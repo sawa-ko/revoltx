@@ -1,12 +1,10 @@
-import type * as Revolt from 'revolt.js';
-
 import type { Client } from '../../lib/client';
 
-export interface ClientOptions extends Revolt.ClientOptions {
+export interface ClientOptions {
 	id?: string;
 	prefix: string;
 }
 
 export interface Container {
-	client?: Client;
+	client: Client;
 }

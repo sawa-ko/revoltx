@@ -1,4 +1,4 @@
-import { container, Store, StoreRegistry } from '@sapphire/pieces';
+import { container, StoreRegistry } from '@sapphire/pieces';
 import { join } from 'path';
 import * as Revolt from 'revolt.js';
 
@@ -24,10 +24,10 @@ export class Client extends Revolt.Client {
 	 */
 	public stores: StoreRegistry;
 
-	public constructor(options: ClientOptions) {
-		super(options);
-		this.prefix = options.prefix;
-		this.id = options.id ?? null;
+	public constructor(private clientOptions: ClientOptions) {
+		super();
+		this.prefix = this.clientOptions.prefix;
+		this.id = this.clientOptions.id ?? null;
 		container.client = this;
 
 		this.stores = new StoreRegistry();
@@ -37,8 +37,18 @@ export class Client extends Revolt.Client {
 	}
 
 	public async start(token: string) {
-		await Promise.all([...this.stores.values()].map((store: Store<any>) => store.loadAll()));
+		await Promise.all([...this.stores.values()].map((store) => store.loadAll()));
 		const login = await super.loginBot(token);
 		return login;
+	}
+}
+
+declare module '@sapphire/pieces' {
+	interface Container {
+		client: Client;
+	}
+
+	interface StoreRegistryEntries {
+		listeners: ListenerStore;
 	}
 }
