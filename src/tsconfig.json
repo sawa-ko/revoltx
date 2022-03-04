@@ -4,7 +4,9 @@
 		"rootDir": "./",
 		"outDir": "../dist",
 		"composite": true,
-		"preserveConstEnums": true
+		"preserveConstEnums": true,
+		"target": "ESNext",
+		"module": "ESNext"
 	},
 	"include": ["."]
 }
