@@ -48,11 +48,10 @@ export class Client extends EventEmitter {
 
 	public constructor(private clientOptions: ClientOptions) {
 		super();
+		container.client = this;
 		this.prefix = this.clientOptions.prefix;
 		this.id = this.clientOptions.id;
 		this.ping = 0;
-
-		container.client = this;
 
 		this.stores = new StoreRegistry();
 		container.stores = this.stores;
@@ -81,7 +80,7 @@ export class Client extends EventEmitter {
 		this.bot.on('member/update', (member: Member) => this.emit(ClientEvents.SERVER_MEMBER_UPDATE, member));
 		this.bot.on('member/leave', (Ids: MemberCompositeKey) => this.emit(ClientEvents.SERVER_MEMBER_LEAVE, this.bot.members.get(Ids.user)));
 		this.bot.on('user/relationship', (user: User) => this.emit(ClientEvents.USER_RELATIONSHIP, user));
-		this.bot.on('packet', (packet: ClientboundNotification) => this.emit(ClientEvents.PACKED, packet));
+		this.bot.on('packet', (packet: ClientboundNotification) => this.emit(ClientEvents.PACKET, packet));
 	}
 
 	public async login(token: string) {

@@ -23,5 +23,5 @@ export enum ClientEvents {
 	ROLE_UPDATE = 'roleUpdate',
 	ROLE_DELETE = 'roleDelete',
 	USER_RELATIONSHIP = 'userRelationship',
-	PACKED = 'packet'
+	PACKET = 'packet'
 }
