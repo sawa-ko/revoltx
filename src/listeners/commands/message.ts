@@ -14,8 +14,6 @@ export class CoreListener extends Listener {
 
 	public run(message: Message) {
 		if (message.author?.bot) return;
-		if (message.asSystemMessage.type) return;
-
 		return this.container.client.emit(CommandEvents.CommandPreParse, message);
 	}
 }
