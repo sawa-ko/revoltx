@@ -15,6 +15,7 @@ import type { ClientboundNotification } from 'revolt.js/dist/websocket/notificat
 import { ListenerStore } from './structures/listener.store';
 import { ClientEvents } from '../utils/enums/events';
 import { CommandStore } from './structures/command.store';
+import { ArgumentStore } from './structures/argument.store';
 
 export class Client extends EventEmitter {
 	/**
@@ -77,10 +78,12 @@ export class Client extends EventEmitter {
 
 		this.stores.register(new ListenerStore().registerPath(join(fileURLToPath(import.meta.url), '..', '..', 'listeners')));
 		this.stores.register(new CommandStore().registerPath(join(fileURLToPath(import.meta.url), '..', '..', 'commands')));
+		this.stores.register(new ArgumentStore().registerPath(join(fileURLToPath(import.meta.url), '..', '..', 'arguments')));
 
 		if (this.baseDirectory) {
 			this.stores.get('commands').registerPath(join(this.baseDirectory, 'commands'));
 			this.stores.get('listeners').registerPath(join(this.baseDirectory, 'listeners'));
+			this.stores.get('arguments').registerPath(join(this.baseDirectory, 'arguments'));
 		}
 
 		if (this.loadDefaultErrorsListeners) {
@@ -136,5 +139,6 @@ declare module '@sapphire/pieces' {
 	interface StoreRegistryEntries {
 		listeners: ListenerStore;
 		commands: CommandStore;
+		arguments: ArgumentStore;
 	}
 }

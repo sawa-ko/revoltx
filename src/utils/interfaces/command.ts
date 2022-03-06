@@ -1,11 +1,13 @@
 import type { AliasPieceJSON, PieceOptions } from '@sapphire/pieces';
 import type { NonNullObject } from '@sapphire/utilities';
 import type { Message } from 'revolt.js/dist/maps/Messages';
+
 import type { Command } from '../../lib/structures/command';
+import type { FlagStrategyOptions } from '../strategies/flag-unordered-strategy';
 
 export interface CommandMetadata extends NonNullObject {}
 
-export interface CommandOptions extends PieceOptions {
+export interface CommandOptions extends PieceOptions, FlagStrategyOptions {
 	/**
 	 * Command description.
 	 * @since 1.0.0
@@ -37,6 +39,7 @@ export interface CommandJSON extends AliasPieceJSON {
 export interface CommandAcceptedPayload {
 	command: Command;
 	message: Message;
+	parameters: string;
 }
 
 export interface CommandErrorPayload {
@@ -44,3 +47,10 @@ export interface CommandErrorPayload {
 	message: Message;
 	error: unknown;
 }
+
+export interface CommandNameNotFoundPayload {
+	message: Message;
+	commandName: string;
+}
+
+export interface CommandNotFoundPayload extends CommandNameNotFoundPayload {}

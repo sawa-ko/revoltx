@@ -944,6 +944,7 @@ __metadata:
     husky: ^7.0.4
     jest: ^27.5.1
     jest-circus: ^27.5.1
+    lexure: ^0.17.0
     lint-staged: ^12.3.4
     prettier: ^2.5.1
     pretty-quick: ^3.1.3
@@ -4704,6 +4705,13 @@ __metadata:
     prelude-ls: ^1.2.1
     type-check: ~0.4.0
   checksum: 12c5021c859bd0f5248561bf139121f0358285ec545ebf48bb3d346820d5c61a4309535c7f387ed7d84361cf821e124ce346c6b7cef8ee09a67c1473b46d0fc4
+  languageName: node
+  linkType: hard
+
+"lexure@npm:^0.17.0":
+  version: 0.17.0
+  resolution: "lexure@npm:0.17.0"
+  checksum: 95797b0ada9452bcdfdd30997572ab1673de1b2583a5af2fa309aa3587ec3b95ba361880b333ed446a6b0f07764b6d8d2cf1d72083c61fa9f96c06181f194453
   languageName: node
   linkType: hard
 

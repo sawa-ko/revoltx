@@ -13,10 +13,11 @@ export class CoreListener extends Listener {
 	}
 
 	public async run(payload: CommandAcceptedPayload) {
-		const { command, message } = payload;
+		const { command, message, parameters } = payload;
+		const args = await command.preParse(message, parameters);
 		const result = await fromAsync(async () => {
 			this.container.client.emit(CommandEvents.CommandRun, { command, message });
-			await command.run(message);
+			await command.run(message, args);
 			this.container.client.emit(CommandEvents.CommandSuccess, { command, message });
 		});
 

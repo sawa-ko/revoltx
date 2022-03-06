@@ -25,6 +25,7 @@ export class CoreListener extends Listener {
 			return this.container.client.emit(CommandEvents.CommandNotFound, { message, commandName });
 		}
 
-		return this.container.client.emit(CommandEvents.CommandAccepted, { message, command });
+		const parameters = spaceIndex === -1 ? '' : prefixLess.slice(spaceIndex + 1).trim();
+		return this.container.client.emit(CommandEvents.CommandAccepted, { message, command, parameters });
 	}
 }
