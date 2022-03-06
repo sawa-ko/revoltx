@@ -85,8 +85,8 @@ export class Client extends EventEmitter {
 
 	public async login(token: string) {
 		await Promise.all([...this.stores.values()].map((store) => store.loadAll()));
-		const login = await this.bot.loginBot(token);
-		return login;
+		await this.bot.loginBot(token);
+		return this.bot.user;
 	}
 }
 
