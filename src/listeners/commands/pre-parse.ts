@@ -15,7 +15,7 @@ export class CoreListener extends Listener {
 		const prefix = this.container.client.prefix.toLowerCase();
 		const content = (message.content as string).toLowerCase();
 
-		if (!content.startsWith(prefix)) return this.container.client.emit(CommandEvents.NonPrefixedCommand, message);
+		if (!content.startsWith(prefix)) return this.container.client.emit(CommandEvents.NonPrefixedCommand, { message, prefix });
 		return this.container.client.emit(CommandEvents.CommandParse, message);
 	}
 }
