@@ -79,8 +79,8 @@ export class Client extends EventEmitter {
 		this.stores.register(new CommandStore().registerPath(join(fileURLToPath(import.meta.url), '..', '..', 'commands')));
 
 		if (this.baseDirectory) {
-			this.stores.get('commands').registerPath(this.baseDirectory);
-			this.stores.get('listeners').registerPath(this.baseDirectory);
+			this.stores.get('commands').registerPath(join(this.baseDirectory, 'commands'));
+			this.stores.get('listeners').registerPath(join(this.baseDirectory, 'listeners'));
 		}
 
 		if (this.loadDefaultErrorsListeners) {
