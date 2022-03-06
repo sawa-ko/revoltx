@@ -15,15 +15,15 @@ export class CoreListener extends Listener {
 	public async run(payload: CommandAcceptedPayload) {
 		const { command, message } = payload;
 		const result = await fromAsync(async () => {
-			this.container.client.emit(CommandEvents.commandRun, { command, message });
+			this.container.client.emit(CommandEvents.CommandRun, { command, message });
 			await command.run(message);
-			this.container.client.emit(CommandEvents.commandSuccess, { command, message });
+			this.container.client.emit(CommandEvents.CommandSuccess, { command, message });
 		});
 
 		if (isErr(result)) {
-			return this.container.client.emit(CommandEvents.commandError, { command, message, error: result.error });
+			return this.container.client.emit(CommandEvents.CommandError, { command, message, error: result.error });
 		}
 
-		return this.container.client.emit(CommandEvents.commandFinish, { command, message });
+		return this.container.client.emit(CommandEvents.CommandFinish, { command, message });
 	}
 }

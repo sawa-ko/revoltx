@@ -7,3 +7,5 @@ export * from './utils/interfaces/command';
 
 export * from './lib/structures/command';
 export * from './lib/structures/listener';
+
+export { container } from '@sapphire/pieces';

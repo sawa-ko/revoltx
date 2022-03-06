@@ -7,7 +7,7 @@ import type { CommandErrorPayload } from '../utils/interfaces/command';
 export class CoreEvent extends Listener {
 	public constructor(context: PieceContext) {
 		super(context, {
-			event: CommandEvents.commandError
+			event: CommandEvents.CommandError
 		});
 	}
 
