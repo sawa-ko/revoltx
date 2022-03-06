@@ -8,7 +8,7 @@ import { ClientEvents } from '../../utils/enums/events';
 export class CoreListener extends Listener {
 	public constructor(context: PieceContext) {
 		super(context, {
-			event: ClientEvents.MESSAGE_CREATE
+			event: ClientEvents.MessageCreate
 		});
 	}
 

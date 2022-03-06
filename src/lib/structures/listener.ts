@@ -3,7 +3,7 @@ import { fromAsync, isErr } from '@sapphire/result';
 
 import type { EventEmitter } from 'events';
 
-import { CoreEvents } from '../../utils/enums/events';
+import { ListenerEvents } from '../../utils/enums/listener';
 import type { ListenerJSON, ListenerOptions } from '../../utils/interfaces/listener';
 
 export abstract class Listener extends Piece {
@@ -85,7 +85,7 @@ export abstract class Listener extends Piece {
 	private async _run(...args: unknown[]) {
 		const result = await fromAsync(() => this.run(...args));
 		if (isErr(result)) {
-			this.container.client.emit(CoreEvents.ListenerError, result.error, { piece: this });
+			this.container.client.emit(ListenerEvents.ListenerError, result.error, { piece: this });
 		}
 	}
 
