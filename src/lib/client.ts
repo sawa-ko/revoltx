@@ -14,6 +14,7 @@ import type { ClientboundNotification } from 'revolt.js/dist/websocket/notificat
 
 import { ListenerStore } from './structures/listener.store';
 import { ClientEvents } from '../utils/enums/events';
+import { CommandStore } from './structures/command.store';
 
 export class Client extends EventEmitter {
 	/**
@@ -57,8 +58,24 @@ export class Client extends EventEmitter {
 		container.stores = this.stores;
 
 		this.stores.register(new ListenerStore().registerPath(join(fileURLToPath(import.meta.url), '..', '..', 'listeners')));
+		this.stores.register(new CommandStore().registerPath(join(fileURLToPath(import.meta.url), '..', '..', 'listeners')));
 
 		this.bot = new Revolt.Client();
+		this.setupEvents();
+	}
+
+	/**
+	 * Login to Revolt and start the client bot service.
+	 * @param token Bot access token to log in.
+	 * @returns Bot user.
+	 */
+	public async login(token: string) {
+		await Promise.all([...this.stores.values()].map((store) => store.loadAll()));
+		await this.bot.loginBot(token);
+		return this.bot.user;
+	}
+
+	private setupEvents() {
 		this.bot.on('connected', () => this.emit(ClientEvents.CONNECTED));
 		this.bot.on('connecting', () => this.emit(ClientEvents.CONNECTED));
 		this.bot.on('dropped', () => this.emit(ClientEvents.DROPPED));
@@ -82,12 +99,6 @@ export class Client extends EventEmitter {
 		this.bot.on('user/relationship', (user: User) => this.emit(ClientEvents.USER_RELATIONSHIP, user));
 		this.bot.on('packet', (packet: ClientboundNotification) => this.emit(ClientEvents.PACKET, packet));
 	}
-
-	public async login(token: string) {
-		await Promise.all([...this.stores.values()].map((store) => store.loadAll()));
-		await this.bot.loginBot(token);
-		return this.bot.user;
-	}
 }
 
 declare module '@sapphire/pieces' {
@@ -97,5 +108,6 @@ declare module '@sapphire/pieces' {
 
 	interface StoreRegistryEntries {
 		listeners: ListenerStore;
+		commands: CommandStore;
 	}
 }

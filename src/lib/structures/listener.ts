@@ -1,33 +1,33 @@
-import { Piece } from '@sapphire/pieces';
+import { Piece, PieceContext } from '@sapphire/pieces';
 import { fromAsync, isErr } from '@sapphire/result';
 
 import type { EventEmitter } from 'events';
-import type { Client } from 'revolt.js';
 
 import { CoreEvents } from '../../utils/enums/events';
+import type { ListenerJSON, ListenerOptions } from '../../utils/interfaces/listener';
 
 export abstract class Listener extends Piece {
 	/**
 	 * The emitter, if any.
-	 * @since 2.0.0
+	 * @since 1.0.0
 	 */
 	public readonly emitter: EventEmitter | null;
 
 	/**
 	 * The name of the event the listener listens to.
-	 * @since 2.0.0
+	 * @since 1.0.0
 	 */
 	public readonly event: string | symbol;
 
 	/**
 	 * Whether or not the listener will be unloaded after the first run.
-	 * @since 2.0.0
+	 * @since 1.0.0
 	 */
 	public readonly once: boolean;
 
 	private _listener: ((...args: any[]) => void) | null;
 
-	public constructor(context: Listener.Context, options: Listener.Options = {} as Listener.Options) {
+	public constructor(context: PieceContext, options: ListenerOptions = {}) {
 		super(context, options);
 
 		this.emitter =
@@ -93,21 +93,4 @@ export abstract class Listener extends Piece {
 		await this._run(...args);
 		await this.unload();
 	}
-}
-
-export interface ListenerOptions extends Piece.Options {
-	readonly emitter?: keyof Client | EventEmitter;
-	readonly event?: string | symbol;
-	readonly once?: boolean;
-}
-
-export interface ListenerJSON extends Piece.JSON {
-	event: string | symbol;
-	once: boolean;
-}
-
-export namespace Listener {
-	export type Options = ListenerOptions;
-	export type JSON = ListenerJSON;
-	export type Context = Piece.Context;
 }
