@@ -6,7 +6,8 @@
 		"composite": true,
 		"preserveConstEnums": true,
 		"target": "ESNext",
-		"module": "ESNext"
+		"module": "ESNext",
+		"moduleResolution": "Node"
 	},
 	"include": ["."]
 }

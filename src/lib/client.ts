@@ -1,5 +1,6 @@
 import { container, StoreRegistry } from '@sapphire/pieces';
 import { join } from 'path';
+import { fileURLToPath } from 'url';
 import * as Revolt from 'revolt.js';
 
 import { ListenerStore } from './structures/listener.store';
@@ -33,7 +34,7 @@ export class Client extends Revolt.Client {
 		this.stores = new StoreRegistry();
 		container.stores = this.stores;
 
-		this.stores.register(new ListenerStore().registerPath(join(__dirname, '..', 'listeners')));
+		this.stores.register(new ListenerStore().registerPath(join(fileURLToPath(import.meta.url), '..', 'listeners')));
 	}
 
 	public async start(token: string) {
