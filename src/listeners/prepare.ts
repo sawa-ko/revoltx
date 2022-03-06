@@ -7,7 +7,8 @@ import { Listener } from '../lib/structures/listener';
 export class CoreListener extends Listener {
 	public constructor(context: PieceContext) {
 		super(context, {
-			event: ClientEvents.Packet
+			event: ClientEvents.Packet,
+			once: true
 		});
 	}
 

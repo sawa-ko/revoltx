@@ -48,11 +48,20 @@ export class Client extends EventEmitter {
 	public ping;
 
 	/**
-	 * Pieces directory.
+	 * Base directory.
+	 *
 	 * Path where all commands, listeners, arguments, etc. are located.
 	 * @since 1.0.0
 	 */
-	public piecesDirectory?: string;
+	public baseDirectory?: string;
+
+	/**
+	 * Default Errors Listeners.
+	 *
+	 * Default events showing errors in commands and events.
+	 * @since 1.0.0
+	 */
+	public loadDefaultErrorsListeners?: boolean;
 
 	public constructor(private clientOptions: ClientOptions) {
 		super();
@@ -60,7 +69,8 @@ export class Client extends EventEmitter {
 		this.prefix = this.clientOptions.prefix;
 		this.id = this.clientOptions.id;
 		this.ping = 0;
-		this.piecesDirectory = this.clientOptions.piecesDirectory;
+		this.baseDirectory = this.clientOptions.baseDirectory;
+		this.loadDefaultErrorsListeners = this.clientOptions.loadDefaultErrorsListeners;
 
 		this.stores = new StoreRegistry();
 		container.stores = this.stores;
@@ -68,9 +78,13 @@ export class Client extends EventEmitter {
 		this.stores.register(new ListenerStore().registerPath(join(fileURLToPath(import.meta.url), '..', '..', 'listeners')));
 		this.stores.register(new CommandStore().registerPath(join(fileURLToPath(import.meta.url), '..', '..', 'commands')));
 
-		if (this.piecesDirectory) {
-			this.stores.get('commands').registerPath(this.piecesDirectory);
-			this.stores.get('listeners').registerPath(this.piecesDirectory);
+		if (this.baseDirectory) {
+			this.stores.get('commands').registerPath(this.baseDirectory);
+			this.stores.get('listeners').registerPath(this.baseDirectory);
+		}
+
+		if (this.loadDefaultErrorsListeners) {
+			this.stores.get('listeners').registerPath(join(fileURLToPath(import.meta.url), '..', '..', 'listeners-errors'));
 		}
 
 		this.bot = new Revolt.Client();

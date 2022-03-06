@@ -3,7 +3,8 @@ import type { Client } from '../../lib/client';
 export interface ClientOptions {
 	id?: string;
 	prefix: string;
-	piecesDirectory?: string;
+	baseDirectory?: string;
+	loadDefaultErrorsListeners?: boolean;
 }
 
 export interface Container {

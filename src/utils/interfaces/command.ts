@@ -38,3 +38,9 @@ export interface CommandAcceptedPayload {
 	command: Command;
 	message: Message;
 }
+
+export interface CommandErrorPayload {
+	command: Command;
+	message: Message;
+	error: unknown;
+}
