@@ -946,6 +946,7 @@ __metadata:
     lint-staged: ^12.3.4
     prettier: ^2.5.1
     pretty-quick: ^3.1.3
+    revolt-api: ^0.5.3-alpha.12
     revolt.js: ^5.2.8
     standard-version: ^9.3.2
     ts-jest: ^27.1.3
@@ -5947,6 +5948,13 @@ __metadata:
   version: 0.5.3-alpha.12
   resolution: "revolt-api@npm:0.5.3-alpha.12"
   checksum: ec7e1d2ac6551e15d40e9e7eff3481d6d9cb5123fc785ac156dc61013e1d74435450c4f28c08e2330a5fc6f107178176168bb443698e9037efaf533b6883fed1
+  languageName: node
+  linkType: hard
+
+"revolt-api@npm:^0.5.3-alpha.12":
+  version: 0.5.3-alpha.8-patch.0
+  resolution: "revolt-api@npm:0.5.3-alpha.8-patch.0"
+  checksum: ae76b81ffbd73a081ea8f9bb5e0718e43cc80d1078b3586385063b8528ec7c20e0ad604af361f9a544900296fdc6aa3fc2ae73f4d49d419d4d3cbdad55b0c367
   languageName: node
   linkType: hard
 

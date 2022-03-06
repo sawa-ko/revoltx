@@ -8,3 +8,8 @@ export interface ClientOptions {
 export interface Container {
 	client: Client;
 }
+
+export interface MemberCompositeKey {
+	server: string;
+	user: string;
+}

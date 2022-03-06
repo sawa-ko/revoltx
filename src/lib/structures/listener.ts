@@ -32,7 +32,7 @@ export abstract class Listener extends Piece {
 
 		this.emitter =
 			typeof options.emitter === 'undefined'
-				? (this.container.client as unknown as EventEmitter)
+				? this.container.client
 				: (typeof options.emitter === 'string' ? (Reflect.get(this.container.client, options.emitter) as EventEmitter) : options.emitter) ??
 				  null;
 		this.event = options.event ?? this.name;
