@@ -47,18 +47,31 @@ export class Client extends EventEmitter {
 	 */
 	public ping;
 
+	/**
+	 * Pieces directory.
+	 * Path where all commands, listeners, arguments, etc. are located.
+	 * @since 1.0.0
+	 */
+	public piecesDirectory?: string;
+
 	public constructor(private clientOptions: ClientOptions) {
 		super();
 		container.client = this;
 		this.prefix = this.clientOptions.prefix;
 		this.id = this.clientOptions.id;
 		this.ping = 0;
+		this.piecesDirectory = this.clientOptions.piecesDirectory;
 
 		this.stores = new StoreRegistry();
 		container.stores = this.stores;
 
 		this.stores.register(new ListenerStore().registerPath(join(fileURLToPath(import.meta.url), '..', '..', 'listeners')));
 		this.stores.register(new CommandStore().registerPath(join(fileURLToPath(import.meta.url), '..', '..', 'commands')));
+
+		if (this.piecesDirectory) {
+			this.stores.get('commands').registerPath(this.piecesDirectory);
+			this.stores.get('listeners').registerPath(this.piecesDirectory);
+		}
 
 		this.bot = new Revolt.Client();
 		this.setupEvents();
