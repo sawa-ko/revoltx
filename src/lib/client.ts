@@ -58,7 +58,7 @@ export class Client extends EventEmitter {
 		container.stores = this.stores;
 
 		this.stores.register(new ListenerStore().registerPath(join(fileURLToPath(import.meta.url), '..', '..', 'listeners')));
-		this.stores.register(new CommandStore().registerPath(join(fileURLToPath(import.meta.url), '..', '..', 'listeners')));
+		this.stores.register(new CommandStore().registerPath(join(fileURLToPath(import.meta.url), '..', '..', 'commands')));
 
 		this.bot = new Revolt.Client();
 		this.setupEvents();
