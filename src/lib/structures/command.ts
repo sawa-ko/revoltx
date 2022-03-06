@@ -23,21 +23,23 @@ export abstract class Command extends AliasPiece {
 	 * The command category can be used to categorize the commands in a help command, etc.
 	 * @since 1.0.0
 	 */
-	public category?: string;
+	public category: string | null;
 
 	public constructor(context: PieceContext, options: CommandOptions) {
 		super(context, options);
 
 		this.description ??= options.description;
 		this.metadata ??= options.metadata;
-		this.category ??= options.category;
+
+		if (options.category) this.category = options.category;
+		else this.category = this.location.directories.length > 0 ? this.location.directories[0] : null;
 	}
 
 	public toJSON(): CommandJSON {
 		return {
 			...super.toJSON(),
 			description: this.description,
-			category: this.description ?? null,
+			category: this.description,
 			metadata: this.metadata ?? {}
 		};
 	}
