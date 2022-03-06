@@ -85,7 +85,7 @@ export abstract class Listener extends Piece {
 	private async _run(...args: unknown[]) {
 		const result = await fromAsync(() => this.run(...args));
 		if (isErr(result)) {
-			this.container.client.emit(ListenerEvents.ListenerError, result.error, { piece: this });
+			this.container.client.emit(ListenerEvents.ListenerError, { listener: this, error: result.error });
 		}
 	}
 

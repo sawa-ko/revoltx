@@ -13,6 +13,6 @@ export class CoreEvent extends Listener {
 
 	public run(payload: CommandErrorPayload) {
 		const { command, error } = payload;
-		throw new Error(`Encountered error on command "${command.name}" at path "${command.location.full}"`, { cause: error as Error });
+		console.error(`Encountered error on command "${command.name}" at path "${command.location.full}"`, error);
 	}
 }

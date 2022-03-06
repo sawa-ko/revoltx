@@ -2,7 +2,7 @@ import type { PieceContext } from '@sapphire/pieces';
 
 import { Listener } from '../lib/structures/listener';
 import { ListenerEvents } from '../utils/enums/listener';
-import type { CommandErrorPayload } from '../utils/interfaces/command';
+import type { ListenerErrorPayload } from '../utils/interfaces/listener';
 
 export class CoreEvent extends Listener {
 	public constructor(context: PieceContext) {
@@ -11,8 +11,8 @@ export class CoreEvent extends Listener {
 		});
 	}
 
-	public run(payload: CommandErrorPayload) {
-		const { command, error } = payload;
-		throw new Error(`Encountered error on listener "${command.name}" at path "${command.location.full}"`, { cause: error as Error });
+	public run(payload: ListenerErrorPayload) {
+		const { listener, error } = payload;
+		console.error(`Encountered error on listener "${listener.name}" at path "${listener.location.full}"`, error);
 	}
 }
