@@ -11,6 +11,7 @@ import type { Role } from 'revolt-api/types/Servers';
 import type { Member } from 'revolt.js/dist/maps/Members';
 import type { User } from 'revolt.js/dist/maps/Users';
 import type { ClientboundNotification } from 'revolt.js/dist/websocket/notifications';
+import type { Id } from 'revolt-api/types/_common';
 
 import { ListenerStore } from './structures/listener.store';
 import { ClientEvents } from '../utils/enums/events';
@@ -113,16 +114,16 @@ export class Client extends EventEmitter {
 		this.bot.on('logout', () => this.emit(ClientEvents.LogOut, this.bot.user));
 		this.bot.on('message', (message: Message) => this.emit(ClientEvents.MessageCreate, message));
 		this.bot.on('message/update', (message: Message) => this.emit(ClientEvents.MessageUpdate, message));
-		this.bot.on('message/delete', (id: string) => this.emit(ClientEvents.MessageDelete, this.bot.messages.get(id)));
+		this.bot.on('message/delete', (messageId: Id) => this.emit(ClientEvents.MessageDelete, this.bot.messages.get(messageId)));
 		this.bot.on('channel/create', (channel: Channel) => this.emit(ClientEvents.ChannelCreate, channel));
 		this.bot.on('channel/update', (channel: Channel) => this.emit(ClientEvents.ChannelUpdate, channel));
-		this.bot.on('channel/delete', (id: string) => this.emit(ClientEvents.ChannelDelete, this.bot.channels.get(id)));
+		this.bot.on('channel/delete', (channelId: Id) => this.emit(ClientEvents.ChannelDelete, this.bot.channels.get(channelId)));
 		this.bot.on('server/update', (server: Server) => this.emit(ClientEvents.ServerUpdate, server));
-		this.bot.on('server/delete', (serverId: string) => this.emit(ClientEvents.ServerDelete, this.bot.servers.get(serverId)));
-		this.bot.on('role/update', (_: string, role: Role, serverId: string) =>
+		this.bot.on('server/delete', (serverId: Id) => this.emit(ClientEvents.ServerDelete, this.bot.servers.get(serverId)));
+		this.bot.on('role/update', (_: string, role: Role, serverId: Id) =>
 			this.emit(ClientEvents.RoleUpdate, { server: this.bot.servers.get(serverId), role })
 		);
-		this.bot.on('role/delete', (roleId: string, serverId: string) => this.emit(ClientEvents.RoleDelete, { roleId, serverId }));
+		this.bot.on('role/delete', (roleId: Id, serverId: Id) => this.emit(ClientEvents.RoleDelete, { roleId, serverId }));
 		this.bot.on('member/join', (member: Member) => this.emit(ClientEvents.ServerMemberJoin, member));
 		this.bot.on('member/update', (member: Member) => this.emit(ClientEvents.ServerMemberUpdate, member));
 		this.bot.on('member/leave', (Ids: MemberCompositeKey) => this.emit(ClientEvents.ServerMemberLeave, this.bot.members.get(Ids.user)));

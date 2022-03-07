@@ -15,5 +15,9 @@ export const enum Identifiers {
 	ArgumentStringTooLong = 'stringTooLong',
 	ArgumentStringTooShort = 'stringTooShort',
 	ArgumentEnumEmptyError = 'enumEmptyError',
-	ArgumentEnumError = 'enumError'
+	ArgumentEnumError = 'enumError',
+	ArgumentChannelError = 'channelError',
+	ArgumentUserError = 'userError',
+	ArgumentMemberError = 'memberError',
+	ArgumentMessageError = 'messageError'
 }

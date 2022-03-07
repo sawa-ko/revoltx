@@ -1,6 +1,9 @@
 import type { AliasPieceOptions } from '@sapphire/pieces';
 import type { Maybe } from '@sapphire/result';
+import type { Member } from 'revolt-api/types/Servers';
+import type { Channel } from 'revolt.js/dist/maps/Channels';
 import type { Message } from 'revolt.js/dist/maps/Messages';
+import type { User } from 'revolt.js/dist/maps/Users';
 
 import type { Args } from '../../lib/parsers/args';
 import type { IArgument } from '../../lib/structures/argument';
@@ -20,12 +23,16 @@ export interface ArgumentContext<T = unknown> extends Record<PropertyKey, unknow
 
 export interface ArgType {
 	boolean: boolean;
+	channel: Channel;
 	enum: string;
 	float: number;
 	hyperlink: URL;
 	integer: number;
+	message: Message;
+	member: Member;
 	number: number;
 	string: string;
+	user: User;
 }
 
 export interface ArgOptions extends Omit<ArgumentContext, 'message' | 'command'> {}
