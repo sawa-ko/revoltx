@@ -1,8 +1,8 @@
 {
-	"projectName": "template",
-	"projectOwner": "sapphiredev",
+	"projectName": "kaname-png/revoltx",
+	"projectOwner": "kaname-png",
 	"repoType": "github",
-	"repoHost": "https://github.com",
+	"repoHost": "https://github.com/kaname-png/revoltx",
 	"files": ["README.md"],
 	"imageSize": 100,
 	"commit": true,

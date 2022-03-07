@@ -1,7 +1,7 @@
 {
 	"name": "@kaname-png/revoltx",
-	"version": "0.0.1",
-	"description": "template",
+	"version": "1.0.0",
+	"description": "RevoltX is a Framework for creating Revolt bots using the power of @sapphire/framework.",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
 	"author": "@sapphire",
@@ -61,7 +61,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/sapphiredev/sapphire-template.git"
+		"url": "git+https://github.com/kaname-png/revoltx.git"
 	},
 	"files": [
 		"dist",
@@ -72,17 +72,16 @@
 		"npm": ">=7.0.0"
 	},
 	"keywords": [
-		"@sapphire/template",
+		"@kaname-png/revoltx",
+		"revolt",
 		"bot",
 		"typescript",
 		"ts",
 		"yarn",
-		"discord",
-		"sapphire",
-		"discordjs"
+		"sapphire"
 	],
 	"bugs": {
-		"url": "https://github.com/sapphiredev/sapphire-template/issues"
+		"url": "https://github.com/kaname-png/revoltx/issues"
 	},
 	"homepage": "https://www.sapphirejs.dev",
 	"commitlint": {
@@ -102,8 +101,7 @@
 		"access": "public"
 	},
 	"resolutions": {
-		"jest-environment-jsdom": "https://registry.yarnpkg.com/@favware/skip-dependency/-/skip-dependency-1.1.3.tgz",
-		"typescript-project-template": "portal:/E:/Proyectos/Personal/Extra/nekodex"
+		"jest-environment-jsdom": "https://registry.yarnpkg.com/@favware/skip-dependency/-/skip-dependency-1.1.3.tgz"
 	},
 	"prettier": "@sapphire/prettier-config",
 	"packageManager": "yarn@3.2.0"
