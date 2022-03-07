@@ -42,9 +42,11 @@ This is how the client is created and the bot is started.
 ```typescript
 // client.js
 import { Client } from '@kaname-png/revoltx';
+import { join } from 'path';
+import { fileURLToPath } from 'url';
 
 const start = () => {
-	const client = new Client({ prefix: '!' });
+	const client = new Client({ prefix: '!', baseDirectory: join(fileURLToPath(import.meta.url), '..') });
 	await client.login('<BOT_TOKEN>');
 };
 ```
