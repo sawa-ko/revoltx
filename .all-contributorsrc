@@ -1,13 +1,31 @@
 {
-	"projectName": "revoltx",
-	"projectOwner": "kaname-png",
-	"repoType": "github",
-	"repoHost": "https://github.com/kaname-png/revoltx",
-	"files": ["README.md"],
-	"imageSize": 100,
-	"commit": true,
-	"commitConvention": "angular",
-	"contributors": [],
-	"contributorsPerLine": 7,
-	"skipCi": true
+  "projectName": "revoltx",
+  "projectOwner": "kaname-png",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": true,
+  "commitConvention": "angular",
+  "contributors": [
+    {
+      "login": "kaname-png",
+      "name": "Kaname",
+      "avatar_url": "https://avatars.githubusercontent.com/u/56084970?v=4",
+      "profile": "https://kaname.netlify.app",
+      "contributions": [
+        "bug",
+        "code",
+        "doc",
+        "ideas",
+        "maintenance",
+        "projectManagement",
+        "review"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "skipCi": true
 }
