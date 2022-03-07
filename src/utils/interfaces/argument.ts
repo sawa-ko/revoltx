@@ -20,6 +20,11 @@ export interface ArgumentContext<T = unknown> extends Record<PropertyKey, unknow
 
 export interface ArgType {
 	boolean: boolean;
+	float: number;
+	hyperlink: URL;
+	integer: number;
+	number: number;
+	string: string;
 }
 
 export interface ArgOptions extends Omit<ArgumentContext, 'message' | 'command'> {}
