@@ -20,6 +20,7 @@ export interface ArgumentContext<T = unknown> extends Record<PropertyKey, unknow
 
 export interface ArgType {
 	boolean: boolean;
+	enum: string;
 	float: number;
 	hyperlink: URL;
 	integer: number;
