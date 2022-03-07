@@ -1,5 +1,7 @@
 <div align="center">
 
+![RevoltX Logo](https://raw.githubusercontent.com/kaname-png/revoltx/development/.github/assets/logo-transparent.png)
+
 # @kaname-png/revoltx
 
 **Bots for Revolt powered by @sapphire/framework.**
@@ -25,19 +27,32 @@ RevoltX is a framework for creating Revolt bots, powered by the @sapphire/framew
 
 With RevoltX you have at your disposal the creation of highly typed, secure and easy to make bots with a wide variety of tools and utilities available.
 
-# 📑 Examples
+# ❗ Usage
+
+Now you can continue installing the necessary packages.
+
+```
+npm i @kaname-png/revoltx revolt.js
+```
 
 ### 🤖 Client
 
 This is how the client is created and the bot is started.
 
 ```typescript
+// client.js
 import { Client } from '@kaname-png/revoltx';
 
 const start = () => {
 	const client = new Client({ prefix: '!' });
 	await client.login('<BOT_TOKEN>');
 };
+```
+
+Now you can start bot as follows:
+
+```
+node --experimental-specifier-resolution=node client.js
 ```
 
 ### 📁 Folder Structure
