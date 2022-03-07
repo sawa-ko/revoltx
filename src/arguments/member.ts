@@ -1,7 +1,7 @@
 import type { PieceContext } from '@sapphire/pieces';
 import type { Member } from 'revolt-api/types/Servers';
 
-import { resolveMember } from '../lib/resolvers/role';
+import { resolveMember } from '../lib/resolvers/member';
 import { Argument, AsyncArgumentResult } from '../lib/structures/argument';
 import type { ArgumentContext } from '../utils/interfaces/argument';
 

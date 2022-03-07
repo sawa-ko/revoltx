@@ -9,7 +9,7 @@ export async function resolveUser(parameter: string): Promise<Result<User, Ident
 	const userId = parameter.match(UserMentionIdRegex);
 	if (!userId) return err(Identifiers.ArgumentUserError);
 
-	const user = container.client.bot.users.get(userId[1]) ?? (await container.client.bot.users.fetch(userId[1]));
+	const user = container.client.bot.users.get(userId[1]) ?? (await container.client.bot.users.fetch(userId[1]).catch(() => null));
 	if (!user) return err(Identifiers.ArgumentUserError);
 
 	return ok(user);

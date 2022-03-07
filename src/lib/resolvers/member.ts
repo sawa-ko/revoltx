@@ -9,7 +9,7 @@ export async function resolveMember(parameter: string, message: Message): Promis
 	const memberId = parameter.match(UserMentionIdRegex);
 	if (!memberId) return err(Identifiers.ArgumentUserError);
 
-	const member = await message.member?.server?.fetchMember(memberId[1]);
+	const member = await message.member?.server?.fetchMember(memberId[1]).catch(() => null);
 	if (!member) return err(Identifiers.ArgumentUserError);
 
 	return ok(member as Member);
