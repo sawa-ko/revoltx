@@ -1,7 +1,7 @@
 {
 	"name": "@kaname-png/revoltx",
 	"version": "1.0.0",
-	"description": "RevoltX is a Framework for creating Revolt bots using the power of @sapphire/framework.",
+	"description": "RevoltX is a framework for creating Revolt bots.",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
 	"author": "@sapphire",
