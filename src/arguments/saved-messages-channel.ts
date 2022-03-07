@@ -1,7 +1,7 @@
 import type { PieceContext } from '@sapphire/pieces';
 import type { Channel } from 'revolt.js/dist/maps/Channels';
 
-import { resolveDMChannel } from '../lib/resolvers/dm-channel';
+import { resolveSaveMessagesChannel } from '../lib/resolvers/saved-messages-channel';
 import { Argument, ArgumentResult } from '../lib/structures/argument';
 import type { ArgumentContext } from '../utils/interfaces/argument';
 
@@ -11,7 +11,7 @@ export class CoreArgument extends Argument<Channel> {
 	}
 
 	public run(parameter: string, context: ArgumentContext): ArgumentResult<Channel> {
-		const resolved = resolveDMChannel(parameter);
+		const resolved = resolveSaveMessagesChannel(parameter);
 		if (resolved.success) return this.ok(resolved.value);
 		return this.error({
 			parameter,

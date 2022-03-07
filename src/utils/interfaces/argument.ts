@@ -8,6 +8,7 @@ import type { User } from 'revolt.js/dist/maps/Users';
 import type { Args } from '../../lib/parsers/args';
 import type { IArgument } from '../../lib/structures/argument';
 import type { Command } from '../../lib/structures/command';
+import type { DirectMessageChannel, GroupChannel, SavedMessagesChannel, TextChannel, VoiceChannel } from './channel';
 
 export interface ArgumentOptions extends AliasPieceOptions {}
 
@@ -24,6 +25,11 @@ export interface ArgumentContext<T = unknown> extends Record<PropertyKey, unknow
 export interface ArgType {
 	boolean: boolean;
 	channel: Channel;
+	dmChannel: DirectMessageChannel;
+	groupChannel: GroupChannel;
+	guildChannel: Channel;
+	guildTextChannel: TextChannel;
+	guildVoiceChannel: VoiceChannel;
 	enum: string;
 	float: number;
 	hyperlink: URL;
@@ -31,6 +37,7 @@ export interface ArgType {
 	message: Message;
 	member: Member;
 	number: number;
+	savedMessagesChannel: SavedMessagesChannel;
 	string: string;
 	user: User;
 }
