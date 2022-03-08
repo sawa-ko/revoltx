@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/kaname-png/revoltx/compare/v1.1.3...v1.2.0) (2022-03-08)
+
+### Features
+
+-   **commands:** permissions manager ([aed15d7](https://github.com/kaname-png/revoltx/commit/aed15d769ed75193162953d111c3c40f5142a117))
+-   **core:** added @sapphire/framework preconditions system ([1fc4d37](https://github.com/kaname-png/revoltx/commit/1fc4d370d6c8024449228033133ab73feb1ded7c))
+-   **core:** permission manager ([873e3ca](https://github.com/kaname-png/revoltx/commit/873e3ca9e7c114af8e1514c6ecaf7446366ff6e4))
+-   **core:** permissions manager ([c51a268](https://github.com/kaname-png/revoltx/commit/c51a2686790eebdc0868f34983c545545f1a0afd))
+-   **preconditions:** added cooldown precondition ([64e9aa6](https://github.com/kaname-png/revoltx/commit/64e9aa65f3e1c2bee1f115937958d6532577ac17))
+-   **preconditions:** added runIn preconditions for commands ([d19bd6c](https://github.com/kaname-png/revoltx/commit/d19bd6c548c6d79a990705515e8d7ddb4bfb468a))
+
+### Bug Fixes
+
+-   **preconditions:** identifiers ([8fbea22](https://github.com/kaname-png/revoltx/commit/8fbea22cd853f801cb8de5a3c6defc6f15b021c8))
+
 ### [1.1.3](https://github.com/kaname-png/revoltx/compare/v1.1.2...v1.1.3) (2022-03-07)
 
 ### Bug Fixes
