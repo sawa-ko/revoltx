@@ -19,7 +19,7 @@
 -   TypeScript & JavaScript support
 -   Written in TypeScript
 -   Completely Modular and Extendable
--   Command Handler, Arguments, Preconditions (soon) and Listeners Store
+-   Command Handler, Arguments, Preconditions and Listeners Store
 
 # 🔎 Introduction
 
