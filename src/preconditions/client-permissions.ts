@@ -1,7 +1,7 @@
 import type { Message } from 'revolt.js/dist/maps/Messages';
 
 import { Precondition } from '../lib/structures/precondition';
-import { PermissionsManager } from '../lib/structures/permissions';
+import { PermissionsManager } from '../lib/utils/permissions';
 import { Identifiers } from '../lib/errors/identifiers';
 import type { Command } from '../lib/structures/command';
 import type { PieceContext } from '@sapphire/pieces';

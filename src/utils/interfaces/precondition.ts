@@ -1,6 +1,6 @@
 import type { PieceOptions } from '@sapphire/pieces';
 import type { Id } from 'revolt-api/types/_common';
-import type { ChannelPermissionsResolvable, ServerPermissionsResolvable } from '../../lib/structures/permissions';
+import type { ChannelPermissionsResolvable, ServerPermissionsResolvable } from '../../lib/utils/permissions';
 import type { BucketScope } from '../enums/command';
 
 /**

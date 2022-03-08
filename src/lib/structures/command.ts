@@ -9,7 +9,7 @@ import { PreconditionContainerArray } from '../preconditions/precondition-contai
 import { CommandJSON, CommandMetadata, CommandOptions, CommandPreConditions } from '../../utils/interfaces/command';
 import { BucketScope } from '../../utils/enums/command';
 import type { RunInCommands } from '../../utils/interfaces/precondition';
-import type { ChannelPermissionsResolvable, ServerPermissionsResolvable } from './permissions';
+import type { ChannelPermissionsResolvable, ServerPermissionsResolvable } from '../utils/permissions';
 
 export abstract class Command<T = Args, O extends CommandOptions = CommandOptions> extends AliasPiece<O> {
 	/**

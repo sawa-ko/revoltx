@@ -11,7 +11,8 @@ export * from './utils/interfaces/client';
 export * from './utils/interfaces/command';
 export * from './utils/interfaces/argument';
 export * from './utils/interfaces/precondition';
-export * from './lib/structures/permissions';
+
+export * from './lib/utils/permissions';
 
 export * from './lib/structures/command';
 export * from './lib/structures/listener';

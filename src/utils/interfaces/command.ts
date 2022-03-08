@@ -6,7 +6,7 @@ import type { UserError } from '../../lib/errors/user-error';
 import type { PreconditionEntryResolvable } from '../../lib/preconditions/precondition-container-array';
 
 import type { Command } from '../../lib/structures/command';
-import type { ChannelPermissionsResolvable, ServerPermissionsResolvable } from '../../lib/structures/permissions';
+import type { ChannelPermissionsResolvable, ServerPermissionsResolvable } from '../../lib/utils/permissions';
 import type { BucketScope } from '../enums/command';
 import type { FlagStrategyOptions } from '../strategies/flag-unordered-strategy';
 import type { RunInCommands } from './precondition';
