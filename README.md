@@ -108,6 +108,8 @@ And so, you can choose the place you want.
 
 Basic structure of a basic command.
 
+Commands are actions that users can request to the bot by means of a prefix and command name, e.g.: `n!help`.
+
 ```typescript
 // commands/help.ts
 import { Command } from '@kaname-png/revoltx';
@@ -132,6 +134,8 @@ export class HelpCommands extends Command {
 
 Basic structure of a basic listener.
 
+The listeners have the function of listening to events that the client emits by default, but you can assign the emitter you need and listen to the events of that emitter.
+
 ```typescript
 // listener/message.ts
 import { Listener, ClientEvents } from '@kaname-png/revoltx';
@@ -153,6 +157,7 @@ export class MessageListener extends Listener {
 # 🛡️ Create Argument
 
 Basic structure of a basic argument.
+Arguments are parameters that the bot receives from the message sent by the user. This argument system allows to use arguments dynamically as needed, and not only by configuring the command options.
 
 ```typescript
 // arguments/serverOwner.ts
@@ -169,8 +174,8 @@ export class CoreArgument extends Argument<boolean> {
 	}
 
 	public run(parameter: string, context: ArgumentContext): ArgumentResult<boolean> {
-		const resolved = message.member?.server?.owner !== parameter;
-		if (resolved) return this.ok(true);
+		const resolved = message.member?.server?.owner === parameter;
+		if (!resolved) return this.ok(true);
 
 		return this.error({
 			parameter,
@@ -186,6 +191,18 @@ declare module '@kaname-png/revoltx' {
 	interface ArgType {
 		// The type returned by the this.ok() method;
 		ServerOwner: boolean;
+	}
+}
+
+// Command Usage
+// User Input: n!server @kaname-png
+import { Args, Command } from '@kaname-png/revoltx';
+import type { Message } from 'revolt.js/dist/maps/Messages';
+
+export class ServerCommand extends Command {
+	public run(message: Message, args: Args) {
+		const owner = await args.pick('ServerOwner');
+		return message.channel?.sendMessage(owner ? 'You are server owner.' : 'You are not the owner of the server.');
 	}
 }
 ```
