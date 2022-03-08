@@ -1,6 +1,7 @@
 import { container, StoreRegistry } from '@sapphire/pieces';
 import { join } from 'path';
 import { fileURLToPath } from 'url';
+import { Logger } from 'tslog';
 import EventEmitter from 'events';
 import * as Revolt from 'revolt.js';
 import type { ClientOptions, DefaultCooldownOptions, MemberCompositeKey } from '../utils/interfaces/client';
@@ -84,6 +85,14 @@ export class Client extends EventEmitter {
 
 		this.stores = new StoreRegistry();
 		container.stores = this.stores;
+		container.logger = new Logger({
+			name: 'RevoltX',
+			minLevel: 'info',
+			displayFilePath: 'hidden',
+			maskValuesOfKeys: ['token', 'password', 'secret'],
+			exposeErrorCodeFrameLinesBeforeAndAfter: 10,
+			...this.clientOptions.logger
+		});
 
 		this.stores.register(new ListenerStore().registerPath(join(fileURLToPath(import.meta.url), '..', '..', 'listeners')));
 		this.stores.register(new CommandStore().registerPath(join(fileURLToPath(import.meta.url), '..', '..', 'commands')));
@@ -145,6 +154,7 @@ export class Client extends EventEmitter {
 declare module '@sapphire/pieces' {
 	interface Container {
 		client: Client;
+		logger: Logger;
 	}
 
 	interface StoreRegistryEntries {

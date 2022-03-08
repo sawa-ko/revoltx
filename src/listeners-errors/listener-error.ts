@@ -13,6 +13,6 @@ export class CoreEvent extends Listener {
 
 	public run(payload: ListenerErrorPayload) {
 		const { listener, error } = payload;
-		console.error(`Encountered error on listener "${listener.name}" at path "${listener.location.full}"`, error);
+		this.container.logger.error(`Encountered error on listener "${listener.name}" at path "${listener.location.full}"`, error);
 	}
 }

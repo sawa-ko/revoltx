@@ -1,4 +1,6 @@
 import type { Id } from 'revolt-api/types/_common';
+import type { ISettingsParam } from 'tslog';
+
 import type { BucketScope } from '../enums/command';
 
 export interface ClientOptions {
@@ -7,6 +9,7 @@ export interface ClientOptions {
 	baseDirectory: string;
 	loadDefaultErrorsListeners?: boolean;
 	defaultCooldown?: DefaultCooldownOptions;
+	logger?: ISettingsParam;
 }
 
 export interface MemberCompositeKey {
@@ -51,4 +54,24 @@ export interface DefaultCooldownOptions {
 	 * @default undefined
 	 */
 	filteredCommands?: string[];
+}
+
+export interface LoggerManagerI {
+	silly(message: string, prefix?: string): void;
+	trace(message: string, prefix?: string): void;
+	debug(message: string, prefix?: string): void;
+	info(message: string): void;
+	warn(message: string, prefix?: string): void;
+	error(message: string, prefix?: string): void;
+	fatal(message: string, prefix?: string): void;
+}
+
+export enum LogLevels {
+	Silly,
+	Trace,
+	Debug,
+	Info,
+	Warn,
+	Error,
+	Fatal
 }
