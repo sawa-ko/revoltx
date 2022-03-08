@@ -21,6 +21,6 @@ export const enum Identifiers {
 	ArgumentUserError = 'userError',
 	ArgumentMemberError = 'memberError',
 	ArgumentMessageError = 'messageError',
-
-	PreconditionsNsfw = 'preconditionNsfw'
+	PreconditionsNsfw = 'preconditionNsfw',
+	PreconditionCooldown = 'preconditionCooldown'
 }

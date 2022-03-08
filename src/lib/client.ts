@@ -3,7 +3,7 @@ import { join } from 'path';
 import { fileURLToPath } from 'url';
 import EventEmitter from 'events';
 import * as Revolt from 'revolt.js';
-import type { ClientOptions, MemberCompositeKey } from '../utils/interfaces/client';
+import type { ClientOptions, DefaultCooldownOptions, MemberCompositeKey } from '../utils/interfaces/client';
 import type { Message } from 'revolt.js/dist/maps/Messages';
 import type { Channel } from 'revolt.js/dist/maps/Channels';
 import type { Server } from 'revolt.js/dist/maps/Servers';
@@ -66,6 +66,12 @@ export class Client extends EventEmitter {
 	 */
 	public loadDefaultErrorsListeners?: boolean;
 
+	/**
+	 * Sets the default cooldown time for all commands.
+	 * @default "No cooldown options"
+	 */
+	public defaultCooldown?: DefaultCooldownOptions;
+
 	public constructor(private clientOptions: ClientOptions) {
 		super();
 		container.client = this;
@@ -74,6 +80,7 @@ export class Client extends EventEmitter {
 		this.ping = 0;
 		this.baseDirectory = this.clientOptions.baseDirectory;
 		this.loadDefaultErrorsListeners = this.clientOptions.loadDefaultErrorsListeners;
+		this.defaultCooldown = this.clientOptions.defaultCooldown;
 
 		this.stores = new StoreRegistry();
 		container.stores = this.stores;

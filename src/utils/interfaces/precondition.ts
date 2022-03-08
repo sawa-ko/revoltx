@@ -1,4 +1,6 @@
 import type { PieceOptions } from '@sapphire/pieces';
+import type { Id } from 'revolt-api/types/_common';
+import type { BucketScope } from '../enums/command';
 
 /**
  * The registered preconditions and their contexts, if any. When registering new ones, it is recommended to use
@@ -50,6 +52,7 @@ import type { PieceOptions } from '@sapphire/pieces';
 export interface Preconditions {
 	Enabled: never;
 	NSFW: never;
+	Cooldown: CooldownContext;
 }
 
 export type PreconditionKeys = keyof Preconditions;
@@ -68,4 +71,35 @@ export interface PreconditionOptions extends PieceOptions {
 
 export interface PreconditionContext extends Record<PropertyKey, unknown> {
 	external?: boolean;
+}
+
+export interface CooldownContext extends PreconditionContext {
+	/**
+	 * The scope of the cooldown entries.
+	 * @since 1.1.3
+	 * @default BucketScope.User
+	 */
+	scope?: BucketScope;
+
+	/**
+	 * The time in milliseconds for the cooldown entries to reset, if set to a non-zero value alongside {@link Command.Options.cooldownLimit}, the `Cooldown` precondition will be added to the list.
+	 * @since 1.1.3
+	 * @default 0
+	 */
+	delay: number;
+
+	/**
+	 * The amount of entries the cooldown can have before filling up, if set to a non-zero value alongside {@link Command.Options.cooldownDelay}, the `Cooldown` precondition will be added to the list.
+	 * @since 1.1.3
+	 * @default 1
+	 */
+	limit?: number;
+
+	/**
+	 * The users that are exempt from the Cooldown precondition.
+	 * Use this to filter out someone like a bot owner
+	 * @since 2.0.0
+	 * @default undefined
+	 */
+	filteredUsers?: Id[];
 }

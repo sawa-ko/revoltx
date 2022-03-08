@@ -1,10 +1,12 @@
 import type { AliasPieceJSON, PieceOptions } from '@sapphire/pieces';
 import type { NonNullObject } from '@sapphire/utilities';
+import type { Id } from 'revolt-api/types/_common';
 import type { Message } from 'revolt.js/dist/maps/Messages';
 import type { UserError } from '../../lib/errors/user-error';
 import type { PreconditionEntryResolvable } from '../../lib/preconditions/precondition-container-array';
 
 import type { Command } from '../../lib/structures/command';
+import type { BucketScope } from '../enums/command';
 import type { FlagStrategyOptions } from '../strategies/flag-unordered-strategy';
 
 export interface CommandMetadata extends NonNullObject {}
@@ -44,6 +46,40 @@ export interface CommandOptions extends PieceOptions, FlagStrategyOptions {
 	 * @since 1.0.0
 	 */
 	nsfw?: boolean;
+
+	/**
+	 * Set individual command cooldown.
+	 * */
+	cooldown?: {
+		/**
+		 * The amount of entries the cooldown can have before filling up, if set to a non-zero value alongside {@link Command.Options.cooldownDelay}, the `Cooldown` precondition will be added to the list.
+		 * @since 1.1.3
+		 * @default 1
+		 */
+		cooldownLimit?: number;
+
+		/**
+		 * The time in milliseconds for the cooldown entries to reset, if set to a non-zero value alongside {@link Command.Options.cooldownLimit}, the `Cooldown` precondition will be added to the list.
+		 * @since 1.1.3
+		 * @default 0
+		 */
+		cooldownDelay?: number;
+
+		/**
+		 * The scope of the cooldown entries.
+		 * @since 1.1.3
+		 * @default BucketScope.User
+		 */
+		cooldownScope?: BucketScope;
+
+		/**
+		 * The users that are exempt from the Cooldown precondition.
+		 * Use this to filter out someone like a bot owner
+		 * @since 2.0.0
+		 * @default undefined
+		 */
+		cooldownFilteredUsers?: Id[];
+	};
 }
 
 export interface CommandJSON extends AliasPieceJSON {
@@ -82,5 +118,6 @@ export interface CommandNotFoundPayload extends CommandNameNotFoundPayload {}
  */
 export const enum CommandPreConditions {
 	Enabled = 'Enabled',
-	NSFW = 'NSFW'
+	NSFW = 'NSFW',
+	Cooldown = 'Cooldown'
 }

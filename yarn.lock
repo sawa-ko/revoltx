@@ -951,6 +951,7 @@ __metadata:
     "@sapphire/eslint-config": ^4.3.0
     "@sapphire/pieces": ^3.3.0
     "@sapphire/prettier-config": ^1.4.0
+    "@sapphire/ratelimits": ^2.4.0
     "@sapphire/result": ^1.1.0
     "@sapphire/ts-config": ^3.3.2
     "@sapphire/utilities": ^3.4.0
@@ -1072,10 +1073,28 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@sapphire/ratelimits@npm:^2.4.0":
+  version: 2.4.0
+  resolution: "@sapphire/ratelimits@npm:2.4.0"
+  dependencies:
+    "@sapphire/time-utilities": ^1.7.0
+  checksum: f29ddc21033e48304fc578d293162232aed856f537da5bfe91e0936d488c93fb6d4e4785789a4273ef3c08cf523ae69091e4a0378d9e4192faf093f705421a72
+  languageName: node
+  linkType: hard
+
 "@sapphire/result@npm:^1.1.0":
   version: 1.1.0
   resolution: "@sapphire/result@npm:1.1.0"
   checksum: 5e838f54c2376d2992ca2d7f0ca13b22e849120f07b834ce9349c9d47e9e730ba1a04c72073d22f63a18eae0c89eca23bdc487e8d18113b654c62137c625cf79
+  languageName: node
+  linkType: hard
+
+"@sapphire/time-utilities@npm:^1.7.0":
+  version: 1.7.0
+  resolution: "@sapphire/time-utilities@npm:1.7.0"
+  dependencies:
+    "@sapphire/utilities": ^3.4.0
+  checksum: af2efcd9489bec41bd8cff8c5b8d567651d13767d2dcdcb421e60d3bda510e1c06c1e2b87d06f15d42ea81690edec7fa6c448fc4926f47d03d7a6cede2e2899a
   languageName: node
   linkType: hard
 

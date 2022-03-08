@@ -7,6 +7,7 @@ import { Args } from '../parsers/args';
 import { FlagUnorderedStrategy } from '../../utils/strategies/flag-unordered-strategy';
 import { PreconditionContainerArray } from '../preconditions/precondition-container-array';
 import { CommandJSON, CommandMetadata, CommandOptions, CommandPreConditions } from '../../utils/interfaces/command';
+import { BucketScope } from '../../utils/enums/command';
 
 export abstract class Command<T = Args, O extends CommandOptions = CommandOptions> extends AliasPiece<O> {
 	/**
@@ -69,6 +70,24 @@ export abstract class Command<T = Args, O extends CommandOptions = CommandOption
 		else this.category = this.location.directories.length > 0 ? this.location.directories[0] : null;
 
 		if (this.nsfw) this.preconditions.append(CommandPreConditions.NSFW);
+
+		const { defaultCooldown } = this.container.client;
+
+		// We will check for whether the command is filtered from the defaults, but we will allow overridden values to
+		// be set. If an overridden value is passed, it will have priority. Otherwise it will default to 0 if filtered
+		// (causing the precondition to not be registered) or the default value with a fallback to a single-use cooldown.
+		const filtered = defaultCooldown?.filteredCommands?.includes(this.name) ?? false;
+		const limit = options.cooldown?.cooldownLimit ?? (filtered ? 0 : defaultCooldown?.limit ?? 1);
+		const delay = options.cooldown?.cooldownDelay ?? (filtered ? 0 : defaultCooldown?.delay ?? 0);
+
+		if (limit && delay) {
+			const scope = options.cooldown?.cooldownScope ?? defaultCooldown?.scope ?? BucketScope.User;
+			const filteredUsers = options.cooldown?.cooldownFilteredUsers ?? defaultCooldown?.filteredUsers;
+			this.preconditions.append({
+				name: CommandPreConditions.Cooldown,
+				context: { scope, limit, delay, filteredUsers }
+			});
+		}
 	}
 
 	public toJSON(): CommandJSON {
