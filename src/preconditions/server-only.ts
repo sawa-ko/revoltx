@@ -12,6 +12,6 @@ export class CorePrecondition extends Precondition {
 	public run(message: Message): PreconditionResult {
 		return message.channel?.server_id
 			? this.ok()
-			: this.error({ identifier: Identifiers.PreconditionsNsfw, message: 'You cannot run this command outside a server.' });
+			: this.error({ identifier: Identifiers.PreconditionServer, message: 'You cannot run this command outside a server.' });
 	}
 }

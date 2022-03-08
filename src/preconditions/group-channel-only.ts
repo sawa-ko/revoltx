@@ -12,6 +12,6 @@ export class CorePrecondition extends Precondition {
 	public run(message: Message): PreconditionResult {
 		return message.channel?.channel_type === 'Group'
 			? this.ok()
-			: this.error({ identifier: Identifiers.PreconditionsNsfw, message: 'You cannot run this command outside group channels.' });
+			: this.error({ identifier: Identifiers.PreconditionGroupChannel, message: 'You cannot run this command outside group channels.' });
 	}
 }

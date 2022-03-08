@@ -12,6 +12,6 @@ export class CorePrecondition extends Precondition {
 	public run(message: Message): PreconditionResult {
 		return message.channel?.channel_type === 'DirectMessage'
 			? this.ok()
-			: this.error({ identifier: Identifiers.PreconditionsNsfw, message: 'You cannot run this command outside DM channels.' });
+			: this.error({ identifier: Identifiers.PreconditionDMChannel, message: 'You cannot run this command outside DM channels.' });
 	}
 }

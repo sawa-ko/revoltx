@@ -12,6 +12,6 @@ export class CorePrecondition extends Precondition {
 	public run(message: Message): PreconditionResult {
 		return message.channel?.channel_type === 'TextChannel'
 			? this.ok()
-			: this.error({ identifier: Identifiers.PreconditionsNsfw, message: 'You cannot run this command outside text channels.' });
+			: this.error({ identifier: Identifiers.PreconditionTextChannel, message: 'You cannot run this command outside text channels.' });
 	}
 }

@@ -22,5 +22,9 @@ export const enum Identifiers {
 	ArgumentMemberError = 'memberError',
 	ArgumentMessageError = 'messageError',
 	PreconditionsNsfw = 'preconditionNsfw',
-	PreconditionCooldown = 'preconditionCooldown'
+	PreconditionCooldown = 'preconditionCooldown',
+	PreconditionDMChannel = 'preconditionDMChannel',
+	PreconditionGroupChannel = 'preconditionGroupChannel',
+	PreconditionTextChannel = 'preconditionTextChannel',
+	PreconditionServer = 'preconditionServer'
 }
