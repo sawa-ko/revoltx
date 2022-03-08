@@ -8,6 +8,7 @@ import { FlagUnorderedStrategy } from '../../utils/strategies/flag-unordered-str
 import { PreconditionContainerArray } from '../preconditions/precondition-container-array';
 import { CommandJSON, CommandMetadata, CommandOptions, CommandPreConditions } from '../../utils/interfaces/command';
 import { BucketScope } from '../../utils/enums/command';
+import type { RunInCommands } from '../../utils/interfaces/precondition';
 
 export abstract class Command<T = Args, O extends CommandOptions = CommandOptions> extends AliasPiece<O> {
 	/**
@@ -50,6 +51,12 @@ export abstract class Command<T = Args, O extends CommandOptions = CommandOption
 	public nsfw?: boolean;
 
 	/**
+	 * Select on which type of channels the command should be executed, e.g. only on servers, only on text channels (TextChannel), etc.
+	 * @since 1.1.3
+	 */
+	public runIn?: RunInCommands[];
+
+	/**
 	 * The lexer to be used for command parsing
 	 * @since 1.0.0
 	 * @private
@@ -62,6 +69,7 @@ export abstract class Command<T = Args, O extends CommandOptions = CommandOption
 		this.description = options.description;
 		this.metadata = options.metadata;
 		this.nsfw = options.nsfw ?? false;
+		this.runIn = options.runIn;
 
 		this.strategy = new FlagUnorderedStrategy(options);
 		this.preconditions = new PreconditionContainerArray(options.preconditions);
@@ -87,6 +95,13 @@ export abstract class Command<T = Args, O extends CommandOptions = CommandOption
 				name: CommandPreConditions.Cooldown,
 				context: { scope, limit, delay, filteredUsers }
 			});
+		}
+
+		if (this.runIn && this.runIn.length > 0) {
+			if (this.runIn.includes('DMChannel')) this.preconditions.append('DMChannelOnly');
+			if (this.runIn.includes('GroupChannel')) this.preconditions.append('GroupChannelOnly');
+			if (this.runIn.includes('Server')) this.preconditions.append('ServerOnly');
+			if (this.runIn.includes('TextChannel')) this.preconditions.append('TextChannelOnly');
 		}
 	}
 

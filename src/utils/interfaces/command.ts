@@ -8,6 +8,7 @@ import type { PreconditionEntryResolvable } from '../../lib/preconditions/precon
 import type { Command } from '../../lib/structures/command';
 import type { BucketScope } from '../enums/command';
 import type { FlagStrategyOptions } from '../strategies/flag-unordered-strategy';
+import type { RunInCommands } from './precondition';
 
 export interface CommandMetadata extends NonNullObject {}
 
@@ -80,6 +81,12 @@ export interface CommandOptions extends PieceOptions, FlagStrategyOptions {
 		 */
 		cooldownFilteredUsers?: Id[];
 	};
+
+	/**
+	 * Mark commands as NSFW.
+	 * @since 1.1.3
+	 */
+	runIn?: RunInCommands[];
 }
 
 export interface CommandJSON extends AliasPieceJSON {

@@ -53,6 +53,10 @@ export interface Preconditions {
 	Enabled: never;
 	NSFW: never;
 	Cooldown: CooldownContext;
+	DMChannelOnly: never;
+	GroupChannelOnly: never;
+	ServerOnly: never;
+	TextChannelOnly: never;
 }
 
 export type PreconditionKeys = keyof Preconditions;
@@ -103,3 +107,5 @@ export interface CooldownContext extends PreconditionContext {
 	 */
 	filteredUsers?: Id[];
 }
+
+export type RunInCommands = 'DMChannel' | 'GroupChannel' | 'Server' | 'TextChannel';
