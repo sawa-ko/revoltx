@@ -1,5 +1,6 @@
 import type { PieceOptions } from '@sapphire/pieces';
 import type { Id } from 'revolt-api/types/_common';
+import type { ChannelPermissionsResolvable, ServerPermissionsResolvable } from '../../lib/structures/permissions';
 import type { BucketScope } from '../enums/command';
 
 /**
@@ -50,13 +51,15 @@ import type { BucketScope } from '../enums/command';
  * ```
  */
 export interface Preconditions {
-	Enabled: never;
-	NSFW: never;
+	ClientPermissions: PermissionsContext;
 	Cooldown: CooldownContext;
 	DMChannelOnly: never;
+	Enabled: never;
 	GroupChannelOnly: never;
+	NSFW: never;
 	ServerOnly: never;
 	TextChannelOnly: never;
+	UserPermissions: PermissionsContext;
 }
 
 export type PreconditionKeys = keyof Preconditions;
@@ -106,6 +109,20 @@ export interface CooldownContext extends PreconditionContext {
 	 * @default undefined
 	 */
 	filteredUsers?: Id[];
+}
+
+export interface PermissionsContext extends PreconditionContext {
+	/**
+	 * Permissions required in the channel.
+	 * @since 1.1.3
+	 */
+	channel_permissions: ChannelPermissionsResolvable[];
+
+	/**
+	 * Required permissions on the server.
+	 * @since 1.1.3
+	 */
+	server_permissions: ServerPermissionsResolvable[];
 }
 
 export type RunInCommands = 'DMChannel' | 'GroupChannel' | 'Server' | 'TextChannel';

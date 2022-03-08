@@ -9,6 +9,7 @@ import { PreconditionContainerArray } from '../preconditions/precondition-contai
 import { CommandJSON, CommandMetadata, CommandOptions, CommandPreConditions } from '../../utils/interfaces/command';
 import { BucketScope } from '../../utils/enums/command';
 import type { RunInCommands } from '../../utils/interfaces/precondition';
+import type { ChannelPermissionsResolvable, ServerPermissionsResolvable } from './permissions';
 
 export abstract class Command<T = Args, O extends CommandOptions = CommandOptions> extends AliasPiece<O> {
 	/**
@@ -56,6 +57,35 @@ export abstract class Command<T = Args, O extends CommandOptions = CommandOption
 	 */
 	public runIn?: RunInCommands[];
 
+	public clientPermissions?: {
+		/**
+		 * Permissions required in the channel.
+		 */
+		channel?: ChannelPermissionsResolvable[];
+
+		/**
+		 * Required permissions on the server.
+		 */
+		server?: ServerPermissionsResolvable[];
+	};
+
+	/**
+	 * User Permissions
+	 * Permissions that the user (author of message) needs to execute the action.
+	 * @since 1.1.3
+	 */
+	public userPermissions?: {
+		/**
+		 * Permissions required in the channel.
+		 */
+		channel?: ChannelPermissionsResolvable[];
+
+		/**
+		 * Required permissions on the server.
+		 */
+		server?: ServerPermissionsResolvable[];
+	};
+
 	/**
 	 * The lexer to be used for command parsing
 	 * @since 1.0.0
@@ -70,6 +100,7 @@ export abstract class Command<T = Args, O extends CommandOptions = CommandOption
 		this.metadata = options.metadata;
 		this.nsfw = options.nsfw ?? false;
 		this.runIn = options.runIn;
+		this.clientPermissions = options.clientPermissions;
 
 		this.strategy = new FlagUnorderedStrategy(options);
 		this.preconditions = new PreconditionContainerArray(options.preconditions);
@@ -102,6 +133,20 @@ export abstract class Command<T = Args, O extends CommandOptions = CommandOption
 			if (this.runIn.includes('GroupChannel')) this.preconditions.append('GroupChannelOnly');
 			if (this.runIn.includes('Server')) this.preconditions.append('ServerOnly');
 			if (this.runIn.includes('TextChannel')) this.preconditions.append('TextChannelOnly');
+		}
+
+		if (this.clientPermissions) {
+			this.preconditions.append({
+				name: CommandPreConditions.ClientPermissions,
+				context: { channel_permissions: this.clientPermissions.channel ?? [], server_permissions: this.clientPermissions.server ?? [] }
+			});
+		}
+
+		if (this.userPermissions) {
+			this.preconditions.append({
+				name: CommandPreConditions.userPermissions,
+				context: { channel_permissions: this.userPermissions.channel ?? [], server_permissions: this.userPermissions.server ?? [] }
+			});
 		}
 	}
 

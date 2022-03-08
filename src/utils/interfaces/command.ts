@@ -6,6 +6,7 @@ import type { UserError } from '../../lib/errors/user-error';
 import type { PreconditionEntryResolvable } from '../../lib/preconditions/precondition-container-array';
 
 import type { Command } from '../../lib/structures/command';
+import type { ChannelPermissionsResolvable, ServerPermissionsResolvable } from '../../lib/structures/permissions';
 import type { BucketScope } from '../enums/command';
 import type { FlagStrategyOptions } from '../strategies/flag-unordered-strategy';
 import type { RunInCommands } from './precondition';
@@ -87,6 +88,40 @@ export interface CommandOptions extends PieceOptions, FlagStrategyOptions {
 	 * @since 1.1.3
 	 */
 	runIn?: RunInCommands[];
+
+	/**
+	 * Client Permissions
+	 * Permissions that the client (bot) needs to execute the action.
+	 * @since 1.1.3
+	 */
+	clientPermissions?: {
+		/**
+		 * Permissions required in the channel.
+		 */
+		channel?: ChannelPermissionsResolvable[];
+
+		/**
+		 * Required permissions on the server.
+		 */
+		server?: ServerPermissionsResolvable[];
+	};
+
+	/**
+	 * User Permissions
+	 * Permissions that the user (author of message) needs to execute the action.
+	 * @since 1.1.3
+	 */
+	userPermissions?: {
+		/**
+		 * Permissions required in the channel.
+		 */
+		channel?: ChannelPermissionsResolvable[];
+
+		/**
+		 * Required permissions on the server.
+		 */
+		server?: ServerPermissionsResolvable[];
+	};
 }
 
 export interface CommandJSON extends AliasPieceJSON {
@@ -124,7 +159,13 @@ export interface CommandNotFoundPayload extends CommandNameNotFoundPayload {}
  * @since 1.0.0
  */
 export const enum CommandPreConditions {
+	ClientPermissions = 'ClientPermissions',
+	Cooldown = 'Cooldown',
+	DMChannelOnly = 'DMChannelOnly',
 	Enabled = 'Enabled',
+	GroupChannelOnly = 'GroupChannelOnly',
 	NSFW = 'NSFW',
-	Cooldown = 'Cooldown'
+	ServerOnly = 'ServerOnly',
+	TextChannelOnly = 'TextChannelOnly',
+	userPermissions = 'UserPermissions'
 }

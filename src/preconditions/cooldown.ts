@@ -1,20 +1,12 @@
 import { RateLimitManager } from '@sapphire/ratelimits';
-import type { Id } from 'revolt-api/types/_common';
 import type { Message } from 'revolt.js/dist/maps/Messages';
 
 import { BucketScope } from '../utils/enums/command';
 import { Identifiers } from '../lib/errors/identifiers';
 import { Precondition } from '../lib/structures/precondition';
-import type { PreconditionContext } from '../utils/interfaces/precondition';
+import type { CooldownContext } from '../utils/interfaces/precondition';
 import type { Command } from '../lib/structures/command';
 import type { PieceContext } from '@sapphire/pieces';
-
-export interface CooldownContext extends PreconditionContext {
-	scope?: BucketScope;
-	delay: number;
-	limit?: number;
-	filteredUsers?: Id[];
-}
 
 export class CorePrecondition extends Precondition {
 	public buckets = new WeakMap<Command, RateLimitManager>();
