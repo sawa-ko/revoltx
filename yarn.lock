@@ -946,6 +946,7 @@ __metadata:
   dependencies:
     "@commitlint/cli": ^16.2.1
     "@commitlint/config-conventional": ^16.2.1
+    "@discordjs/collection": ^0.5.0
     "@favware/npm-deprecate": ^1.0.4
     "@sapphire/eslint-config": ^4.3.0
     "@sapphire/pieces": ^3.3.0

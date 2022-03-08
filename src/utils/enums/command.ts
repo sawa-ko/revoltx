@@ -9,5 +9,6 @@ export enum CommandEvents {
 	CommandSuccess = 'commandSuccess',
 	CommandError = 'commandError',
 	CommandFinish = 'commandFinish',
+	CommandPreAccepted = 'commandPreAccepted',
 	NonPrefixedCommand = 'nonPrefixedCommand'
 }

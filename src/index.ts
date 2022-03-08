@@ -1,15 +1,21 @@
 export * from './lib/client';
 export * from './lib/parsers/args';
+export * from './lib/preconditions/conditions';
+export * from './lib/preconditions/precondition-container';
+export * from './lib/preconditions/precondition-container-array';
+export * from './lib/preconditions/precondition-container-single';
 
 export * from './utils/enums/events';
 export * from './utils/enums/command';
 export * from './utils/interfaces/client';
 export * from './utils/interfaces/command';
 export * from './utils/interfaces/argument';
+export * from './utils/interfaces/precondition';
 
 export * from './lib/structures/command';
 export * from './lib/structures/listener';
 export * from './lib/structures/argument';
+export * from './lib/structures/precondition';
 
 export * from './lib/resolvers/boolean';
 export * from './lib/resolvers/channel';

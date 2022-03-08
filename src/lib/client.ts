@@ -17,6 +17,7 @@ import { ListenerStore } from './structures/listener.store';
 import { ClientEvents } from '../utils/enums/events';
 import { CommandStore } from './structures/command.store';
 import { ArgumentStore } from './structures/argument.store';
+import { PreconditionStore } from './structures/precondition.store';
 
 export class Client extends EventEmitter {
 	/**
@@ -80,11 +81,13 @@ export class Client extends EventEmitter {
 		this.stores.register(new ListenerStore().registerPath(join(fileURLToPath(import.meta.url), '..', '..', 'listeners')));
 		this.stores.register(new CommandStore().registerPath(join(fileURLToPath(import.meta.url), '..', '..', 'commands')));
 		this.stores.register(new ArgumentStore().registerPath(join(fileURLToPath(import.meta.url), '..', '..', 'arguments')));
+		this.stores.register(new PreconditionStore().registerPath(join(fileURLToPath(import.meta.url), '..', '..', 'preconditions')));
 
 		if (this.baseDirectory) {
 			this.stores.get('commands').registerPath(join(this.baseDirectory, 'commands'));
 			this.stores.get('listeners').registerPath(join(this.baseDirectory, 'listeners'));
 			this.stores.get('arguments').registerPath(join(this.baseDirectory, 'arguments'));
+			this.stores.get('preconditions').registerPath(join(this.baseDirectory, 'preconditions'));
 		}
 
 		if (this.loadDefaultErrorsListeners) {
@@ -141,5 +144,6 @@ declare module '@sapphire/pieces' {
 		listeners: ListenerStore;
 		commands: CommandStore;
 		arguments: ArgumentStore;
+		preconditions: PreconditionStore;
 	}
 }

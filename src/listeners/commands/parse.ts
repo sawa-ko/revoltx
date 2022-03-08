@@ -26,6 +26,6 @@ export class CoreListener extends Listener {
 		}
 
 		const parameters = spaceIndex === -1 ? '' : prefixLess.slice(spaceIndex + 1).trim();
-		return this.container.client.emit(CommandEvents.CommandAccepted, { message, command, parameters });
+		return this.container.client.emit(CommandEvents.CommandPreAccepted, { message, command, parameters });
 	}
 }

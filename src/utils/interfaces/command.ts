@@ -1,6 +1,8 @@
 import type { AliasPieceJSON, PieceOptions } from '@sapphire/pieces';
 import type { NonNullObject } from '@sapphire/utilities';
 import type { Message } from 'revolt.js/dist/maps/Messages';
+import type { UserError } from '../../lib/errors/user-error';
+import type { PreconditionEntryResolvable } from '../../lib/preconditions/precondition-container-array';
 
 import type { Command } from '../../lib/structures/command';
 import type { FlagStrategyOptions } from '../strategies/flag-unordered-strategy';
@@ -12,7 +14,7 @@ export interface CommandOptions extends PieceOptions, FlagStrategyOptions {
 	 * Command description.
 	 * @since 1.0.0
 	 */
-	description: string;
+	description?: string;
 
 	/**
 	 * Extra data for the command, such as help, more information, etc. Useful for help commands.
@@ -28,12 +30,31 @@ export interface CommandOptions extends PieceOptions, FlagStrategyOptions {
 	 * @since 1.0.0
 	 */
 	category?: string;
+
+	/**
+	 * The {@link Precondition}s to be run, accepts an array of their names.
+	 * @seealso {@link PreconditionContainerArray}
+	 * @since 1.0.0
+	 * @default []
+	 */
+	preconditions?: readonly PreconditionEntryResolvable[];
+
+	/**
+	 * Mark commands as NSFW.
+	 * @since 1.0.0
+	 */
+	nsfw?: boolean;
 }
 
 export interface CommandJSON extends AliasPieceJSON {
-	description: string;
+	description: string | null;
 	category: string | null;
 	metadata: CommandMetadata;
+}
+
+export interface CommandPreRunPayload extends CommandAcceptedPayload {}
+export interface CommandDeniedPayload extends CommandAcceptedPayload {
+	error: UserError;
 }
 
 export interface CommandAcceptedPayload {
@@ -54,3 +75,12 @@ export interface CommandNameNotFoundPayload {
 }
 
 export interface CommandNotFoundPayload extends CommandNameNotFoundPayload {}
+
+/**
+ * The available command pre-conditions.
+ * @since 1.0.0
+ */
+export const enum CommandPreConditions {
+	Enabled = 'Enabled',
+	NSFW = 'NSFW'
+}

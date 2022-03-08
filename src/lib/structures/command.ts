@@ -3,16 +3,17 @@ import * as Lexure from 'lexure';
 import type { Awaitable } from '@sapphire/utilities';
 import type { Message } from 'revolt.js/dist/maps/Messages';
 
-import type { CommandJSON, CommandMetadata, CommandOptions } from '../../utils/interfaces/command';
 import { Args } from '../parsers/args';
 import { FlagUnorderedStrategy } from '../../utils/strategies/flag-unordered-strategy';
+import { PreconditionContainerArray } from '../preconditions/precondition-container-array';
+import { CommandJSON, CommandMetadata, CommandOptions, CommandPreConditions } from '../../utils/interfaces/command';
 
 export abstract class Command<T = Args, O extends CommandOptions = CommandOptions> extends AliasPiece<O> {
 	/**
 	 * Command description.
 	 * @since 1.0.0
 	 */
-	public description: string;
+	public description?: string;
 
 	/**
 	 * Extra data for the command, such as help, more information, etc. Useful for help commands.
@@ -36,6 +37,18 @@ export abstract class Command<T = Args, O extends CommandOptions = CommandOption
 	public strategy: Lexure.UnorderedStrategy;
 
 	/**
+	 * The preconditions to be run.
+	 * @since 1.0.0
+	 */
+	public preconditions: PreconditionContainerArray;
+
+	/**
+	 * Mark commands as NSFW.
+	 * @since 1.0.0
+	 */
+	public nsfw?: boolean;
+
+	/**
 	 * The lexer to be used for command parsing
 	 * @since 1.0.0
 	 * @private
@@ -45,19 +58,24 @@ export abstract class Command<T = Args, O extends CommandOptions = CommandOption
 	public constructor(context: PieceContext, options: CommandOptions) {
 		super(context, options);
 
-		this.description ??= options.description;
-		this.metadata ??= options.metadata;
+		this.description = options.description;
+		this.metadata = options.metadata;
+		this.nsfw = options.nsfw ?? false;
+
 		this.strategy = new FlagUnorderedStrategy(options);
+		this.preconditions = new PreconditionContainerArray(options.preconditions);
 
 		if (options.category) this.category = options.category;
 		else this.category = this.location.directories.length > 0 ? this.location.directories[0] : null;
+
+		if (this.nsfw) this.preconditions.append(CommandPreConditions.NSFW);
 	}
 
 	public toJSON(): CommandJSON {
 		return {
 			...super.toJSON(),
-			description: this.description,
-			category: this.description,
+			description: this.description ?? null,
+			category: this.description ?? null,
 			metadata: this.metadata ?? {}
 		};
 	}

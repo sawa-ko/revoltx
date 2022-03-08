@@ -1,4 +1,5 @@
 export const enum Identifiers {
+	CommandDisabled = 'commandDisabled',
 	ArgsMissing = 'argsMissing',
 	ArgsUnavailable = 'argsUnavailable',
 	ArgumentBooleanError = 'booleanError',
@@ -19,5 +20,7 @@ export const enum Identifiers {
 	ArgumentChannelError = 'channelError',
 	ArgumentUserError = 'userError',
 	ArgumentMemberError = 'memberError',
-	ArgumentMessageError = 'messageError'
+	ArgumentMessageError = 'messageError',
+
+	PreconditionsNsfw = 'preconditionNsfw'
 }
