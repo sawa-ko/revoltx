@@ -4,6 +4,7 @@ export * from './lib/preconditions/conditions';
 export * from './lib/preconditions/precondition-container';
 export * from './lib/preconditions/precondition-container-array';
 export * from './lib/preconditions/precondition-container-single';
+export * from './lib/permissions';
 
 export * from './utils/enums/events';
 export * from './utils/enums/command';
