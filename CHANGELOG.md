@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.4.0](https://github.com/kaname-png/revoltx/compare/v1.3.0...v1.4.0) (2022-03-09)
+
+
+### Features
+
+* **commands:** prefix per-server ([d2af1f7](https://github.com/kaname-png/revoltx/commit/d2af1f726e48911750080542915d05f539bf6326))
+* **core:** added hmr ([e0117bb](https://github.com/kaname-png/revoltx/commit/e0117bb2f3c796ea25c4ac1661daa2d12c563a7d))
+
 ## [1.3.0](https://github.com/kaname-png/revoltx/compare/v1.2.0...v1.3.0) (2022-03-09)
 
 ### Features
