@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/kaname-png/revoltx/compare/v1.2.0...v1.3.0) (2022-03-09)
+
+### Features
+
+-   **client:** logger ([4df3800](https://github.com/kaname-png/revoltx/commit/4df3800b88ee2c7de5802a891452cd12fc6278e4))
+
 ## [1.2.0](https://github.com/kaname-png/revoltx/compare/v1.1.3...v1.2.0) (2022-03-08)
 
 ### Features
