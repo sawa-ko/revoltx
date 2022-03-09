@@ -1,3 +1,3 @@
 name: '*next*'
 package:
-  - 'kaname-png/revoltx'
+  - '@kaname-png/revoltx'
