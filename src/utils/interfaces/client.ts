@@ -2,6 +2,7 @@ import type { Awaitable } from '@sapphire/utilities';
 import type { Id } from 'revolt-api/types/_common';
 import type { Message } from 'revolt.js/dist/maps/Messages';
 import type { ISettingsParam } from 'tslog';
+import type { HMROptions } from '../../lib/utils/hmr';
 
 import type { BucketScope } from '../enums/command';
 
@@ -49,6 +50,13 @@ export interface ClientOptions {
 	 * @default () => client.options.defaultPrefix
 	 */
 	fetchPrefix?: ClientPrefixHook;
+
+	/**
+	 * HMR options
+	 * @since 1.3.0
+	 * @default null (disabled)
+	 */
+	hmr?: HMROptions;
 }
 
 export interface MemberCompositeKey {

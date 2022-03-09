@@ -19,6 +19,7 @@ import { ClientEvents } from '../utils/enums/events';
 import { CommandStore } from './structures/command.store';
 import { ArgumentStore } from './structures/argument.store';
 import { PreconditionStore } from './structures/precondition.store';
+import { HMROptions, startHMR } from './utils/hmr';
 
 export class Client extends EventEmitter {
 	/**
@@ -103,6 +104,13 @@ export class Client extends EventEmitter {
 	 */
 	public fetchPrefix: ClientPrefixHook;
 
+	/**
+	 * HMR options
+	 * @since 1.3.0
+	 * @default null (disabled)
+	 */
+	public hmr?: HMROptions;
+
 	public constructor(private clientOptions: ClientOptions) {
 		super();
 		container.client = this;
@@ -153,6 +161,7 @@ export class Client extends EventEmitter {
 	public async login(token: string) {
 		await Promise.all([...this.stores.values()].map((store) => store.loadAll()));
 		await this.bot.loginBot(token);
+		startHMR(this.hmr);
 		return this.bot.user;
 	}
 
