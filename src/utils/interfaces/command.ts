@@ -152,6 +152,11 @@ export interface CommandNameNotFoundPayload {
 	commandName: string;
 }
 
+export interface CommandParsePayload {
+	message: Message;
+	prefix: string;
+}
+
 export interface CommandNotFoundPayload extends CommandNameNotFoundPayload {}
 
 /**

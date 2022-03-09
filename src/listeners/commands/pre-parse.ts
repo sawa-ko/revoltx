@@ -11,11 +11,23 @@ export class CoreListener extends Listener {
 		});
 	}
 
-	public run(message: Message) {
-		const prefix = this.container.client.prefix.toLowerCase();
+	public async run(message: Message) {
 		const content = (message.content as string).toLowerCase();
+		const prefix = await this.container.client.fetchPrefix(message);
 
-		if (!content.startsWith(prefix)) return this.container.client.emit(CommandEvents.NonPrefixedCommand, { message, prefix });
-		return this.container.client.emit(CommandEvents.CommandParse, message);
+		if (prefix) {
+			if (typeof prefix === 'string') {
+				if (content.startsWith(prefix.toLowerCase())) {
+					return this.container.client.emit(CommandEvents.CommandParse, { message, prefix });
+				}
+
+				return this.container.client.emit(CommandEvents.NonPrefixedCommand, { message });
+			}
+
+			const matchedPrefix = prefix.find((prefix) => content.startsWith(prefix.toLowerCase()));
+			if (matchedPrefix) return this.container.client.emit(CommandEvents.CommandParse, { message, prefix: matchedPrefix });
+		}
+
+		return this.container.client.emit(CommandEvents.NonPrefixedCommand, { message });
 	}
 }

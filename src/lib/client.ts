@@ -4,7 +4,7 @@ import { fileURLToPath } from 'url';
 import { Logger } from 'tslog';
 import EventEmitter from 'events';
 import * as Revolt from 'revolt.js';
-import type { ClientOptions, DefaultCooldownOptions, MemberCompositeKey } from '../utils/interfaces/client';
+import type { ClientOptions, ClientPrefixHook, DefaultCooldownOptions, MemberCompositeKey } from '../utils/interfaces/client';
 import type { Message } from 'revolt.js/dist/maps/Messages';
 import type { Channel } from 'revolt.js/dist/maps/Channels';
 import type { Server } from 'revolt.js/dist/maps/Servers';
@@ -31,7 +31,7 @@ export class Client extends EventEmitter {
 	 * Commands prefix
 	 * @since 1.0.0
 	 */
-	public prefix: string;
+	public defaultPrefix: string;
 
 	/**
 	 * The registered stores.
@@ -73,10 +73,40 @@ export class Client extends EventEmitter {
 	 */
 	public defaultCooldown?: DefaultCooldownOptions;
 
+	/**
+	 * The method to be overridden by the developer.
+	 * @since 1.3.0
+	 * @return A string for a single prefix, an array of strings for matching multiple, or null for no match (mention prefix only).
+	 * @example
+	 * ```typescript
+	 * // Return always the same prefix (unconfigurable):
+	 * client.fetchPrefix = () => '!';
+	 * ```
+	 * @example
+	 * ```typescript
+	 * // Retrieving the prefix from a SQL database:
+	 * client.fetchPrefix = async (message) => {
+	 *   // note: driver is something generic and depends on how you connect to your database
+	 *   const guild = await driver.getOne('SELECT prefix FROM public.guild WHERE id = $1', [message.guild.id]);
+	 *   return guild?.prefix ?? '!';
+	 * };
+	 * ```
+	 * @example
+	 * ```typescript
+	 * // Retrieving the prefix from an ORM:
+	 * client.fetchPrefix = async (message) => {
+	 *   // note: driver is something generic and depends on how you connect to your database
+	 *   const guild = await driver.getRepository(GuildEntity).findOne({ id: message.guild.id });
+	 *   return guild?.prefix ?? '!';
+	 * };
+	 * ```
+	 */
+	public fetchPrefix: ClientPrefixHook;
+
 	public constructor(private clientOptions: ClientOptions) {
 		super();
 		container.client = this;
-		this.prefix = this.clientOptions.prefix;
+		this.defaultPrefix = this.clientOptions.defaultPrefix;
 		this.id = this.clientOptions.id;
 		this.ping = 0;
 		this.baseDirectory = this.clientOptions.baseDirectory;
@@ -110,6 +140,7 @@ export class Client extends EventEmitter {
 			this.stores.get('listeners').registerPath(join(fileURLToPath(import.meta.url), '..', '..', 'listeners-errors'));
 		}
 
+		this.fetchPrefix = this.clientOptions.fetchPrefix ?? (() => this.clientOptions.defaultPrefix ?? null);
 		this.bot = new Revolt.Client();
 		this.setupEvents();
 	}

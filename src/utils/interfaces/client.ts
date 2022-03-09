@@ -1,15 +1,54 @@
+import type { Awaitable } from '@sapphire/utilities';
 import type { Id } from 'revolt-api/types/_common';
+import type { Message } from 'revolt.js/dist/maps/Messages';
 import type { ISettingsParam } from 'tslog';
 
 import type { BucketScope } from '../enums/command';
 
 export interface ClientOptions {
+	/**
+	 * Client Id
+	 * @since 1.3.0
+	 */
 	id?: string;
-	prefix: string;
+
+	/**
+	 * The default prefix, in case of `null`, only mention prefix will trigger the bot's commands.
+	 * @since 1.3.0
+	 */
+	defaultPrefix: string;
+
+	/**
+	 * Path where all commands, listeners, arguments, etc. are located.
+	 * @since 1.0.0
+	 */
 	baseDirectory: string;
+
+	/**
+	 * If Client should load the pre-included error event listeners that log any encountered errors to the {@link Client.logger} instance
+	 * @since 1.3.0
+	 * @default true
+	 */
 	loadDefaultErrorsListeners?: boolean;
+
+	/**
+	 * Sets the default cooldown time for all commands.
+	 * @default "No cooldown options"
+	 */
 	defaultCooldown?: DefaultCooldownOptions;
+
+	/**
+	 * The logger options
+	 * @since 1.3.0
+	 */
 	logger?: ISettingsParam;
+
+	/**
+	 * The prefix hook, by default it is a callback function that returns {@link ClientOptions.defaultPrefix}.
+	 * @since 1.3.0
+	 * @default () => client.options.defaultPrefix
+	 */
+	fetchPrefix?: ClientPrefixHook;
 }
 
 export interface MemberCompositeKey {
@@ -56,22 +95,14 @@ export interface DefaultCooldownOptions {
 	filteredCommands?: string[];
 }
 
-export interface LoggerManagerI {
-	silly(message: string, prefix?: string): void;
-	trace(message: string, prefix?: string): void;
-	debug(message: string, prefix?: string): void;
-	info(message: string): void;
-	warn(message: string, prefix?: string): void;
-	error(message: string, prefix?: string): void;
-	fatal(message: string, prefix?: string): void;
-}
+/**
+ * A valid prefix in Client.
+ * * `string`: a single prefix, e.g. `'!'`.
+ * * `string[]`: an array of prefixes, e.g. `['!', '.']`.
+ * * `null`: disabled prefix, locks the bot's command usage to mentions only.
+ */
+export type ClientPrefix = string | readonly string[] | null;
 
-export enum LogLevels {
-	Silly,
-	Trace,
-	Debug,
-	Info,
-	Warn,
-	Error,
-	Fatal
+export interface ClientPrefixHook {
+	(message: Message): Awaitable<ClientPrefix>;
 }

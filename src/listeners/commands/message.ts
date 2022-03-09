@@ -1,4 +1,5 @@
 import type { PieceContext } from '@sapphire/pieces';
+import { ChannelPermission } from 'revolt.js';
 import type { Message } from 'revolt.js/dist/maps/Messages';
 
 import { Listener } from '../../lib/structures/listener';
@@ -13,7 +14,12 @@ export class CoreListener extends Listener {
 	}
 
 	public run(message: Message) {
-		if (message.author?.bot) return;
+		if (message.author?.bot || !message.channel) return;
+
+		const channelPermissions = message.channel.permissions ?? message.channel.default_permissions ?? 0;
+		if (!(channelPermissions & ChannelPermission.SendMessage) && ChannelPermission.SendMessage) return;
+		if (!(channelPermissions & ChannelPermission.View) && ChannelPermission.View) return;
+
 		return this.container.client.emit(CommandEvents.CommandPreParse, message);
 	}
 }
