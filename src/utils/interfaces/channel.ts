@@ -1,5 +1,4 @@
-import type { Attachment } from 'revolt-api/types/Autumn';
-import type { Id } from 'revolt-api/types/_common';
+import type { API } from 'revolt.js';
 
 /**
  * Saved Messages channel has only one participant, the user who created it.
@@ -8,7 +7,7 @@ export interface SavedMessagesChannel {
 	/**
 	 * Channel Id
 	 */
-	_id: Id;
+	_id: API.Id;
 
 	channel_type: 'SavedMessages';
 
@@ -22,7 +21,7 @@ export interface DirectMessageChannel {
 	/**
 	 * Channel Id
 	 */
-	_id: Id;
+	_id: API.Id;
 
 	channel_type: 'DirectMessage';
 
@@ -46,7 +45,7 @@ export interface GroupChannel {
 	/**
 	 * Channel Id
 	 */
-	_id: Id;
+	_id: API.Id;
 
 	channel_type: 'Group';
 
@@ -78,7 +77,7 @@ export interface GroupChannel {
 	/**
 	 * Group icon
 	 */
-	icon?: Attachment;
+	icon?: API.Attachment;
 
 	/**
 	 * Permissions given to group members
@@ -95,7 +94,7 @@ export interface ServerChannel {
 	/**
 	 * Channel Id
 	 */
-	_id: Id;
+	_id: API.Id;
 
 	/**
 	 * Server Id
@@ -112,7 +111,7 @@ export interface ServerChannel {
 	 */
 	description?: string;
 
-	icon?: Attachment;
+	icon?: API.Attachment;
 
 	/**
 	 * Permissions given to all users

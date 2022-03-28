@@ -1,6 +1,5 @@
 import type { PieceContext } from '@sapphire/pieces';
-import { ChannelPermission } from 'revolt.js';
-import type { Message } from 'revolt.js';
+import { Message, Permission } from 'revolt.js';
 
 import { Listener } from '../../lib/structures/listener';
 import { CommandEvents } from '../../utils/enums/command';
@@ -17,8 +16,8 @@ export class CoreListener extends Listener {
 		if (message.author?.bot || !message.channel) return;
 
 		const channelPermissions = message.channel.permissions ?? message.channel.default_permissions ?? 0;
-		if (!(channelPermissions & ChannelPermission.SendMessage) && ChannelPermission.SendMessage) return;
-		if (!(channelPermissions & ChannelPermission.View) && ChannelPermission.View) return;
+		if (!(channelPermissions & Permission.SendMessage) && Permission.SendMessage) return;
+		if (!(channelPermissions & Permission.ViewChannel) && Permission.ViewChannel) return;
 
 		return this.container.client.emit(CommandEvents.CommandPreParse, message);
 	}
