@@ -1,5 +1,5 @@
 import { Store } from '@sapphire/pieces';
-import type { Message } from 'revolt.js/dist/maps/Messages';
+import type { Message } from 'revolt.js';
 
 import { ok } from '../parsers/result';
 import { AsyncPreconditionResult, Precondition } from './precondition';

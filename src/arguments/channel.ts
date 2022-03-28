@@ -1,5 +1,5 @@
 import type { PieceContext } from '@sapphire/pieces';
-import type { Channel } from 'revolt.js/dist/maps/Channels';
+import type { Channel } from 'revolt.js';
 
 import { resolveChannel } from '../lib/resolvers/channel';
 import { Argument, ArgumentResult } from '../lib/structures/argument';

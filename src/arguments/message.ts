@@ -1,5 +1,5 @@
 import type { PieceContext } from '@sapphire/pieces';
-import type { Message } from 'revolt.js/dist/maps/Messages';
+import type { Message } from 'revolt.js';
 
 import { resolveMessage } from '../lib/resolvers/message';
 import { Argument, ArgumentResult } from '../lib/structures/argument';

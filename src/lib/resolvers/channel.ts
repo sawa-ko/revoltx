@@ -1,6 +1,6 @@
 import { container } from '@sapphire/pieces';
 import { err, ok, Result } from '@sapphire/result';
-import type { Channel } from 'revolt.js/dist/maps/Channels';
+import type { Channel } from 'revolt.js';
 
 import { ChannelMentionIdRegex } from '../../utils/regex';
 import { Identifiers } from '../errors/identifiers';

@@ -1,9 +1,8 @@
 import type { Awaitable } from '@sapphire/utilities';
-import type { Id } from 'revolt-api/types/_common';
-import type { Message } from 'revolt.js/dist/maps/Messages';
+import type { API, Message } from 'revolt.js';
 import type { ISettingsParam } from 'tslog';
-import type { HMROptions } from '../../lib/utils/hmr';
 
+import type { HMROptions } from '../../lib/utils/hmr';
 import type { BucketScope } from '../enums/command';
 
 export interface ClientOptions {
@@ -92,7 +91,7 @@ export interface DefaultCooldownOptions {
 	 * @since 1.1.3
 	 * @default undefined
 	 */
-	filteredUsers?: Id[];
+	filteredUsers?: API.Id[];
 
 	/**
 	 * The comamnds that are exempt from the Cooldown precondition.

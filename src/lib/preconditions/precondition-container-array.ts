@@ -1,4 +1,4 @@
-import type { Message } from 'revolt.js/dist/maps/Messages';
+import type { Message } from 'revolt.js';
 import Collection from '@discordjs/collection';
 
 import { IPreconditionCondition, PreconditionConditionAnd, PreconditionConditionOr } from './conditions';

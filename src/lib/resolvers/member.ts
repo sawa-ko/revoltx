@@ -1,6 +1,5 @@
 import { err, ok, Result } from '@sapphire/result';
-import type { Member } from 'revolt-api/types/Servers';
-import type { Message } from 'revolt.js/dist/maps/Messages';
+import type { Member, Message } from 'revolt.js';
 
 import { UserMentionIdRegex } from '../../utils/regex';
 import { Identifiers } from '../errors/identifiers';

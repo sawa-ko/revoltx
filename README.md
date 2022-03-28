@@ -113,7 +113,7 @@ Commands are actions that users can request to the bot by means of a prefix and 
 ```typescript
 // commands/help.ts
 import { Command } from '@kaname-png/revoltx';
-import type { Message } from 'revolt.js/dist/maps/Messages';
+import type { Message } from 'revolt.js';
 import type { PieceContext } from '@sapphire/pieces';
 
 export class HelpCommands extends Command {
@@ -139,7 +139,7 @@ The listeners have the function of listening to events that the client emits by 
 ```typescript
 // listener/message.ts
 import { Listener, ClientEvents } from '@kaname-png/revoltx';
-import type { Message } from 'revolt.js/dist/maps/Messages';
+import type { Message } from 'revolt.js';
 import type { PieceContext } from '@sapphire/pieces';
 
 export class MessageListener extends Listener {
@@ -197,7 +197,7 @@ declare module '@kaname-png/revoltx' {
 // Command Usage
 // User Input: n!server @kaname-png
 import { Args, Command } from '@kaname-png/revoltx';
-import type { Message } from 'revolt.js/dist/maps/Messages';
+import type { Message } from 'revolt.js';
 
 export class ServerCommand extends Command {
 	public run(message: Message, args: Args) {
@@ -214,7 +214,7 @@ Basic structure of a basic precondition.
 ```typescript
 // preconditions/nsfw.ts
 import type { PieceContext } from '@sapphire/pieces';
-import type { Message } from 'revolt.js/dist/maps/Messages';
+import type { Message } from 'revolt.js';
 
 import { Identifiers } from '../lib/errors/identifiers';
 import { Precondition, PreconditionResult } from '../lib/structures/precondition';
@@ -254,7 +254,7 @@ TypeScript code
 ```typescript
 // commands/help.ts
 import { Command } from '@kaname-png/revoltx';
-import type { Message } from 'revolt.js/dist/maps/Messages';
+import type { Message } from 'revolt.js';
 import type { PieceContext } from '@sapphire/pieces';
 
 export class HelpCommands extends Command {

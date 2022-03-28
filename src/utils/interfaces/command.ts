@@ -1,12 +1,11 @@
 import type { AliasPieceJSON, PieceOptions } from '@sapphire/pieces';
 import type { NonNullObject } from '@sapphire/utilities';
-import type { Id } from 'revolt-api/types/_common';
-import type { Message } from 'revolt.js/dist/maps/Messages';
+import type { Message, API } from 'revolt.js';
 import type { UserError } from '../../lib/errors/user-error';
 import type { PreconditionEntryResolvable } from '../../lib/preconditions/precondition-container-array';
 
 import type { Command } from '../../lib/structures/command';
-import type { ChannelPermissionsResolvable, ServerPermissionsResolvable } from '../../lib/utils/permissions';
+import type { PermissionsResolvable } from '../../lib/utils/permissions';
 import type { BucketScope } from '../enums/command';
 import type { FlagStrategyOptions } from '../strategies/flag-unordered-strategy';
 import type { RunInCommands } from './precondition';
@@ -80,7 +79,7 @@ export interface CommandOptions extends PieceOptions, FlagStrategyOptions {
 		 * @since 2.0.0
 		 * @default undefined
 		 */
-		cooldownFilteredUsers?: Id[];
+		cooldownFilteredUsers?: API.Id[];
 	};
 
 	/**
@@ -98,12 +97,12 @@ export interface CommandOptions extends PieceOptions, FlagStrategyOptions {
 		/**
 		 * Permissions required in the channel.
 		 */
-		channel?: ChannelPermissionsResolvable[];
+		channel?: PermissionsResolvable[];
 
 		/**
 		 * Required permissions on the server.
 		 */
-		server?: ServerPermissionsResolvable[];
+		server?: PermissionsResolvable[];
 	};
 
 	/**
@@ -115,12 +114,12 @@ export interface CommandOptions extends PieceOptions, FlagStrategyOptions {
 		/**
 		 * Permissions required in the channel.
 		 */
-		channel?: ChannelPermissionsResolvable[];
+		channel?: PermissionsResolvable[];
 
 		/**
 		 * Required permissions on the server.
 		 */
-		server?: ServerPermissionsResolvable[];
+		server?: PermissionsResolvable[];
 	};
 }
 

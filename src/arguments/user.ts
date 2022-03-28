@@ -1,5 +1,5 @@
 import type { PieceContext } from '@sapphire/pieces';
-import type { User } from 'revolt.js/dist/maps/Users';
+import type { User } from 'revolt.js';
 
 import { resolveUser } from '../lib/resolvers/user';
 import { Argument, AsyncArgumentResult } from '../lib/structures/argument';

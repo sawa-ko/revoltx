@@ -1,6 +1,6 @@
 import { Piece } from '@sapphire/pieces';
 import type { Awaitable } from '@sapphire/utilities';
-import type { Message } from 'revolt.js/dist/maps/Messages';
+import type { Message } from 'revolt.js';
 
 import { PreconditionError } from '../errors/precondition-error';
 import { err, ok, Result } from '../parsers/result';

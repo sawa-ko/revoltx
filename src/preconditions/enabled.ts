@@ -1,5 +1,5 @@
 import type { PieceContext } from '@sapphire/pieces';
-import type { Message } from 'revolt.js/dist/maps/Messages';
+import type { Message } from 'revolt.js';
 
 import { Identifiers } from '../lib/errors/identifiers';
 import { Precondition, PreconditionResult } from '../lib/structures/precondition';

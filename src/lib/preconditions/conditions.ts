@@ -1,5 +1,5 @@
 import { isErr, isOk, ok } from '@sapphire/result';
-import type { Message } from 'revolt.js/dist/maps/Messages';
+import type { Message } from 'revolt.js';
 import type { PreconditionContext } from '../../utils/interfaces/precondition';
 import type { Command } from '../structures/command';
 import type { IPreconditionContainer, PreconditionContainerResult, PreconditionContainerReturn } from './precondition-container';

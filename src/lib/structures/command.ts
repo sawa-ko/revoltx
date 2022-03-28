@@ -1,7 +1,7 @@
 import { AliasPiece, PieceContext } from '@sapphire/pieces';
 import * as Lexure from 'lexure';
 import type { Awaitable } from '@sapphire/utilities';
-import type { Message } from 'revolt.js/dist/maps/Messages';
+import type { Message } from 'revolt.js';
 
 import { Args } from '../parsers/args';
 import { FlagUnorderedStrategy } from '../../utils/strategies/flag-unordered-strategy';
@@ -9,7 +9,7 @@ import { PreconditionContainerArray } from '../preconditions/precondition-contai
 import { CommandJSON, CommandMetadata, CommandOptions, CommandPreConditions } from '../../utils/interfaces/command';
 import { BucketScope } from '../../utils/enums/command';
 import type { RunInCommands } from '../../utils/interfaces/precondition';
-import type { ChannelPermissionsResolvable, ServerPermissionsResolvable } from '../utils/permissions';
+import type { PermissionsResolvable } from '../utils/permissions';
 
 export abstract class Command<T = Args, O extends CommandOptions = CommandOptions> extends AliasPiece<O> {
 	/**
@@ -61,12 +61,12 @@ export abstract class Command<T = Args, O extends CommandOptions = CommandOption
 		/**
 		 * Permissions required in the channel.
 		 */
-		channel?: ChannelPermissionsResolvable[];
+		channel?: PermissionsResolvable[];
 
 		/**
 		 * Required permissions on the server.
 		 */
-		server?: ServerPermissionsResolvable[];
+		server?: PermissionsResolvable[];
 	};
 
 	/**
@@ -78,12 +78,12 @@ export abstract class Command<T = Args, O extends CommandOptions = CommandOption
 		/**
 		 * Permissions required in the channel.
 		 */
-		channel?: ChannelPermissionsResolvable[];
+		channel?: PermissionsResolvable[];
 
 		/**
 		 * Required permissions on the server.
 		 */
-		server?: ServerPermissionsResolvable[];
+		server?: PermissionsResolvable[];
 	};
 
 	/**

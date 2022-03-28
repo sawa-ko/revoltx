@@ -1,6 +1,6 @@
 import { container } from '@sapphire/pieces';
 import { err, ok, Result } from '@sapphire/result';
-import type { Message } from 'revolt.js/dist/maps/Messages';
+import type { Message } from 'revolt.js';
 
 import { IdRegex } from '../../utils/regex';
 import { Identifiers } from '../errors/identifiers';

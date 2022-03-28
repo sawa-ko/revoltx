@@ -1,5 +1,5 @@
 import type { PieceContext } from '@sapphire/pieces';
-import type { Message } from 'revolt.js/dist/maps/Messages';
+import type { Message } from 'revolt.js';
 
 import { Listener } from '../../lib/structures/listener';
 import { CommandEvents } from '../../utils/enums/command';

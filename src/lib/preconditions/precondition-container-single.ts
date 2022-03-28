@@ -1,5 +1,5 @@
 import { container } from '@sapphire/pieces';
-import type { Message } from 'revolt.js/dist/maps/Messages';
+import type { Message } from 'revolt.js';
 
 import type { SimplePreconditionKeys, PreconditionKeys, Preconditions, PreconditionContext } from '../../utils/interfaces/precondition';
 import type { Command } from '../structures/command';

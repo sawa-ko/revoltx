@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/require-await */
 import { container } from '@sapphire/pieces';
 import type * as Lexure from 'lexure';
-import type { Message } from 'revolt.js/dist/maps/Messages';
+import type { Message } from 'revolt.js';
 
 import { ArgumentError } from '../errors/argument-error';
 import { Identifiers } from '../errors/identifiers';

@@ -1,5 +1,5 @@
 import type { Awaitable } from '@sapphire/utilities';
-import type { Message } from 'revolt.js/dist/maps/Messages';
+import type { Message } from 'revolt.js';
 import type { PreconditionContext } from '../../utils/interfaces/precondition';
 
 import type { UserError } from '../errors/user-error';
