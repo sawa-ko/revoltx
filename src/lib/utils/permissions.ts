@@ -1,8 +1,5 @@
 import { container } from '@sapphire/pieces';
 import { Channel, Permission } from 'revolt.js';
-import { DEFAULT_PERMISSION_DIRECT_MESSAGE } from 'revolt.js/dist/api/permissions';
-
-export type PermissionsResolvable = keyof typeof Permission;
 
 export class PermissionsManager {
 	private _permissions = 0;
@@ -115,3 +112,16 @@ export class PermissionsManager {
 		this._permissions = permissions;
 	}
 }
+
+export type PermissionsResolvable = keyof typeof Permission;
+export const DEFAULT_PERMISSION =
+	Permission.ViewChannel +
+	Permission.ReadMessageHistory +
+	Permission.SendMessage +
+	Permission.InviteOthers +
+	Permission.SendEmbeds +
+	Permission.UploadFiles +
+	Permission.Connect +
+	Permission.Speak;
+
+export const DEFAULT_PERMISSION_DIRECT_MESSAGE = DEFAULT_PERMISSION + Permission.ManageChannel;
