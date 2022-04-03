@@ -1,6 +1,7 @@
-import type { AliasPieceJSON, PieceOptions } from '@sapphire/pieces';
+import type { AliasPieceJSON, AliasPieceOptions } from '@sapphire/pieces';
 import type { NonNullObject } from '@sapphire/utilities';
 import type { Message, API } from 'revolt.js';
+
 import type { UserError } from '../../lib/errors/user-error';
 import type { PreconditionEntryResolvable } from '../../lib/preconditions/precondition-container-array';
 
@@ -10,9 +11,11 @@ import type { BucketScope } from '../enums/command';
 import type { FlagStrategyOptions } from '../strategies/flag-unordered-strategy';
 import type { RunInCommands } from './precondition';
 
-export interface CommandMetadata extends NonNullObject {}
+export type CommandMetadata = string | CommandMetadataObject;
 
-export interface CommandOptions extends PieceOptions, FlagStrategyOptions {
+export interface CommandMetadataObject extends NonNullObject {}
+
+export interface CommandOptions extends AliasPieceOptions, FlagStrategyOptions {
 	/**
 	 * Command description.
 	 * @since 1.0.0
@@ -83,7 +86,7 @@ export interface CommandOptions extends PieceOptions, FlagStrategyOptions {
 	};
 
 	/**
-	 * Mark commands as NSFW.
+	 * Type of channels where the command will be allowed to be executed.
 	 * @since 1.1.3
 	 */
 	runIn?: RunInCommands[];
