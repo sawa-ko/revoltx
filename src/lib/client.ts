@@ -175,16 +175,18 @@ export class Client extends EventEmitter {
 		this.bot.on('logout', () => this.emit(ClientEvents.LogOut, this.bot.user));
 		this.bot.on('message', (message: Message) => this.emit(ClientEvents.MessageCreate, message));
 		this.bot.on('message/update', (message: Message) => this.emit(ClientEvents.MessageUpdate, message));
-		this.bot.on('message/delete', (messageId: API.Id) => this.emit(ClientEvents.MessageDelete, this.bot.messages.get(messageId)));
+		this.bot.on('message/delete', (_: API.Id, message?: Message) => this.emit(ClientEvents.MessageDelete, message));
 		this.bot.on('channel/create', (channel: Channel) => this.emit(ClientEvents.ChannelCreate, channel));
 		this.bot.on('channel/update', (channel: Channel) => this.emit(ClientEvents.ChannelUpdate, channel));
-		this.bot.on('channel/delete', (channelId: API.Id) => this.emit(ClientEvents.ChannelDelete, this.bot.channels.get(channelId)));
+		this.bot.on('channel/delete', (_: API.Id, channel?: Channel) => this.emit(ClientEvents.ChannelDelete, channel));
 		this.bot.on('server/update', (server: Server) => this.emit(ClientEvents.ServerUpdate, server));
-		this.bot.on('server/delete', (serverId: API.Id) => this.emit(ClientEvents.ServerDelete, this.bot.servers.get(serverId)));
+		this.bot.on('server/delete', (_: API.Id, server?: Server) => this.emit(ClientEvents.ServerDelete, server));
 		this.bot.on('role/update', (_: string, role: API.Role, serverId: API.Id) =>
 			this.emit(ClientEvents.RoleUpdate, { server: this.bot.servers.get(serverId), role })
 		);
-		this.bot.on('role/delete', (roleId: API.Id, serverId: API.Id) => this.emit(ClientEvents.RoleDelete, { roleId, serverId }));
+		this.bot.on('role/delete', (roleId: API.Id, serverId: API.Id) =>
+			this.emit(ClientEvents.RoleDelete, { role_id: roleId, server: this.bot.servers.get(serverId) })
+		);
 		this.bot.on('member/join', (member: Member) => this.emit(ClientEvents.ServerMemberJoin, member));
 		this.bot.on('member/update', (member: Member) => this.emit(ClientEvents.ServerMemberUpdate, member));
 		this.bot.on('member/leave', (Ids: MemberCompositeKey) => this.emit(ClientEvents.ServerMemberLeave, this.bot.members.get(Ids.user)));
