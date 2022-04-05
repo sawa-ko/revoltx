@@ -1,6 +1,7 @@
 import { container } from '@sapphire/pieces';
 import { Channel, Permission } from 'revolt.js';
 
+// TODO: Improve this tool
 export class PermissionsManager {
 	private _permissions = 0;
 

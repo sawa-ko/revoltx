@@ -114,6 +114,7 @@ export class Client extends EventEmitter {
 		this.baseDirectory = this.clientOptions.baseDirectory;
 		this.loadDefaultErrorsListeners = this.clientOptions.loadDefaultErrorsListeners;
 		this.defaultCooldown = this.clientOptions.defaultCooldown;
+		this.hmr = this.clientOptions.hmr;
 
 		this.stores = new StoreRegistry();
 		container.stores = this.stores;
