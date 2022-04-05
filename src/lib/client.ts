@@ -105,6 +105,13 @@ export class Client extends EventEmitter {
 	 */
 	public hmr?: HMROptions;
 
+	/**
+	 * Date on which the bot was marked as ready.
+	 * @since 1.4.1
+	 * @default undefined
+	 */
+	public readyAt?: Date;
+
 	public constructor(private clientOptions: ClientOptions) {
 		super();
 		container.client = this;
