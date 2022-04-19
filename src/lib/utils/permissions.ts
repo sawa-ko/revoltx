@@ -61,11 +61,14 @@ export class PermissionsManager {
 				const member = await channel.server?.fetchMember(user?._id ?? '0').catch(() => null);
 				if (!member) break;
 
-				this.add(channel.default_permissions ?? channel.server.default_permissions ?? 0);
+				this.add(channel.default_permissions?.a ?? channel.server.default_permissions ?? 0);
+				this.delete(channel.default_permissions?.d ?? channel.server.default_permissions ?? 0);
 				if (member.roles) {
 					for (const role of member.roles) {
-						this.add(channel.role_permissions?.[role] ?? 0);
-						this.add(channel.server.roles?.[role].permissions[1] ?? 0);
+						this.add(channel.role_permissions?.[role].a ?? 0);
+						this.add(channel.server.roles?.[role].permissions.a ?? 0);
+						this.delete(channel.role_permissions?.[role].d ?? 0);
+						this.delete(channel.server.roles?.[role].permissions.d ?? 0);
 					}
 				}
 
@@ -88,7 +91,8 @@ export class PermissionsManager {
 		this.add(channel.server.default_permissions);
 		if (member.roles) {
 			for (const role of member.roles) {
-				this.add(channel.server.roles?.[role].permissions[0] ?? 0);
+				this.add(channel.server.roles?.[role].permissions.a ?? 0);
+				this.delete(channel.server.roles?.[role].permissions.r ?? 0);
 			}
 		}
 

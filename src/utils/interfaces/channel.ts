@@ -77,7 +77,7 @@ export interface GroupChannel {
 	/**
 	 * Group icon
 	 */
-	icon?: API.Attachment;
+	icon?: API.File;
 
 	/**
 	 * Permissions given to group members
@@ -111,7 +111,7 @@ export interface ServerChannel {
 	 */
 	description?: string;
 
-	icon?: API.Attachment;
+	icon?: API.File;
 
 	/**
 	 * Permissions given to all users

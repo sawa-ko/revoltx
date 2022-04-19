@@ -38,6 +38,7 @@ export * from './lib/resolvers/string';
 export * from './lib/resolvers/user';
 
 export { container } from '@sapphire/pieces';
+export { API as Revolt } from 'revolt.js';
 
 /**
  * Revoltx version

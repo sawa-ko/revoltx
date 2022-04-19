@@ -18,10 +18,6 @@ export class CorePrecondition extends Precondition {
 			await permissions.computeChannelPermissions(message.channel, message.author);
 		}
 
-		if (context.channel_permissions.length > 0 && message.channel) {
-			await permissions.computeChannelPermissions(message.channel, message.author);
-		}
-
 		const channelMissingPermissions = context.channel_permissions.filter((p) => !permissions.has(p));
 		const ServerMissingPermissions = context.server_permissions.filter((p) => !permissions.has(p));
 		const errorMessage = ['You are missing the following permissions to run this command:'];

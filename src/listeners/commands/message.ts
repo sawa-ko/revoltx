@@ -15,7 +15,7 @@ export class CoreListener extends Listener {
 	public run(message: Message) {
 		if (message.author?.bot || !message.channel) return;
 
-		const channelPermissions = message.channel.permissions ?? message.channel.default_permissions ?? 0;
+		const channelPermissions = message.channel.permissions ?? message.channel.default_permissions?.a ?? 0;
 		if (!(channelPermissions & Permission.SendMessage) && Permission.SendMessage) return;
 		if (!(channelPermissions & Permission.ViewChannel) && Permission.ViewChannel) return;
 
