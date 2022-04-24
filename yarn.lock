@@ -654,6 +654,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@eslint/eslintrc@npm:^1.2.2":
+  version: 1.2.2
+  resolution: "@eslint/eslintrc@npm:1.2.2"
+  dependencies:
+    ajv: ^6.12.4
+    debug: ^4.3.2
+    espree: ^9.3.1
+    globals: ^13.9.0
+    ignore: ^5.2.0
+    import-fresh: ^3.2.1
+    js-yaml: ^4.1.0
+    minimatch: ^3.0.4
+    strip-json-comments: ^3.1.1
+  checksum: d891036bbffb0efec1462aa4a603ed6e349d546b1632dde7d474ddd15c2a8b6895671b25293f1d3ba10ff629c24a3649ad049373fe695a0e44b612537088563c
+  languageName: node
+  linkType: hard
+
 "@favware/npm-deprecate@npm:^1.0.4":
   version: 1.0.4
   resolution: "@favware/npm-deprecate@npm:1.0.4"
@@ -721,9 +738,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@insertish/oapi@npm:0.1.14":
-  version: 0.1.14
-  resolution: "@insertish/oapi@npm:0.1.14"
+"@insertish/oapi@npm:0.1.15":
+  version: 0.1.15
+  resolution: "@insertish/oapi@npm:0.1.15"
   dependencies:
     axios: ^0.26.1
     openapi-typescript: ^5.2.0
@@ -735,7 +752,7 @@ __metadata:
       optional: true
   bin:
     oapilib: cli.js
-  checksum: 6fca767b7fde620ce61b6933906693d8daf1ae2903bc96ac0b65b586dbcbd481996b611fce3a4684e4ce343f51b34ddd3b191a3edb54e427b08a68b9fe8ea266
+  checksum: e4b34382f8f64eb6f5e6f9e3df6e607341031c4d4571169d7d7ad75e76f5dabc766de467f9f6a1cdd35818ce39724daa4a5ce487ccb5d069379a6dfab0faf8b6
   languageName: node
   linkType: hard
 
@@ -1006,21 +1023,21 @@ __metadata:
     chalk: ^5.0.1
     chokidar: ^3.5.3
     cz-conventional-changelog: ^3.3.0
-    eslint: ^8.13.0
+    eslint: ^8.14.0
     eslint-config-prettier: ^8.5.0
     eslint-plugin-prettier: ^4.0.0
     husky: ^7.0.4
     jest: ^27.5.1
     jest-circus: ^27.5.1
     lexure: ^0.17.0
-    lint-staged: ^12.3.8
+    lint-staged: ^12.4.0
     prettier: ^2.6.2
     pretty-quick: ^3.1.3
-    revolt.js: ^6.0.0-rc.8
+    revolt.js: ^6.0.0-rc.15
     standard-version: ^9.3.2
     ts-jest: ^27.1.4
     ts-node: ^10.7.0
-    tslib: ^2.3.1
+    tslib: ^2.4.0
     tslog: ^3.3.3
     typedoc: ^0.22.15
     typedoc-plugin-mdn-links: ^1.0.6
@@ -3009,6 +3026,51 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eslint@npm:^8.14.0":
+  version: 8.14.0
+  resolution: "eslint@npm:8.14.0"
+  dependencies:
+    "@eslint/eslintrc": ^1.2.2
+    "@humanwhocodes/config-array": ^0.9.2
+    ajv: ^6.10.0
+    chalk: ^4.0.0
+    cross-spawn: ^7.0.2
+    debug: ^4.3.2
+    doctrine: ^3.0.0
+    escape-string-regexp: ^4.0.0
+    eslint-scope: ^7.1.1
+    eslint-utils: ^3.0.0
+    eslint-visitor-keys: ^3.3.0
+    espree: ^9.3.1
+    esquery: ^1.4.0
+    esutils: ^2.0.2
+    fast-deep-equal: ^3.1.3
+    file-entry-cache: ^6.0.1
+    functional-red-black-tree: ^1.0.1
+    glob-parent: ^6.0.1
+    globals: ^13.6.0
+    ignore: ^5.2.0
+    import-fresh: ^3.0.0
+    imurmurhash: ^0.1.4
+    is-glob: ^4.0.0
+    js-yaml: ^4.1.0
+    json-stable-stringify-without-jsonify: ^1.0.1
+    levn: ^0.4.1
+    lodash.merge: ^4.6.2
+    minimatch: ^3.0.4
+    natural-compare: ^1.4.0
+    optionator: ^0.9.1
+    regexpp: ^3.2.0
+    strip-ansi: ^6.0.1
+    strip-json-comments: ^3.1.0
+    text-table: ^0.2.0
+    v8-compile-cache: ^2.0.3
+  bin:
+    eslint: bin/eslint.js
+  checksum: 87d2e3e5eb93216d4ab36006e7b8c0bfad02f40b0a0f193f1d42754512cd3a9d8244152f1c69df5db2e135b3c4f1c10d0ed2f0881fe8a8c01af55465968174c1
+  languageName: node
+  linkType: hard
+
 "espree@npm:^9.3.1":
   version: 9.3.1
   resolution: "espree@npm:9.3.1"
@@ -4786,9 +4848,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lint-staged@npm:^12.3.8":
-  version: 12.3.8
-  resolution: "lint-staged@npm:12.3.8"
+"lint-staged@npm:^12.4.0":
+  version: 12.4.0
+  resolution: "lint-staged@npm:12.4.0"
   dependencies:
     cli-truncate: ^3.1.0
     colorette: ^2.0.16
@@ -4806,7 +4868,7 @@ __metadata:
     yaml: ^1.10.2
   bin:
     lint-staged: bin/lint-staged.js
-  checksum: af6a89ae4244e4eac7180c6e7da452f378fd156ff38eaa666ecbb78f1e2efb7f1a9fc766dcc1cdde2bd76e03da68e602056ca9d2f1c6e46cf10aa83d20bf4d49
+  checksum: e25b273a73b79f224ff1ccb22432c34a9050fe8318b9cf7e08c748e2efc80e1f48ed4f2aa61cd16a701bb7fd6323ecf0d94a497c97732db04f2b5382d6b70131
   languageName: node
   linkType: hard
 
@@ -6128,20 +6190,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"revolt-api@npm:0.5.3-rc.11":
-  version: 0.5.3-rc.11
-  resolution: "revolt-api@npm:0.5.3-rc.11"
+"revolt-api@npm:0.5.3-rc.15":
+  version: 0.5.3-rc.15
+  resolution: "revolt-api@npm:0.5.3-rc.15"
   dependencies:
-    "@insertish/oapi": 0.1.14
+    "@insertish/oapi": 0.1.15
     axios: ^0.26.1
     lodash.defaultsdeep: ^4.6.1
-  checksum: 8466a076899f6d1187379eae85acc2d30b9d99bb8c938c49125aef4f4beed974d2551b6e8acc9bf4bf9791766f53a0dc2b60c35dfddcc77c6b524d0ca6a9ce54
+  checksum: 72406d67aa60570660ef146bb5bae6c8cb98b41ac2fbb1eac4196f4927678f060c89a46c56abb3623836d86fc0a650da8edc6ab4b349fb8904b79bafb98ecb33
   languageName: node
   linkType: hard
 
-"revolt.js@npm:^6.0.0-rc.8":
-  version: 6.0.0-rc.8
-  resolution: "revolt.js@npm:6.0.0-rc.8"
+"revolt.js@npm:^6.0.0-rc.15":
+  version: 6.0.0-rc.15
+  resolution: "revolt.js@npm:6.0.0-rc.15"
   dependencies:
     "@insertish/exponential-backoff": 3.1.0-patch.0
     "@insertish/isomorphic-ws": ^4.0.1
@@ -6152,10 +6214,10 @@ __metadata:
     lodash.isequal: ^4.5.0
     long: ^5.2.0
     mobx: ^6.3.2
-    revolt-api: 0.5.3-rc.11
+    revolt-api: 0.5.3-rc.15
     ulid: ^2.3.0
     ws: ^8.2.2
-  checksum: fbf537e1a46f9a65b2bfc12716d9362496dfc9fd518fc5088b1f167ade7c383a544dd82cd84feea15863359ab3c81a66ce95ab04047b8e64b54ecf08a44219d0
+  checksum: 51260c43426029c0dd9336be3d7136f8b43803585a15a026922eee83b7a56fe821a8b4c08cbf00c18e78375142be543a6dd0f3432c3fdcd01f63c588af60a49b
   languageName: node
   linkType: hard
 
@@ -6971,6 +7033,13 @@ __metadata:
   version: 2.3.1
   resolution: "tslib@npm:2.3.1"
   checksum: de17a98d4614481f7fcb5cd53ffc1aaf8654313be0291e1bfaee4b4bb31a20494b7d218ff2e15017883e8ea9626599b3b0e0229c18383ba9dce89da2adf15cb9
+  languageName: node
+  linkType: hard
+
+"tslib@npm:^2.4.0":
+  version: 2.4.0
+  resolution: "tslib@npm:2.4.0"
+  checksum: 8c4aa6a3c5a754bf76aefc38026134180c053b7bd2f81338cb5e5ebf96fefa0f417bff221592bf801077f5bf990562f6264fecbc42cd3309b33872cb6fc3b113
   languageName: node
   linkType: hard
 
