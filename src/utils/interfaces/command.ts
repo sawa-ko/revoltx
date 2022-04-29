@@ -96,34 +96,14 @@ export interface CommandOptions extends AliasPieceOptions, FlagStrategyOptions {
 	 * Permissions that the client (bot) needs to execute the action.
 	 * @since 1.1.3
 	 */
-	clientPermissions?: {
-		/**
-		 * Permissions required in the channel.
-		 */
-		channel?: PermissionsResolvable[];
-
-		/**
-		 * Required permissions on the server.
-		 */
-		server?: PermissionsResolvable[];
-	};
+	clientPermissions?: PermissionsResolvable[];
 
 	/**
 	 * User Permissions
 	 * Permissions that the user (author of message) needs to execute the action.
 	 * @since 1.1.3
 	 */
-	userPermissions?: {
-		/**
-		 * Permissions required in the channel.
-		 */
-		channel?: PermissionsResolvable[];
-
-		/**
-		 * Required permissions on the server.
-		 */
-		server?: PermissionsResolvable[];
-	};
+	userPermissions?: PermissionsResolvable[];
 }
 
 export interface CommandJSON extends AliasPieceJSON {

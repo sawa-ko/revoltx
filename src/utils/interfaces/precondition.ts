@@ -113,16 +113,10 @@ export interface CooldownContext extends PreconditionContext {
 
 export interface PermissionsContext extends PreconditionContext {
 	/**
-	 * Permissions required in the channel.
+	 * Permissions required.
 	 * @since 1.1.3
 	 */
-	channel_permissions: PermissionsResolvable[];
-
-	/**
-	 * Required permissions on the server.
-	 * @since 1.1.3
-	 */
-	server_permissions: PermissionsResolvable[];
+	permissions: PermissionsResolvable[];
 }
 
 export type RunInCommands = 'DMChannel' | 'GroupChannel' | 'Server' | 'TextChannel';

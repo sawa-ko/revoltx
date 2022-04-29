@@ -57,34 +57,19 @@ export abstract class Command<T = Args, O extends CommandOptions = CommandOption
 	 */
 	public runIn?: RunInCommands[];
 
-	public clientPermissions?: {
-		/**
-		 * Permissions required in the channel.
-		 */
-		channel?: PermissionsResolvable[];
-
-		/**
-		 * Required permissions on the server.
-		 */
-		server?: PermissionsResolvable[];
-	};
+	/**
+	 * Client Permissions
+	 * Permissions that the clientr (bot) needs to execute the action.
+	 * @since 1.1.3
+	 */
+	public clientPermissions?: PermissionsResolvable[];
 
 	/**
 	 * User Permissions
 	 * Permissions that the user (author of message) needs to execute the action.
 	 * @since 1.1.3
 	 */
-	public userPermissions?: {
-		/**
-		 * Permissions required in the channel.
-		 */
-		channel?: PermissionsResolvable[];
-
-		/**
-		 * Required permissions on the server.
-		 */
-		server?: PermissionsResolvable[];
-	};
+	public userPermissions?: PermissionsResolvable[];
 
 	/**
 	 * The lexer to be used for command parsing
@@ -138,14 +123,14 @@ export abstract class Command<T = Args, O extends CommandOptions = CommandOption
 		if (this.clientPermissions) {
 			this.preconditions.append({
 				name: CommandPreConditions.ClientPermissions,
-				context: { channel_permissions: this.clientPermissions.channel ?? [], server_permissions: this.clientPermissions.server ?? [] }
+				context: { permissions: this.clientPermissions ?? [] }
 			});
 		}
 
 		if (this.userPermissions) {
 			this.preconditions.append({
 				name: CommandPreConditions.userPermissions,
-				context: { channel_permissions: this.userPermissions.channel ?? [], server_permissions: this.userPermissions.server ?? [] }
+				context: { permissions: this.userPermissions ?? [] }
 			});
 		}
 	}
