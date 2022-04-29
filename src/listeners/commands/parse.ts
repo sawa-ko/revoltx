@@ -12,7 +12,7 @@ export class CoreListener extends Listener {
 	}
 
 	public run(payload: CommandParsePayload) {
-		const prefixLess = (payload.message.content as string).slice(payload.prefix.length).trim();
+		const prefixLess = payload.message.content!.slice(payload.prefix.length).trim();
 		const spaceIndex = prefixLess.indexOf(' ');
 		const commandName = spaceIndex === -1 ? prefixLess : prefixLess.slice(0, spaceIndex);
 
