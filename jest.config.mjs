@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/require-await
 export default async () => ({
-	displayName: 'unit test',
+	displayName: 'Unit Test',
 	preset: 'ts-jest',
 	testEnvironment: 'node',
 	testRunner: 'jest-circus/runner',
