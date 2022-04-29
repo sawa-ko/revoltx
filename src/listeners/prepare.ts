@@ -1,5 +1,5 @@
 import type { PieceContext } from '@sapphire/pieces';
-import type { ClientboundNotification } from 'revolt.js/dist/websocket/notifications';
+import type { ClientboundNotification } from 'revolt.js';
 
 import { ClientEvents } from '../utils/enums/events';
 import { Listener } from '../lib/structures/listener';

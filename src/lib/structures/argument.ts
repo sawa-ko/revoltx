@@ -100,9 +100,7 @@ export abstract class Argument<T = unknown, O extends ArgumentOptions = Argument
 
 	/**
 	 * Constructs an {@link ArgumentError} with a custom type.
-	 * @param parameter The parameter that triggered the argument.
-	 * @param type The identifier for the error.
-	 * @param message The description message for the rejection.
+	 * @param options ArgumentError options
 	 */
 	public error(options: Omit<ArgumentError.Options<T>, 'argument'>): ArgumentResult<T> {
 		return Args.error({ argument: this, identifier: this.name, ...options });

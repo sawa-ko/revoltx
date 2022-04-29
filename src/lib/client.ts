@@ -5,8 +5,7 @@ import { Logger } from 'tslog';
 import EventEmitter from 'events';
 import * as Revolt from 'revolt.js';
 import type { ClientOptions, ClientPrefixHook, DefaultCooldownOptions, MemberCompositeKey } from '../utils/interfaces/client';
-import type { Channel, Message, Server, Member, User, API } from 'revolt.js';
-import type { ClientboundNotification } from 'revolt.js/dist/websocket/notifications';
+import type { Channel, Message, Server, Member, User, API, ClientboundNotification } from 'revolt.js';
 
 import { ListenerStore } from './structures/stores/listener';
 import { ClientEvents } from '../utils/enums/events';
