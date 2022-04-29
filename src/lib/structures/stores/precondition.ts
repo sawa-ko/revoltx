@@ -1,10 +1,10 @@
 import { Store } from '@sapphire/pieces';
 import type { Message } from 'revolt.js';
 
-import { ok } from '../parsers/result';
-import { AsyncPreconditionResult, Precondition } from './precondition';
-import type { PreconditionContext } from '../../utils/interfaces/precondition';
-import type { Command } from './command';
+import { ok } from '../../parsers/result';
+import { AsyncPreconditionResult, Precondition } from '../precondition';
+import type { PreconditionContext } from '../../../utils/interfaces/precondition';
+import type { Command } from '../command';
 
 export class PreconditionStore extends Store<Precondition> {
 	private readonly globalPreconditions: Precondition[] = [];

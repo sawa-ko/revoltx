@@ -8,11 +8,11 @@ import type { ClientOptions, ClientPrefixHook, DefaultCooldownOptions, MemberCom
 import type { Channel, Message, Server, Member, User, API } from 'revolt.js';
 import type { ClientboundNotification } from 'revolt.js/dist/websocket/notifications';
 
-import { ListenerStore } from './structures/listener.store';
+import { ListenerStore } from './structures/stores/listener';
 import { ClientEvents } from '../utils/enums/events';
-import { CommandStore } from './structures/command.store';
-import { ArgumentStore } from './structures/argument.store';
-import { PreconditionStore } from './structures/precondition.store';
+import { CommandStore } from './structures/stores/command';
+import { ArgumentStore } from './structures/stores/argument';
+import { PreconditionStore } from './structures/stores/precondition';
 import { HMROptions, startHMR } from './utils/hmr';
 
 export class Client extends EventEmitter {
