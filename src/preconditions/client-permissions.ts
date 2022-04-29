@@ -1,4 +1,4 @@
-import type { Message } from 'revolt.js';
+import { type Message, calculatePermission } from 'revolt.js';
 import type { PieceContext } from '@sapphire/pieces';
 
 import { Precondition } from '../lib/structures/precondition';
@@ -15,7 +15,8 @@ export class CorePrecondition extends Precondition {
 	public async run(message: Message, _: Command, context: PermissionsContext) {
 		const permissions = new PermissionsManager();
 		if (context.channel_permissions.length > 0 && message.channel) {
-			await permissions.computeChannelPermissions(message.channel);
+			const clientMember = await message.channel.server?.fetchMember(message.client.user ?? '');
+			permissions.add(calculatePermission(message.channel, { member: clientMember }));
 		}
 
 		const channelMissingPermissions = context.channel_permissions.filter((p) => !permissions.has(p));

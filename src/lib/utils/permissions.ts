@@ -1,7 +1,7 @@
-import { container } from '@sapphire/pieces';
-import { Channel, Permission } from 'revolt.js';
+import { Permission } from 'revolt.js';
 
 // TODO: Improve this tool
+export type PermissionsResolvable = keyof typeof Permission;
 export class PermissionsManager {
 	private _permissions = 0;
 
@@ -42,63 +42,6 @@ export class PermissionsManager {
 		return permissions.filter((p) => !this.has(p));
 	}
 
-	public async computeChannelPermissions(channel: Channel, user = container.client.bot.user) {
-		switch (channel.channel_type) {
-			case 'SavedMessages':
-				this._permissions = Permission.GrantAllSafe;
-				break;
-			case 'DirectMessage':
-			case 'Group':
-				this._permissions = DEFAULT_PERMISSION_DIRECT_MESSAGE;
-				break;
-			case 'TextChannel':
-			case 'VoiceChannel': {
-				if (!channel.server) break;
-				if (channel.owner_id === user?._id) {
-					this._permissions = Permission.GrantAllSafe;
-				}
-
-				const member = await channel.server?.fetchMember(user?._id ?? '0').catch(() => null);
-				if (!member) break;
-
-				this.add(channel.default_permissions?.a ?? channel.server.default_permissions ?? 0);
-				this.delete(channel.default_permissions?.d ?? channel.server.default_permissions ?? 0);
-				if (member.roles) {
-					for (const role of member.roles) {
-						this.add(channel.role_permissions?.[role].a ?? 0);
-						this.add(channel.server.roles?.[role].permissions.a ?? 0);
-						this.delete(channel.role_permissions?.[role].d ?? 0);
-						this.delete(channel.server.roles?.[role].permissions.d ?? 0);
-					}
-				}
-
-				break;
-			}
-		}
-
-		return this;
-	}
-
-	public async computeServerPermissions(channel: Channel, user = container.client.bot.user) {
-		if (!channel.server) return;
-		if (channel.owner_id === user?._id) {
-			this._permissions = Permission.GrantAllSafe;
-		}
-
-		const member = await channel.server?.fetchMember(user?._id ?? '0'.repeat(26)).catch(() => null);
-		if (!member) return;
-
-		this.add(channel.server.default_permissions);
-		if (member.roles) {
-			for (const role of member.roles) {
-				this.add(channel.server.roles?.[role].permissions.a ?? 0);
-				this.delete(channel.server.roles?.[role].permissions.r ?? 0);
-			}
-		}
-
-		return this;
-	}
-
 	public get permissions() {
 		const permissions: PermissionsResolvable[] = [];
 		Object.keys(Permission).forEach((permission) => {
@@ -117,16 +60,3 @@ export class PermissionsManager {
 		this._permissions = permissions;
 	}
 }
-
-export type PermissionsResolvable = keyof typeof Permission;
-export const DEFAULT_PERMISSION =
-	Permission.ViewChannel +
-	Permission.ReadMessageHistory +
-	Permission.SendMessage +
-	Permission.InviteOthers +
-	Permission.SendEmbeds +
-	Permission.UploadFiles +
-	Permission.Connect +
-	Permission.Speak;
-
-export const DEFAULT_PERMISSION_DIRECT_MESSAGE = DEFAULT_PERMISSION + Permission.ManageChannel;
