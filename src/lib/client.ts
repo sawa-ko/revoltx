@@ -118,7 +118,7 @@ export class Client extends EventEmitter {
 		this.id = this.clientOptions.id;
 		this.ping = 0;
 		this.baseDirectory = this.clientOptions.baseDirectory;
-		this.loadDefaultErrorsListeners = this.clientOptions.loadDefaultErrorsListeners;
+		this.loadDefaultErrorsListeners = this.clientOptions.loadDefaultErrorsListeners ?? true;
 		this.defaultCooldown = this.clientOptions.defaultCooldown;
 		this.hmr = this.clientOptions.hmr;
 

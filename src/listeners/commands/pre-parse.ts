@@ -12,22 +12,24 @@ export class CoreListener extends Listener {
 	}
 
 	public async run(message: Message) {
-		const content = (message.content as string).toLowerCase();
+		const content = message.content!.toLowerCase();
 		const prefix = await this.container.client.fetchPrefix(message);
+		if (!prefix) return;
 
-		if (prefix) {
-			if (typeof prefix === 'string') {
-				if (content.startsWith(prefix.toLowerCase())) {
-					return this.container.client.emit(CommandEvents.CommandParse, { message, prefix });
-				}
-
-				return this.container.client.emit(CommandEvents.NonPrefixedCommand, { message });
-			}
-
-			const matchedPrefix = prefix.find((prefix) => content.startsWith(prefix.toLowerCase()));
-			if (matchedPrefix) return this.container.client.emit(CommandEvents.CommandParse, { message, prefix: matchedPrefix });
+		const matchedPrefix = this.commandPrefix(prefix, content);
+		if (matchedPrefix) {
+			return this.container.client.emit(CommandEvents.CommandParse, { message, prefix: matchedPrefix });
 		}
 
-		return this.container.client.emit(CommandEvents.NonPrefixedCommand, { message });
+		return this.container.client.emit(CommandEvents.CommandParse, { message, prefix: matchedPrefix });
+	}
+
+	private commandPrefix(prefix: string | readonly string[], content: string) {
+		if (typeof prefix === 'string') {
+			const matched = content.startsWith(prefix.toLowerCase());
+			return matched ? prefix : null;
+		}
+
+		return prefix.find((p) => content.startsWith(p));
 	}
 }
