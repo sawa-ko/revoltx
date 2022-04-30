@@ -1199,7 +1199,7 @@ __metadata:
     lint-staged: ^12.4.1
     prettier: ^2.6.2
     pretty-quick: ^3.1.3
-    revolt.js: ^6.0.0-rc.21
+    revolt.js: ^6.0.0-rc.24
     standard-version: ^9.3.2
     ts-jest: ^28.0.0-next.3
     ts-node: ^10.7.0
@@ -6507,9 +6507,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"revolt.js@npm:^6.0.0-rc.21":
-  version: 6.0.0-rc.21
-  resolution: "revolt.js@npm:6.0.0-rc.21"
+"revolt.js@npm:^6.0.0-rc.24":
+  version: 6.0.0-rc.24
+  resolution: "revolt.js@npm:6.0.0-rc.24"
   dependencies:
     "@insertish/exponential-backoff": 3.1.0-patch.2
     "@insertish/isomorphic-ws": ^4.0.1
@@ -6523,7 +6523,7 @@ __metadata:
     revolt-api: 0.5.3-rc.15
     ulid: ^2.3.0
     ws: ^8.2.2
-  checksum: 547cf4a11ef591351523f19707c8d6ee306a82f965da6db2b63217067dea19244fc8125c362bcf0c32f727f2ba351b748f176a633f2420ee37599bef35942c6f
+  checksum: 1ecfd839632f38ef16e85165c97b236e7f1b17ee918604bc28d82a8af4a8375c0bac1f91ba977be0e9e65137b55e2a9f767dc1dc14c62fe81c44a3d41eb7f581
   languageName: node
   linkType: hard
 
