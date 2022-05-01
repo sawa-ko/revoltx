@@ -149,7 +149,7 @@ export class MessageListener extends Listener {
 		super(context, { 
                   ...options,
                   event: ClientEvents.MessageCreate
-                  /* More listener optional options*/
+                  /* optional listeners options */
                 });
 	}
 
@@ -178,6 +178,7 @@ export class CoreArgument extends Argument<boolean> {
 		super(context, {
                   ...options,
                   name: 'ServerOwner'
+                  /* optional arguments options */
                 });
 	}
 
@@ -232,6 +233,7 @@ export class CorePrecondition extends Precondition {
 		super(context, {
                   ...options,
                   name: 'NSFW'
+                  /* optional preconditions options */
                 });
 	}
 
@@ -264,15 +266,16 @@ TypeScript code
 
 ```typescript
 // commands/help.ts
-import { Command } from '@kaname-png/revoltx';
+import { Command, CommandOptions } from '@kaname-png/revoltx';
 import type { Message } from 'revolt.js';
 import type { PieceContext } from '@sapphire/pieces';
 
 export class HelpCommands extends Command {
 	// If you need to add extra options to the command, you can do it in the constructor, it is not required if you don't need to add options.
-	constructor(context: PieceContext) {
+	constructor(context: PieceContext, options: CommandOptions) {
 		super(context, {
-			/*optional commands options*/
+                  ...options
+                  /* optional commands options */
 		});
 	}
 
@@ -290,9 +293,10 @@ import { Command } from '@kaname-png/revoltx';
 
 export class HelpCommands extends Command {
 	// If you need to add extra options to the command, you can do it in the constructor, it is not required if you don't need to add options.
-	constructor(context) {
+	constructor(context, options) {
 		super(context, {
-			/*optional commands options*/
+                  ...options
+                  /* optional commands options */
 		});
 	}
 
