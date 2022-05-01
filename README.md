@@ -116,7 +116,7 @@ import { Command, CommandOptions } from '@kaname-png/revoltx';
 import type { Message } from 'revolt.js';
 import type { PieceContext } from '@sapphire/pieces';
 
-export class HelpCommands extends Command {
+export class HelpCommand extends Command {
 	// If you need to add extra options to the command, you can do it in the constructor, it is not required if you don't need to add options.
 	constructor(context: PieceContext, options: CommandOptions) {
 		super(context, {
@@ -172,7 +172,7 @@ import { Argument, ArgumentOptions ArgumentResult } from '../lib/structures/argu
 import type { ArgumentContext } from '../utils/interfaces/argument';
 
 // <boolean> is for TypeScript users only.
-export class CoreArgument extends Argument<boolean> {
+export class ServerOwnerArgument extends Argument<boolean> {
 	// Asign name of argument
 	public constructor(context: PieceContext, options: ArgumentOptions) {
 		super(context, {
@@ -228,7 +228,7 @@ import type { Message } from 'revolt.js';
 import { Identifiers } from '../lib/errors/identifiers';
 import { Precondition, PreconditionOptions PreconditionResult } from '../lib/structures/precondition';
 
-export class CorePrecondition extends Precondition {
+export class NSFWPrecondition extends Precondition {
 	public constructor(context: PieceContext, options: PreconditionOptions) {
 		super(context, {
                   ...options,
@@ -270,7 +270,7 @@ import { Command, CommandOptions } from '@kaname-png/revoltx';
 import type { Message } from 'revolt.js';
 import type { PieceContext } from '@sapphire/pieces';
 
-export class HelpCommands extends Command {
+export class HelpCommand extends Command {
 	// If you need to add extra options to the command, you can do it in the constructor, it is not required if you don't need to add options.
 	constructor(context: PieceContext, options: CommandOptions) {
 		super(context, {
@@ -291,7 +291,7 @@ JavaScript code
 // commands/help.js
 import { Command } from '@kaname-png/revoltx';
 
-export class HelpCommands extends Command {
+export class HelpCommand extends Command {
 	// If you need to add extra options to the command, you can do it in the constructor, it is not required if you don't need to add options.
 	constructor(context, options) {
 		super(context, {
