@@ -112,15 +112,16 @@ Commands are actions that users can request to the bot by means of a prefix and 
 
 ```typescript
 // commands/help.ts
-import { Command } from '@kaname-png/revoltx';
+import { Command, CommandOptions } from '@kaname-png/revoltx';
 import type { Message } from 'revolt.js';
 import type { PieceContext } from '@sapphire/pieces';
 
 export class HelpCommands extends Command {
 	// If you need to add extra options to the command, you can do it in the constructor, it is not required if you don't need to add options.
-	constructor(context: PieceContext) {
+	constructor(context: PieceContext, options: CommandOptions) {
 		super(context, {
-			/*optional commands options*/
+                   ...options
+                   /* optional commands options */
 		});
 	}
 
@@ -138,14 +139,18 @@ The listeners have the function of listening to events that the client emits by 
 
 ```typescript
 // listener/message.ts
-import { Listener, ClientEvents } from '@kaname-png/revoltx';
+import { Listener, ListenerOptions ClientEvents } from '@kaname-png/revoltx';
 import type { Message } from 'revolt.js';
 import type { PieceContext } from '@sapphire/pieces';
 
 export class MessageListener extends Listener {
 	// You can set the event name you need.
-	constructor(context: PieceContext) {
-		super(context, { event: ClientEvents.MessageCreate /* More listener optional options*/ });
+	constructor(context: PieceContext, options: ListenerOptions) {
+		super(context, { 
+                  ...options,
+                  event: ClientEvents.MessageCreate
+                  /* More listener optional options*/
+                });
 	}
 
 	public async run(message: Message) {
@@ -163,14 +168,17 @@ Arguments are parameters that the bot receives from the message sent by the user
 // arguments/serverOwner.ts
 import type { PieceContext } from '@sapphire/pieces';
 
-import { Argument, ArgumentResult } from '../lib/structures/argument';
+import { Argument, ArgumentOptions ArgumentResult } from '../lib/structures/argument';
 import type { ArgumentContext } from '../utils/interfaces/argument';
 
 // <boolean> is for TypeScript users only.
 export class CoreArgument extends Argument<boolean> {
 	// Asign name of argument
-	public constructor(context: PieceContext) {
-		super(context, { name: 'ServerOwner' });
+	public constructor(context: PieceContext, options: ArgumentOptions) {
+		super(context, {
+                  ...options,
+                  name: 'ServerOwner'
+                });
 	}
 
 	public run(parameter: string, context: ArgumentContext): ArgumentResult<boolean> {
@@ -217,11 +225,14 @@ import type { PieceContext } from '@sapphire/pieces';
 import type { Message } from 'revolt.js';
 
 import { Identifiers } from '../lib/errors/identifiers';
-import { Precondition, PreconditionResult } from '../lib/structures/precondition';
+import { Precondition, PreconditionOptions PreconditionResult } from '../lib/structures/precondition';
 
 export class CorePrecondition extends Precondition {
-	public constructor(context: PieceContext) {
-		super(context, { name: 'NSFW' });
+	public constructor(context: PieceContext, options: PreconditionOptions) {
+		super(context, {
+                  ...options,
+                  name: 'NSFW'
+                });
 	}
 
 	public run(message: Message): PreconditionResult {
@@ -247,7 +258,7 @@ declare module '@kaname-png/revoltx' {
 
 #### Example of converting TypeScript code to JavaScript code:
 
-> This also applies to arguments and listeners.
+> This also applies to arguments, listeners, preconditions, etc.
 
 TypeScript code
 
