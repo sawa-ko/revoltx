@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.5.0](https://github.com/kaname-png/revoltx/compare/v1.4.1...v1.5.0) (2022-05-08)
+
+
+### Features
+
+* **client:** date on which the bot was marked as ready ([04aa359](https://github.com/kaname-png/revoltx/commit/04aa35999e3981c9719c2644d31439fec6e393f8))
+* **client:** updated revolt events ([53f0c6f](https://github.com/kaname-png/revoltx/commit/53f0c6fd24a4efc5501a9fd5eb0985e9d985dca8))
+* **commands:** now in revolt.js the channel and server permissions are unified ([9d6b837](https://github.com/kaname-png/revoltx/commit/9d6b837c013d7d5f9964e55136527057214b4f30))
+* **commands:** rework base listeners ([db88e7b](https://github.com/kaname-png/revoltx/commit/db88e7b5bc75d24e5291d27fcd113b71f505664d))
+* export more types, utils and classes ([2612d55](https://github.com/kaname-png/revoltx/commit/2612d55a3d655155268dcff949e409ee3c59b3e6))
+* now baseUserDirectory is optional and update readme ([cf84713](https://github.com/kaname-png/revoltx/commit/cf847130f8112867e88e110a7f974e2efbf5fdbd))
+* **preconditions:** improve permissions calculate for client/user permissions ([247a5d7](https://github.com/kaname-png/revoltx/commit/247a5d78e1fc06dd37350c4ad43c265b88b842d6))
+* refactor small code to new revolt.js package version ([7c9e1bf](https://github.com/kaname-png/revoltx/commit/7c9e1bf86694528f6c91c806e37c992da8086a96))
+
+
+### Bug Fixes
+
+* **client:** options of hmr not resolved ([712ece8](https://github.com/kaname-png/revoltx/commit/712ece816dd9b4c9854b3291b584ca7ce10b2a87))
+* **commands:** minor fixes in command options ([c81c641](https://github.com/kaname-png/revoltx/commit/c81c641b42e3ae4f9715a829a000b58cbda3dd1d))
+* **deps:** update sapphire dependencies ([381dcca](https://github.com/kaname-png/revoltx/commit/381dcca8386df72904b7f010ab7e9771734442fc))
+* **permissions:** default permissions for dm channels ([68e8727](https://github.com/kaname-png/revoltx/commit/68e872742e484915e7842a89e55fcb9740ebb8dc))
+* types ([d47cd03](https://github.com/kaname-png/revoltx/commit/d47cd03931b34cad21415d0d769448e7205c4e27))
+* updated with latest revolt features ([38f695d](https://github.com/kaname-png/revoltx/commit/38f695d51221e1349392f6e508fba4784f7945a3))
+
 ### [1.4.1](https://github.com/kaname-png/revoltx/compare/v1.4.0...v1.4.1) (2022-03-09)
 
 ## [1.4.0](https://github.com/kaname-png/revoltx/compare/v1.3.0...v1.4.0) (2022-03-09)
