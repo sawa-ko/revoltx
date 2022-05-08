@@ -20,7 +20,7 @@ export interface HMROptions extends WatchOptions {
  * and if not provided in the object then `enabled` is also set to true.
  *
  */
-export function startHMR({ enabled = false, silent = false, ...options }: HMROptions = { enabled: true }) {
+export function startHMR({ enabled = false, silent = false, ...options }: HMROptions) {
 	// Do not enable plugin when enabled is false
 	if (!enabled) return;
 
