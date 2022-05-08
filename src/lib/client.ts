@@ -113,7 +113,6 @@ export class Client extends EventEmitter {
 
 	public constructor(private clientOptions: ClientOptions) {
 		super();
-		container.client = this;
 		this.defaultPrefix = this.clientOptions.defaultPrefix;
 		this.id = this.clientOptions.id;
 		this.ping = 0;
@@ -123,6 +122,7 @@ export class Client extends EventEmitter {
 		this.hmr = this.clientOptions.hmr;
 
 		this.stores = new StoreRegistry();
+		container.client = this;
 		container.stores = this.stores;
 		container.logger = new Logger({
 			name: 'RevoltX',
@@ -133,15 +133,14 @@ export class Client extends EventEmitter {
 			...this.clientOptions.logger
 		});
 
-		this.stores.register(new ListenerStore().registerPath(join(fileURLToPath(import.meta.url), '..', '..', 'listeners')));
-		this.stores.register(new CommandStore().registerPath(join(fileURLToPath(import.meta.url), '..', '..', 'commands')));
-		this.stores.register(new ArgumentStore().registerPath(join(fileURLToPath(import.meta.url), '..', '..', 'arguments')));
-		this.stores.register(new PreconditionStore().registerPath(join(fileURLToPath(import.meta.url), '..', '..', 'preconditions')));
+		this.stores
+			.register(new ListenerStore().registerPath(join(fileURLToPath(import.meta.url), '..', '..', 'listeners')))
+			.register(new CommandStore())
+			.register(new ArgumentStore().registerPath(join(fileURLToPath(import.meta.url), '..', '..', 'arguments')))
+			.register(new PreconditionStore().registerPath(join(fileURLToPath(import.meta.url), '..', '..', 'preconditions')));
 
-		// Register the user directory if not null:
-		if (this.clientOptions.baseUserDirectory) {
-			this.stores.registerPath(this.clientOptions.baseUserDirectory);
-		}
+		// Register user directory path for the store pieces, otherwise get the path from the "main" property in package.json using the @sapphire/pieces strategy
+		this.stores.registerPath(this.clientOptions.baseUserDirectory);
 
 		if (this.loadDefaultErrorsListeners) {
 			this.stores.get('listeners').registerPath(join(fileURLToPath(import.meta.url), '..', '..', 'listeners-errors'));

@@ -56,7 +56,21 @@ export * from './lib/utils/permissions';
 export * from './utils/strategies/flag-unordered-strategy';
 export * from './utils/regex';
 
-export { container } from '@sapphire/pieces';
+export {
+	AliasPiece,
+	AliasPieceOptions,
+	AliasStore,
+	container,
+	LoaderError,
+	MissingExportsError,
+	Piece,
+	PieceContext,
+	PieceOptions,
+	Store,
+	StoreOptions,
+	StoreRegistry,
+	StoreRegistryEntries
+} from '@sapphire/pieces';
 export { API as Revolt } from 'revolt.js';
 
 /**
