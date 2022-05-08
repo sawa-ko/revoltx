@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.1](https://github.com/kaname-png/revoltx/compare/v1.5.0...v1.5.1) (2022-05-08)
+
+
+### Bug Fixes
+
+* **utils:** hmr not enabled by default ([2c5255e](https://github.com/kaname-png/revoltx/commit/2c5255e9457d6062b46690215e8035ceb50558e2))
+
 ## [1.5.0](https://github.com/kaname-png/revoltx/compare/v1.4.1...v1.5.0) (2022-05-08)
 
 
