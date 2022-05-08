@@ -1,6 +1,6 @@
 {
 	"name": "@kaname-png/revoltx",
-	"version": "1.5.3",
+	"version": "1.5.4",
 	"description": "RevoltX is a framework for creating Revolt bots.",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",

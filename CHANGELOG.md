@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.4](https://github.com/kaname-png/revoltx/compare/v1.5.3...v1.5.4) (2022-05-08)
+
+
+### Bug Fixes
+
+* **listeners:** get ws ping data ([1a59877](https://github.com/kaname-png/revoltx/commit/1a59877fba577d2d2a9aea2cf98c37fa74fa287f))
+
 ### [1.5.3](https://github.com/kaname-png/revoltx/compare/v1.5.2...v1.5.3) (2022-05-08)
 
 
