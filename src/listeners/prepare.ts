@@ -7,14 +7,13 @@ import { Listener } from '../lib/structures/listener';
 export class CoreListener extends Listener {
 	public constructor(context: PieceContext) {
 		super(context, {
-			event: ClientEvents.Packet,
-			once: true
+			event: ClientEvents.Packet
 		});
 	}
 
 	public run(packet: ClientboundNotification) {
 		if (packet.type === 'Pong') {
-			this.container.client.ping = packet.data;
+			this.container.client.ping = new Date().getTime() - packet.data;
 		}
 	}
 }
