@@ -119,9 +119,8 @@ Commands are actions that users can request to the bot by means of a prefix and 
 
 ```typescript
 // commands/help.ts
-import { Command, CommandOptions } from '@kaname-png/revoltx';
+import { Command, CommandOptions, PieceContext } from '@kaname-png/revoltx';
 import type { Message } from 'revolt.js';
-import type { PieceContext } from '@sapphire/pieces';
 
 export class HelpCommand extends Command {
 	// If you need to add extra options to the command, you can do it in the constructor, it is not required if you don't need to add options.
@@ -147,9 +146,8 @@ The listeners have the function of listening to events that the client emits by 
 
 ```typescript
 // listener/message.ts
-import { Listener, ListenerOptions ClientEvents } from '@kaname-png/revoltx';
+import { Listener, ListenerOptions ClientEvents, PieceContext } from '@kaname-png/revoltx';
 import type { Message } from 'revolt.js';
-import type { PieceContext } from '@sapphire/pieces';
 
 export class MessageListener extends Listener {
 	// You can set the event name you need.
@@ -174,9 +172,7 @@ Arguments are parameters that the bot receives from the message sent by the user
 
 ```typescript
 // arguments/serverOwner.ts
-import type { PieceContext } from '@sapphire/pieces';
-
-import { Argument, ArgumentOptions ArgumentResult } from '../lib/structures/argument';
+import { Argument, ArgumentOptions ArgumentResult, PieceContext } from '../lib/structures/argument';
 import type { ArgumentContext } from '../utils/interfaces/argument';
 
 // <boolean> is for TypeScript users only.
@@ -230,19 +226,16 @@ Basic structure of a basic precondition.
 
 ```typescript
 // preconditions/nsfw.ts
-import type { PieceContext } from '@sapphire/pieces';
+import type { PieceContext, Precondition, PreconditionOptions, PreconditionResult, Identifiers } from '@kaname-png/revoltx';
 import type { Message } from 'revolt.js';
-
-import { Identifiers } from '../lib/errors/identifiers';
-import { Precondition, PreconditionOptions PreconditionResult } from '../lib/structures/precondition';
 
 export class NSFWPrecondition extends Precondition {
 	public constructor(context: PieceContext, options: PreconditionOptions) {
 		super(context, {
-                  ...options,
-                  name: 'NSFW'
-                  /* optional preconditions options */
-                });
+			...options,
+			name: 'NSFW'
+			/* optional preconditions options */
+		});
 	}
 
 	public run(message: Message): PreconditionResult {
@@ -274,9 +267,8 @@ TypeScript code
 
 ```typescript
 // commands/help.ts
-import { Command, CommandOptions } from '@kaname-png/revoltx';
+import { Command, CommandOptions, PieceContext } from '@kaname-png/revoltx';
 import type { Message } from 'revolt.js';
-import type { PieceContext } from '@sapphire/pieces';
 
 export class HelpCommand extends Command {
 	// If you need to add extra options to the command, you can do it in the constructor, it is not required if you don't need to add options.
