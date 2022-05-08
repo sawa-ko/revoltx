@@ -34,6 +34,12 @@ Now you can continue installing the necessary packages.
 npm i @kaname-png/revoltx revolt.js
 ```
 
+Or
+
+```
+yarn add @kaname-png/revoltx revolt.js
+```
+
 ### 🤖 Client
 
 This is how the client is created and the bot is started.
