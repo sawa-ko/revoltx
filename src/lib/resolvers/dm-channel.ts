@@ -9,7 +9,7 @@ export function resolveDMChannel(parameter: string): Result<Channel, Identifiers
 	const channelId = parameter.match(ChannelMentionIdRegex);
 	if (!channelId) return err(Identifiers.ArgumentChannelError);
 
-	const channel = container.client.bot.channels.get(channelId[1]);
+	const channel = container.client.x.channels.get(channelId[1]);
 	if (!channel || channel.channel_type !== 'DirectMessage') return err(Identifiers.ArgumentChannelError);
 
 	return ok(channel);

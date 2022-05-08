@@ -22,7 +22,7 @@ export interface ClientOptions {
 	 * Path where all commands, listeners, arguments, etc. are located.
 	 * @since 1.0.0
 	 */
-	baseDirectory: string;
+	baseUserDirectory?: string;
 
 	/**
 	 * If Client should load the pre-included error event listeners that log any encountered errors to the {@link Client.logger} instance

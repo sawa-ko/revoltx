@@ -4,7 +4,7 @@
 
 # @kaname-png/revoltx
 
-**Bots for Revolt powered by @sapphire/framework.**
+**Create Revolt bots in a simple, fast and fun way**
 
 [![GitHub](https://img.shields.io/github/license/kaname-png/revoltx)](https://github.com/kaname-png/revoltx/blob/main/LICENSE.md)
 [![codecov](https://codecov.io/gh/kaname-png/revoltx/branch/main/graph/badge.svg?token=0MSAyoZNxz)](https://codecov.io/gh/kaname-png/revoltx)
@@ -20,10 +20,9 @@
 -   Written in TypeScript
 -   Completely Modular and Extendable
 -   Command Handler, Arguments, Preconditions and Listeners Store
+-   Powered by [@sapphire/framework](https://github.com/sapphiredev/framework) preconditions and arguments system
 
 # 🔎 Introduction
-
-RevoltX is a framework for creating Revolt bots, powered by the @sapphire/framework Arguments and Preconditions system.
 
 With RevoltX you have at your disposal the creation of highly typed, secure and easy to make bots with a wide variety of tools and utilities available.
 
@@ -46,15 +45,41 @@ import { join } from 'path';
 import { fileURLToPath } from 'url';
 
 const start = () => {
-	const client = new Client({ prefix: '!', baseDirectory: join(fileURLToPath(import.meta.url), '..') });
+	const client = new Client({ prefix: '!' });
 	await client.login('<BOT_TOKEN>');
 };
+
+void start();
 ```
 
 Now you can start bot as follows:
 
 ```
 node --experimental-specifier-resolution=node client.js
+```
+
+To set the path to the commands, listeners, etc. you need to indicate the path to your "main.js" file (the file which starts your bot) in the "main" property of your `package.json` file.
+
+> Remember that the name of your main file `(main.js)` is up to you.
+
+For JavaScript it should be for example:
+
+```json
+{
+	"name": "my-awesome-bot",
+	"version": "1.0.0",
+	"main": "src/main.js"
+}
+```
+
+For TypeScript it should be for example:
+
+```json
+{
+	"name": "my-awesome-bot",
+	"version": "1.0.0",
+	"main": "dist/main.js"
+}
 ```
 
 ### 📁 Folder Structure
@@ -67,7 +92,7 @@ import { join } from 'path';
 import { fileURLToPath } from 'url';
 
 const start = () => {
-	const client = new Client({ prefix: '!', baseDirectory: join(fileURLToPath(import.meta.url), '..') });
+	const client = new Client({ prefix: '!' });
 	await client.login('<BOT_TOKEN>');
 };
 ```
@@ -77,32 +102,8 @@ Our project should have a folder structure like this.
 ```
 ├───commands
 │   └───help.js
-└───client.js
+└───main.js
 ```
-
-If you want to change the path of the client instance, for example, to be inside a directory called `lib`, you can do the following.
-
-```typescript
-import { Client } from '@kaname-png/revoltx';
-import { join } from 'path';
-import { fileURLToPath } from 'url';
-
-const start = () => {
-	const client = new Client({ prefix: '!', baseDirectory: join(fileURLToPath(import.meta.url), '..', '..') });
-	await client.login('<BOT_TOKEN>');
-};
-```
-
-Our project should have a folder structure like this.
-
-```
-├───commands
-│   └───help.js
-└───lib
-    └───client.js
-```
-
-And so, you can choose the place you want.
 
 # 📝 Create command
 
@@ -120,6 +121,7 @@ export class HelpCommands extends Command {
 	// If you need to add extra options to the command, you can do it in the constructor, it is not required if you don't need to add options.
 	constructor(context: PieceContext) {
 		super(context, {
+			alias: ['helpme']
 			/*optional commands options*/
 		});
 	}

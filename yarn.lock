@@ -1207,6 +1207,7 @@ __metadata:
     eslint: ^8.15.0
     eslint-config-prettier: ^8.5.0
     eslint-plugin-prettier: ^4.0.0
+    git-cz: ^4.8.0
     husky: ^7.0.4
     jest: ^28.1.0
     jest-circus: ^28.1.0
@@ -3877,6 +3878,16 @@ __metadata:
   version: 6.0.1
   resolution: "get-stream@npm:6.0.1"
   checksum: e04ecece32c92eebf5b8c940f51468cd53554dcbb0ea725b2748be583c9523d00128137966afce410b9b051eb2ef16d657cd2b120ca8edafcf5a65e81af63cad
+  languageName: node
+  linkType: hard
+
+"git-cz@npm:^4.8.0":
+  version: 4.8.0
+  resolution: "git-cz@npm:4.8.0"
+  bin:
+    git-cz: bin/git-cz.js
+    gitcz: bin/git-cz.js
+  checksum: 2916ac622d77e1913ce75a2bd454e1ee41071c74323819f7dcfc6f2086edc6894b7968809cb70938214d136ab1591710fcac257d81ea419e60714a9ac0e0dafe
   languageName: node
   linkType: hard
 

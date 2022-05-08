@@ -12,7 +12,7 @@ export class CoreListener extends Listener {
 	}
 
 	public run() {
-		this.container.client.id = this.container.client.bot.user?._id;
+		this.container.client.id = this.container.client.x.user?._id;
 		this.container.client.readyAt = new Date();
 	}
 }

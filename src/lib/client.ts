@@ -37,7 +37,7 @@ export class Client extends EventEmitter {
 	 * The registered stores.
 	 * @since 1.0.0
 	 */
-	public bot: Revolt.Client;
+	public x: Revolt.Client;
 
 	/**
 	 * Ping to Revolt Servers.
@@ -117,7 +117,7 @@ export class Client extends EventEmitter {
 		this.defaultPrefix = this.clientOptions.defaultPrefix;
 		this.id = this.clientOptions.id;
 		this.ping = 0;
-		this.baseDirectory = this.clientOptions.baseDirectory;
+		this.baseDirectory = this.clientOptions.baseUserDirectory;
 		this.loadDefaultErrorsListeners = this.clientOptions.loadDefaultErrorsListeners ?? true;
 		this.defaultCooldown = this.clientOptions.defaultCooldown;
 		this.hmr = this.clientOptions.hmr;
@@ -138,11 +138,9 @@ export class Client extends EventEmitter {
 		this.stores.register(new ArgumentStore().registerPath(join(fileURLToPath(import.meta.url), '..', '..', 'arguments')));
 		this.stores.register(new PreconditionStore().registerPath(join(fileURLToPath(import.meta.url), '..', '..', 'preconditions')));
 
-		if (this.baseDirectory) {
-			this.stores.get('commands').registerPath(join(this.baseDirectory, 'commands'));
-			this.stores.get('listeners').registerPath(join(this.baseDirectory, 'listeners'));
-			this.stores.get('arguments').registerPath(join(this.baseDirectory, 'arguments'));
-			this.stores.get('preconditions').registerPath(join(this.baseDirectory, 'preconditions'));
+		// Register the user directory if not null:
+		if (this.clientOptions.baseUserDirectory) {
+			this.stores.registerPath(this.clientOptions.baseUserDirectory);
 		}
 
 		if (this.loadDefaultErrorsListeners) {
@@ -150,7 +148,7 @@ export class Client extends EventEmitter {
 		}
 
 		this.fetchPrefix = this.clientOptions.fetchPrefix ?? (() => this.clientOptions.defaultPrefix ?? null);
-		this.bot = new Revolt.Client();
+		this.x = new Revolt.Client();
 		this.setupEvents();
 	}
 
@@ -161,36 +159,36 @@ export class Client extends EventEmitter {
 	 */
 	public async login(token: string) {
 		await Promise.all([...this.stores.values()].map((store) => store.loadAll()));
-		await this.bot.loginBot(token);
+		await this.x.loginBot(token);
 		startHMR(this.hmr);
-		return this.bot.user;
+		return this.x.user;
 	}
 
 	private setupEvents() {
-		this.bot.on('connected', () => this.emit(ClientEvents.Connected));
-		this.bot.on('connecting', () => this.emit(ClientEvents.Connected));
-		this.bot.on('dropped', () => this.emit(ClientEvents.Dropped));
-		this.bot.on('ready', () => this.emit(ClientEvents.Ready, this.bot.user));
-		this.bot.on('logout', () => this.emit(ClientEvents.LogOut, this.bot.user));
-		this.bot.on('message', (message: Message) => this.emit(ClientEvents.MessageCreate, message));
-		this.bot.on('message/update', (message: Message) => this.emit(ClientEvents.MessageUpdate, message));
-		this.bot.on('message/delete', (_: API.Id, message?: Message) => this.emit(ClientEvents.MessageDelete, message));
-		this.bot.on('channel/create', (channel: Channel) => this.emit(ClientEvents.ChannelCreate, channel));
-		this.bot.on('channel/update', (channel: Channel) => this.emit(ClientEvents.ChannelUpdate, channel));
-		this.bot.on('channel/delete', (_: API.Id, channel?: Channel) => this.emit(ClientEvents.ChannelDelete, channel));
-		this.bot.on('server/update', (server: Server) => this.emit(ClientEvents.ServerUpdate, server));
-		this.bot.on('server/delete', (_: API.Id, server?: Server) => this.emit(ClientEvents.ServerDelete, server));
-		this.bot.on('role/update', (_: string, role: API.Role, serverId: API.Id) =>
-			this.emit(ClientEvents.RoleUpdate, { server: this.bot.servers.get(serverId), role })
+		this.x.on('connected', () => this.emit(ClientEvents.Connected));
+		this.x.on('connecting', () => this.emit(ClientEvents.Connected));
+		this.x.on('dropped', () => this.emit(ClientEvents.Dropped));
+		this.x.on('ready', () => this.emit(ClientEvents.Ready, this.x.user));
+		this.x.on('logout', () => this.emit(ClientEvents.LogOut, this.x.user));
+		this.x.on('message', (message: Message) => this.emit(ClientEvents.MessageCreate, message));
+		this.x.on('message/update', (message: Message) => this.emit(ClientEvents.MessageUpdate, message));
+		this.x.on('message/delete', (_: API.Id, message?: Message) => this.emit(ClientEvents.MessageDelete, message));
+		this.x.on('channel/create', (channel: Channel) => this.emit(ClientEvents.ChannelCreate, channel));
+		this.x.on('channel/update', (channel: Channel) => this.emit(ClientEvents.ChannelUpdate, channel));
+		this.x.on('channel/delete', (_: API.Id, channel?: Channel) => this.emit(ClientEvents.ChannelDelete, channel));
+		this.x.on('server/update', (server: Server) => this.emit(ClientEvents.ServerUpdate, server));
+		this.x.on('server/delete', (_: API.Id, server?: Server) => this.emit(ClientEvents.ServerDelete, server));
+		this.x.on('role/update', (_: string, role: API.Role, serverId: API.Id) =>
+			this.emit(ClientEvents.RoleUpdate, { server: this.x.servers.get(serverId), role })
 		);
-		this.bot.on('role/delete', (roleId: API.Id, serverId: API.Id) =>
-			this.emit(ClientEvents.RoleDelete, { role_id: roleId, server: this.bot.servers.get(serverId) })
+		this.x.on('role/delete', (roleId: API.Id, serverId: API.Id) =>
+			this.emit(ClientEvents.RoleDelete, { role_id: roleId, server: this.x.servers.get(serverId) })
 		);
-		this.bot.on('member/join', (member: Member) => this.emit(ClientEvents.ServerMemberJoin, member));
-		this.bot.on('member/update', (member: Member) => this.emit(ClientEvents.ServerMemberUpdate, member));
-		this.bot.on('member/leave', (Ids: MemberCompositeKey) => this.emit(ClientEvents.ServerMemberLeave, this.bot.members.get(Ids.user)));
-		this.bot.on('user/relationship', (user: User) => this.emit(ClientEvents.UserRelationship, user));
-		this.bot.on('packet', (packet: ClientboundNotification) => this.emit(ClientEvents.Packet, packet));
+		this.x.on('member/join', (member: Member) => this.emit(ClientEvents.ServerMemberJoin, member));
+		this.x.on('member/update', (member: Member) => this.emit(ClientEvents.ServerMemberUpdate, member));
+		this.x.on('member/leave', (Ids: MemberCompositeKey) => this.emit(ClientEvents.ServerMemberLeave, this.x.members.get(Ids.user)));
+		this.x.on('user/relationship', (user: User) => this.emit(ClientEvents.UserRelationship, user));
+		this.x.on('packet', (packet: ClientboundNotification) => this.emit(ClientEvents.Packet, packet));
 	}
 }
 

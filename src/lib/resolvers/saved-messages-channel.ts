@@ -9,7 +9,7 @@ export function resolveSaveMessagesChannel(parameter: string): Result<Channel, I
 	const channelId = parameter.match(ChannelMentionIdRegex);
 	if (!channelId) return err(Identifiers.ArgumentChannelError);
 
-	const channel = container.client.bot.channels.get(channelId[1]);
+	const channel = container.client.x.channels.get(channelId[1]);
 	if (!channel || channel.channel_type !== 'SavedMessages') return err(Identifiers.ArgumentChannelError);
 
 	return ok(channel);

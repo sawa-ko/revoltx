@@ -9,7 +9,7 @@ export function resolveGuildChannel(parameter: string, message: Message): Result
 	const channelId = parameter.match(ChannelMentionIdRegex);
 	if (!channelId) return err(Identifiers.ArgumentChannelError);
 
-	const channel = container.client.bot.channels.get(channelId[1]);
+	const channel = container.client.x.channels.get(channelId[1]);
 	if (!channel || channel.server_id !== message.member?.server?._id) return err(Identifiers.ArgumentChannelError);
 
 	return ok(channel);

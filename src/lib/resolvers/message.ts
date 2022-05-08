@@ -9,7 +9,7 @@ export function resolveMessage(parameter: string): Result<Message, Identifiers.A
 	const messageId = parameter.match(IdRegex);
 	if (!messageId) return err(Identifiers.ArgumentMessageError);
 
-	const message = container.client.bot.messages.get(messageId[1]);
+	const message = container.client.x.messages.get(messageId[1]);
 	if (!message) return err(Identifiers.ArgumentMessageError);
 
 	return ok(message);
