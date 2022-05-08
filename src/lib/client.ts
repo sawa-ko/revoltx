@@ -160,7 +160,8 @@ export class Client extends EventEmitter {
 	public async login(token: string) {
 		await Promise.all([...this.stores.values()].map((store) => store.loadAll()));
 		await this.x.loginBot(token);
-		startHMR(this.hmr);
+
+		startHMR({ ...this.hmr });
 		return this.x.user;
 	}
 
