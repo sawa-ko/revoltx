@@ -112,16 +112,17 @@ export interface CommandJSON extends AliasPieceJSON {
 	metadata: CommandMetadata;
 }
 
-export interface CommandPreRunPayload extends CommandAcceptedPayload {}
-export interface CommandDeniedPayload extends CommandAcceptedPayload {
-	error: UserError;
-}
-
-export interface CommandAcceptedPayload {
+export interface CommandPreAcceptedPayload extends CommandParsePayload {
 	command: Command;
 	message: Message;
 	parameters: string;
 }
+
+export interface CommandDeniedPayload extends CommandPreAcceptedPayload {
+	error: UserError;
+}
+
+export interface CommandAcceptedPayload extends CommandPreAcceptedPayload {}
 
 export interface CommandErrorPayload {
 	command: Command;
@@ -140,6 +141,11 @@ export interface CommandParsePayload {
 }
 
 export interface CommandNotFoundPayload extends CommandNameNotFoundPayload {}
+
+export interface CommandContext {
+	commandName: string;
+	prefix: string;
+}
 
 /**
  * The available command pre-conditions.

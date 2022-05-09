@@ -17,7 +17,7 @@ export class CoreListener extends Listener {
 		const args = await command.preParse(message, parameters);
 		const result = await fromAsync(async () => {
 			this.container.client.emit(CommandEvents.CommandRun, { command, message });
-			await command.run(message, args);
+			await command.run(message, args, { commandName: command.name, prefix: payload.prefix });
 			this.container.client.emit(CommandEvents.CommandSuccess, { command, message });
 		});
 

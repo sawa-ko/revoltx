@@ -6,7 +6,7 @@ import type { Message } from 'revolt.js';
 import { Args } from '../parsers/args';
 import { FlagUnorderedStrategy } from '../../utils/strategies/flag-unordered-strategy';
 import { PreconditionContainerArray } from '../preconditions/precondition-container-array';
-import { CommandJSON, CommandMetadata, CommandOptions, CommandPreConditions } from '../../utils/interfaces/command';
+import { CommandContext, CommandJSON, CommandMetadata, CommandOptions, CommandPreConditions } from '../../utils/interfaces/command';
 import { BucketScope } from '../../utils/enums/command';
 import type { RunInCommands } from '../../utils/interfaces/precondition';
 import type { PermissionsResolvable } from '../utils/permissions';
@@ -149,7 +149,7 @@ export abstract class Command<T = Args, O extends CommandOptions = CommandOption
 	 * @param message The message that triggered the command.
 	 * @param args The value returned by {@link Command.preParse}, by default an instance of {@link Args}.
 	 */
-	public abstract run(message: Message, args: T): Awaitable<unknown>;
+	public abstract run(message: Message, args: T, context: CommandContext): Awaitable<unknown>;
 
 	/**
 	 * The pre-parse method. This method can be overridden by plugins to define their own argument parser.

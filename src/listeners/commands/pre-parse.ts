@@ -21,7 +21,7 @@ export class CoreListener extends Listener {
 			return this.container.client.emit(CommandEvents.CommandParse, { message, prefix: matchedPrefix });
 		}
 
-		return this.container.client.emit(CommandEvents.CommandParse, { message, prefix: matchedPrefix });
+		return this.container.client.emit(CommandEvents.NonPrefixedCommand, { message });
 	}
 
 	private commandPrefix(prefix: string | readonly string[], content: string) {
