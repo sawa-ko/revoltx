@@ -72,9 +72,3 @@ export {
 	StoreRegistryEntries
 } from '@sapphire/pieces';
 export { API as Revolt } from 'revolt.js';
-
-/**
- * Revoltx version
- */
-// eslint-disable-next-line @typescript-eslint/no-inferrable-types
-export const version: string = '[VI]{version}[/VI]';

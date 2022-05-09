@@ -20,11 +20,12 @@
 		"sversion": "standard-version --no-verify",
 		"commit": "git-cz",
 		"cz": "git-cz",
-		"prepublishOnly": "yarn build",
+		"prepublishOnly": "rollup-type-bundler -v -e url events",
 		"prepare": "husky install .github/husky"
 	},
 	"dependencies": {
 		"@discordjs/collection": "^0.6.0",
+		"@favware/rollup-type-bundler": "^1.0.7",
 		"@sapphire/pieces": "^3.3.1",
 		"@sapphire/ratelimits": "^2.4.4",
 		"@sapphire/result": "^1.1.1",
