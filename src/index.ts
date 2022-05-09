@@ -11,8 +11,8 @@ export * from './utils/interfaces/client';
 export * from './utils/interfaces/command';
 export * from './utils/interfaces/argument';
 export * from './utils/interfaces/precondition';
-export * from './utils/interfaces/argument';
 export * from './utils/interfaces/channel';
+export * from './utils/interfaces/listener';
 
 export * from './lib/structures/command';
 export * from './lib/structures/listener';
