@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.5](https://github.com/kaname-png/revoltx/compare/v1.5.4...v1.5.5) (2022-05-09)
+
+
+### Bug Fixes
+
+* **commands:** commandParse event called incorrectly and the command context parameter was added ([e75edf6](https://github.com/kaname-png/revoltx/commit/e75edf6d8ccb1f4f5abbfbd5dfa6e465e6ff9bb2))
+
 ### [1.5.4](https://github.com/kaname-png/revoltx/compare/v1.5.3...v1.5.4) (2022-05-08)
 
 
