@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.6.1](https://github.com/kaname-png/revoltx/compare/v1.6.0...v1.6.1) (2022-05-30)
+
 ## [1.6.0](https://github.com/kaname-png/revoltx/compare/v1.5.6...v1.6.0) (2022-05-09)
 
 
