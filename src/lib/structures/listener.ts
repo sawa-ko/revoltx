@@ -46,7 +46,7 @@ export abstract class Listener extends Piece {
 
 	public abstract run(...args: unknown[]): unknown;
 
-	public onLoad() {
+	public override onLoad() {
 		if (this._listener) {
 			const emitter = this.emitter!;
 
@@ -59,7 +59,7 @@ export abstract class Listener extends Piece {
 		return super.onLoad();
 	}
 
-	public onUnload() {
+	public override onUnload() {
 		if (!this.once && this._listener) {
 			const emitter = this.emitter!;
 
@@ -74,7 +74,7 @@ export abstract class Listener extends Piece {
 		return super.onUnload();
 	}
 
-	public toJSON(): ListenerJSON {
+	public override toJSON(): ListenerJSON {
 		return {
 			...super.toJSON(),
 			once: this.once,

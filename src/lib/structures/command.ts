@@ -135,7 +135,7 @@ export abstract class Command<T = Args, O extends CommandOptions = CommandOption
 		}
 	}
 
-	public toJSON(): CommandJSON {
+	public override toJSON(): CommandJSON {
 		return {
 			...super.toJSON(),
 			description: this.description ?? null,

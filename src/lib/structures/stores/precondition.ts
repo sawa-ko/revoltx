@@ -22,7 +22,7 @@ export class PreconditionStore extends Store<Precondition> {
 		return ok();
 	}
 
-	public set(key: string, value: Precondition): this {
+	public override set(key: string, value: Precondition): this {
 		if (value.position !== null) {
 			const index = this.globalPreconditions.findIndex((precondition) => precondition.position! >= value.position!);
 
@@ -34,7 +34,7 @@ export class PreconditionStore extends Store<Precondition> {
 		return super.set(key, value);
 	}
 
-	public delete(key: string): boolean {
+	public override delete(key: string): boolean {
 		const index = this.globalPreconditions.findIndex((precondition) => precondition.name === key);
 
 		// If the middleware was found, remove it
@@ -43,7 +43,7 @@ export class PreconditionStore extends Store<Precondition> {
 		return super.delete(key);
 	}
 
-	public clear(): void {
+	public override clear(): void {
 		this.globalPreconditions.length = 0;
 		return super.clear();
 	}
