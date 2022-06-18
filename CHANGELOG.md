@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/kaname-png/revoltx/compare/v1.6.1...v2.0.0) (2022-06-18)
+
+
+### ⚠ BREAKING CHANGES
+
+* Enabled typescript mode strict
+
+* update deps ([169a98d](https://github.com/kaname-png/revoltx/commit/169a98d8fa4c19076afc8e416d751fd0cba6d954))
+
 ### [1.6.1](https://github.com/kaname-png/revoltx/compare/v1.6.0...v1.6.1) (2022-05-30)
 
 ## [1.6.0](https://github.com/kaname-png/revoltx/compare/v1.5.6...v1.6.0) (2022-05-09)
