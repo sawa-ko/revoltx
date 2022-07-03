@@ -29,7 +29,7 @@
 		"@sapphire/pieces": "^3.3.4",
 		"@sapphire/ratelimits": "^2.4.4",
 		"@sapphire/result": "^2.0.0",
-		"@sapphire/utilities": "^3.6.2",
+		"@sapphire/utilities": "^3.7.0",
 		"chalk": "^5.0.1",
 		"chokidar": "^3.5.3",
 		"lexure": "^0.17.0",
