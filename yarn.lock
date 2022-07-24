@@ -671,6 +671,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@discordjs/collection@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@discordjs/collection@npm:1.0.0"
+  checksum: d8eafd35e782a6a2ee83a22c31679958bc827fce8cd5ffc7e5942cf681c96fd9543334b48c743ecda45179fcefa8d7be7a13f771d7f14effaec8a8ca25077031
+  languageName: node
+  linkType: hard
+
 "@eslint/eslintrc@npm:^1.3.0":
   version: 1.3.0
   resolution: "@eslint/eslintrc@npm:1.3.0"
@@ -1132,7 +1139,7 @@ __metadata:
   dependencies:
     "@commitlint/cli": ^17.0.3
     "@commitlint/config-conventional": ^17.0.3
-    "@discordjs/collection": ^0.7.0
+    "@discordjs/collection": ^1.0.0
     "@favware/npm-deprecate": ^1.0.4
     "@favware/rollup-type-bundler": ^1.0.9
     "@sapphire/eslint-config": ^4.3.7
