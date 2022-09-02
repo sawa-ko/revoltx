@@ -1,5 +1,5 @@
 import type { Precondition } from '../structures/precondition';
-import { UserError, UserErrorOptions } from './user-error';
+import { UserError } from './user-error';
 
 /**
  * Errors thrown by preconditions
@@ -24,7 +24,7 @@ export namespace PreconditionError {
 	 * The options for {@link PreconditionError}.
 	 * @since 1.0.0
 	 */
-	export interface Options extends Omit<UserErrorOptions, 'identifier'> {
+	export interface Options extends Omit<UserError.Options, 'identifier'> {
 		/**
 		 * The precondition that caused the error.
 		 * @since 1.0.0

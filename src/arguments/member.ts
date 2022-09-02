@@ -12,12 +12,13 @@ export class CoreArgument extends Argument<Member> {
 
 	public async run(parameter: string, context: ArgumentContext): AsyncArgumentResult<Member> {
 		const resolved = await resolveMember(parameter, context.message);
-		if (resolved.success) return this.ok(resolved.value);
-		return this.error({
-			parameter,
-			identifier: resolved.error,
-			message: 'The given argument did not resolved with a server member.',
-			context
-		});
+		return resolved.mapErrInto((identifier) =>
+			this.error({
+				parameter,
+				identifier,
+				message: 'The argument did not resolve to a member.',
+				context
+			})
+		);
 	}
 }

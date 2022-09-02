@@ -1,5 +1,5 @@
 import { container, type Store, type Piece } from '@sapphire/pieces';
-import { fromAsync, isErr } from '@sapphire/result';
+import { Result } from '@sapphire/result';
 import { watch, WatchOptions } from 'chokidar';
 import { relative } from 'node:path';
 
@@ -39,13 +39,13 @@ async function handlePiecePathDelete(store: Store<Piece>, path: string, silent: 
 	const pieceToDelete = store.find((piece) => piece.location.full === path);
 	if (!pieceToDelete) return;
 
-	const result = await fromAsync(async () => {
+	const result = await Result.fromAsync(async () => {
 		await pieceToDelete.unload();
 		if (!silent) container.logger.info(`[HMR]: Unloaded ${pieceToDelete.name} piece from ${pieceToDelete.store.name} store.`);
 	});
 
-	if (isErr(result)) {
-		container.logger.error(`[HMR]: Failed to unload ${pieceToDelete.name} piece from ${pieceToDelete.store.name} store.`, result.error);
+	if (result.isErr()) {
+		container.logger.error(`[HMR]: Failed to unload ${pieceToDelete.name} piece from ${pieceToDelete.store.name} store.`, result.err().unwrap());
 	}
 }
 
@@ -54,7 +54,7 @@ async function handlePiecePathUpdate(store: Store<Piece>, path: string, silent: 
 
 	const pieceToUpdate = store.find((piece) => piece.location.full === path);
 
-	const result = await fromAsync(async () => {
+	const result = await Result.fromAsync(async () => {
 		if (pieceToUpdate) {
 			await pieceToUpdate.reload();
 			if (!silent) container.logger.info(`[HMR]: reloaded ${pieceToUpdate.name} piece from ${pieceToUpdate.store.name} store.`);
@@ -72,7 +72,7 @@ async function handlePiecePathUpdate(store: Store<Piece>, path: string, silent: 
 		}
 	});
 
-	if (isErr(result)) {
-		container.logger.error(`[HMR]: Failed to load pieces from ${path}.`, result.error);
+	if (result.isErr()) {
+		container.logger.error(`[HMR]: Failed to load pieces from ${path}.`, result.err().unwrap());
 	}
 }

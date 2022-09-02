@@ -10,20 +10,20 @@ export class CoreListener extends Listener {
 	}
 
 	public async run(payload: CommandPreAcceptedPayload) {
-		const { message, command } = payload;
+		const { message, command, prefix } = payload;
 
 		const globalResult = await this.container.stores.get('preconditions').run(message, command, payload as any);
-		if (!globalResult.success) {
-			this.container.client.emit(CommandEvents.CommandDenied, { ...payload, error: globalResult.error });
+		if (!globalResult.isErr()) {
+			this.container.client.emit(CommandEvents.CommandDenied, { ...payload, error: globalResult.err().unwrap() });
 			return;
 		}
 
 		const localResult = await command.preconditions.run(message, command, payload as any);
-		if (!localResult.success) {
-			this.container.client.emit(CommandEvents.CommandDenied, { ...payload, error: localResult.error });
+		if (!localResult.isErr()) {
+			this.container.client.emit(CommandEvents.CommandDenied, { ...payload, error: localResult.err().unwrap() });
 			return;
 		}
 
-		this.container.client.emit(CommandEvents.CommandAccepted, payload);
+		this.container.client.emit(CommandEvents.CommandAccepted, payload, { commandName: command.name, prefix });
 	}
 }

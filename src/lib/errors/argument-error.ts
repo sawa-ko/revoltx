@@ -1,5 +1,5 @@
 import type { IArgument } from '../structures/argument';
-import { UserError, UserErrorOptions } from './user-error';
+import { UserError } from './user-error';
 
 /**
  * Errors thrown by the argument parser
@@ -27,7 +27,7 @@ export namespace ArgumentError {
 	 * The options for {@link ArgumentError}.
 	 * @since 1.0.0
 	 */
-	export interface Options<T> extends Omit<UserErrorOptions, 'identifier'> {
+	export interface Options<T> extends Omit<UserError.Options, 'identifier'> {
 		/**
 		 * The argument that caused the error.
 		 * @since 1.0.0

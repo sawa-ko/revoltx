@@ -1,11 +1,14 @@
 import type { AliasPieceOptions } from '@sapphire/pieces';
-import type { Maybe } from '@sapphire/result';
+import type { Option, Result } from '@sapphire/result';
 import type { Message, Member, User, Channel } from 'revolt.js';
+import type { ArgumentError } from '../../lib/errors/argument-error';
+import type { UserError } from '../../lib/errors/user-error';
 
 import type { Args } from '../../lib/parsers/args';
 import type { IArgument } from '../../lib/structures/argument';
 import type { Command } from '../../lib/structures/command';
 import type { DirectMessageChannel, GroupChannel, SavedMessagesChannel, TextChannel, VoiceChannel } from './channel';
+import type { CommandRunContext } from './command';
 
 export interface ArgumentOptions extends AliasPieceOptions {}
 
@@ -14,6 +17,7 @@ export interface ArgumentContext<T = unknown> extends Record<PropertyKey, unknow
 	args: Args;
 	message: Message;
 	command: Command;
+	commandContext: CommandRunContext;
 	minimum?: number;
 	maximum?: number;
 	inclusive?: boolean;
@@ -56,5 +60,14 @@ export interface ArgsNextCallback<T> {
 	/**
 	 * The value to be mapped.
 	 */
-	(value: string): Maybe<T>;
+	(value: string): Option<T>;
+}
+
+export type ResultType<T> = Result<T, UserError | ArgumentError<T>>;
+export type ArrayResultType<T> = Result<T[], UserError | ArgumentError<T>>;
+
+export interface ArgsJson {
+	message: Message;
+	command: Command;
+	commandContext: CommandRunContext;
 }

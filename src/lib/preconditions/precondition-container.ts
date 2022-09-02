@@ -1,9 +1,9 @@
+import type { Result } from '@sapphire/result';
 import type { Awaitable } from '@sapphire/utilities';
 import type { Message } from 'revolt.js';
 import type { PreconditionContext } from '../../utils/interfaces/precondition';
 
 import type { UserError } from '../errors/user-error';
-import type { Result } from '../parsers/result';
 import type { Command } from '../structures/command';
 
 /**

@@ -12,12 +12,13 @@ export class CoreArgument extends Argument<User> {
 
 	public async run(parameter: string, context: ArgumentContext): AsyncArgumentResult<User> {
 		const resolved = await resolveUser(parameter);
-		if (resolved.success) return this.ok(resolved.value);
-		return this.error({
-			parameter,
-			identifier: resolved.error,
-			message: 'The given argument did not resolve to a Revolt user.',
-			context
-		});
+		return resolved.mapErrInto((identifier) =>
+			this.error({
+				parameter,
+				identifier,
+				message: 'The argument did not resolve to a user.',
+				context
+			})
+		);
 	}
 }
