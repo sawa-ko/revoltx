@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.2](https://github.com/kaname-png/revoltx/compare/v2.0.1...v2.0.2) (2022-09-02)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sapphire/pieces to ^3.3.5 ([8448669](https://github.com/kaname-png/revoltx/commit/844866938d425fc6c495a747ace0ad957d654421))
+* **deps:** update dependency @sapphire/result to v2 ([cdcd251](https://github.com/kaname-png/revoltx/commit/cdcd251e9bf710bbc7b32e93164aa5e6eb97eb32))
+* **deps:** update dependency @sapphire/utilities to ^3.7.0 ([07360df](https://github.com/kaname-png/revoltx/commit/07360df0e96189e98168970c9cafd5608a9402d7))
+* **deps:** update dependency @sapphire/utilities to ^3.8.0 ([c52524e](https://github.com/kaname-png/revoltx/commit/c52524efe237325dd82e19c6263d7b0bcda438fe))
+* **deps:** update sapphire dependencies ([678fe7c](https://github.com/kaname-png/revoltx/commit/678fe7c9e8532ff3fbd655c06e63416d32ac5b23))
+* downgrade @sapphire/result ([441d8c2](https://github.com/kaname-png/revoltx/commit/441d8c2129c170ee122ca38d2927f9abdb3b32a4))
+* **listeners:** check preoconditions ([fdb5cf3](https://github.com/kaname-png/revoltx/commit/fdb5cf37291ed542e00f2c594751479b82b57cb0))
+* some errors ([42e6ee2](https://github.com/kaname-png/revoltx/commit/42e6ee24a28485ef89796db0b0eff00ad0692dec))
+
 ### [2.0.1](https://github.com/kaname-png/revoltx/compare/v2.0.0...v2.0.1) (2022-06-28)
 
 
