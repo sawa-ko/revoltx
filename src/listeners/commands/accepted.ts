@@ -3,7 +3,7 @@ import { Result } from '@sapphire/result';
 
 import { Listener } from '../../lib/structures/listener';
 import { CommandEvents } from '../../utils/enums/command';
-import type { CommandAcceptedPayload } from '../../utils/interfaces/command';
+import type { CommandAcceptedPayload, CommandRunContext } from '../../utils/interfaces/command';
 
 export class CoreListener extends Listener {
 	public constructor(context: PieceContext) {
@@ -12,8 +12,8 @@ export class CoreListener extends Listener {
 		});
 	}
 
-	public async run(payload: CommandAcceptedPayload) {
-		const { command, message, parameters, context } = payload;
+	public async run(payload: CommandAcceptedPayload, context: CommandRunContext) {
+		const { command, message, parameters } = payload;
 		const args = await command.preParse(message, parameters, context);
 		const result = await Result.fromAsync(async () => {
 			this.container.client.emit(CommandEvents.CommandRun, { command, message });

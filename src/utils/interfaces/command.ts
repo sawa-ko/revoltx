@@ -1,4 +1,5 @@
 import type { AliasPieceJSON, AliasPieceOptions } from '@sapphire/pieces';
+import type { ResultError } from '@sapphire/result';
 import type { NonNullObject } from '@sapphire/utilities';
 import type { Message, API } from 'revolt.js';
 
@@ -142,7 +143,7 @@ export interface CommandAcceptedPayload extends CommandPreAcceptedPayload {
 export interface CommandErrorPayload {
 	command: Command;
 	message: Message;
-	error: unknown;
+	error: ResultError<unknown>;
 }
 
 export interface CommandNameNotFoundPayload {
