@@ -12,12 +12,13 @@ export class CoreArgument extends Argument<Channel> {
 
 	public run(parameter: string, context: ArgumentContext): ArgumentResult<Channel> {
 		const resolved = resolveGuildTextChannel(parameter, context.message);
-		if (resolved.success) return this.ok(resolved.value);
-		return this.error({
-			parameter,
-			identifier: resolved.error,
-			message: 'The argument did not resolve to a guild text channel.',
-			context
-		});
+		return resolved.mapErrInto((identifier) =>
+			this.error({
+				parameter,
+				identifier,
+				message: 'The argument did not resolve to a guild text channel.',
+				context
+			})
+		);
 	}
 }

@@ -1,5 +1,5 @@
 import { Piece, PieceContext } from '@sapphire/pieces';
-import { fromAsync, isErr } from '@sapphire/result';
+import { Result } from '@sapphire/result';
 
 import type { EventEmitter } from 'events';
 
@@ -83,9 +83,9 @@ export abstract class Listener extends Piece {
 	}
 
 	private async _run(...args: unknown[]) {
-		const result = await fromAsync(() => this.run(...args));
-		if (isErr(result)) {
-			this.container.client.emit(ListenerEvents.ListenerError, { listener: this, error: result.error });
+		const result = await Result.fromAsync(() => this.run(...args));
+		if (result.isErr()) {
+			this.container.client.emit(ListenerEvents.ListenerError, { listener: this, error: result.err().unwrap() });
 		}
 	}
 

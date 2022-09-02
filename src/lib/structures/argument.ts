@@ -1,21 +1,26 @@
 import { AliasPiece } from '@sapphire/pieces';
+import type { Result } from '@sapphire/result';
 import type { Awaitable } from '@sapphire/utilities';
-
-import { Args } from '../parsers/args';
-import type { ArgumentContext, ArgumentOptions } from '../../utils/interfaces/argument';
+import type { Message } from 'revolt.js';
+import type { CommandRunContext } from '../../utils/interfaces/command';
 import type { ArgumentError } from '../errors/argument-error';
-import type { UserError } from '../errors/user-error';
-import type { Result } from '../parsers/result';
+import { Args } from '../parsers/args';
+import type { Command } from './command';
 
 /**
  * Defines a synchronous result of an {@link Argument}, check {@link Argument.AsyncResult} for the asynchronous version.
  */
-export type ArgumentResult<T> = Awaitable<Result<T, UserError>>;
+export type ArgumentResult<T> = Result<T, ArgumentError<T>>;
 
 /**
- * Defines an asynchronous result of an {@link Argument}, check {@link ArgumentResult} for the synchronous version.
+ * Defines a synchronous or asynchronous result of an {@link Argument}, check {@link Argument.AsyncResult} for the asynchronous version.
  */
-export type AsyncArgumentResult<T> = Promise<Result<T, UserError>>;
+export type AwaitableArgumentResult<T> = Awaitable<ArgumentResult<T>>;
+
+/**
+ * Defines an asynchronous result of an {@link Argument}, check {@link Argument.Result} for the synchronous version.
+ */
+export type AsyncArgumentResult<T> = Promise<ArgumentResult<T>>;
 
 export interface IArgument<T> {
 	/**
@@ -28,7 +33,7 @@ export interface IArgument<T> {
 	 * @param parameter The string parameter to parse.
 	 * @param context The context for the method call, contains the message, command, and other options.
 	 */
-	run(parameter: string, context: ArgumentContext<T>): ArgumentResult<T>;
+	run(parameter: string, context: Argument.Context<T>): Argument.AwaitableResult<T>;
 }
 
 /**
@@ -39,7 +44,7 @@ export interface IArgument<T> {
  * ```typescript
  * // TypeScript:
  * import { Argument, PieceContext } from '@sapphire/framework';
- * import { URL } from 'url';
+ * import { URL } from 'node:url';
  *
  * // Define a class extending `Argument`, then export it.
  * // NOTE: You can use `export default` or `export =` too.
@@ -48,7 +53,7 @@ export interface IArgument<T> {
  *     super(context, { name: 'hyperlink', aliases: ['url'] });
  *   }
  *
- *   public run(argument: string): ArgumentResult<URL> {
+ *   public run(argument: string): Argument.Result<URL> {
  *     try {
  *       return this.ok(new URL(argument));
  *     } catch {
@@ -87,22 +92,43 @@ export interface IArgument<T> {
  * }
  * ```
  */
-export abstract class Argument<T = unknown, O extends ArgumentOptions = ArgumentOptions> extends AliasPiece<O> implements IArgument<T> {
-	public abstract run(parameter: string, context: ArgumentContext<T>): ArgumentResult<T>;
+export abstract class Argument<T = unknown, O extends Argument.Options = Argument.Options> extends AliasPiece<O> implements IArgument<T> {
+	public abstract run(parameter: string, context: Argument.Context<T>): Argument.AwaitableResult<T>;
 
 	/**
 	 * Wraps a value into a successful value.
 	 * @param value The value to wrap.
 	 */
-	public ok(value: T): ArgumentResult<T> {
+	public ok(value: T): Argument.Result<T> {
 		return Args.ok(value);
 	}
 
 	/**
-	 * Constructs an {@link ArgumentError} with a custom type.
-	 * @param options ArgumentError options
+	 * Constructs an {@link Err} result containing an {@link ArgumentError} with a custom type.
+	 * @param options The options to pass to the ArgumentError.
 	 */
-	public error(options: Omit<ArgumentError.Options<T>, 'argument'>): ArgumentResult<T> {
+	public error(options: Omit<ArgumentError.Options<T>, 'argument'>): Argument.Result<T> {
 		return Args.error({ argument: this, identifier: this.name, ...options });
 	}
+}
+
+export interface ArgumentOptions extends AliasPiece.Options {}
+
+export interface ArgumentContext<T = unknown> extends Record<PropertyKey, unknown> {
+	argument: IArgument<T>;
+	args: Args;
+	message: Message;
+	command: Command;
+	commandContext: CommandRunContext;
+	minimum?: number;
+	maximum?: number;
+	inclusive?: boolean;
+}
+
+export namespace Argument {
+	export type Options = ArgumentOptions;
+	export type Context<T = unknown> = ArgumentContext<T>;
+	export type Result<T> = ArgumentResult<T>;
+	export type AwaitableResult<T> = AwaitableArgumentResult<T>;
+	export type AsyncResult<T> = AsyncArgumentResult<T>;
 }

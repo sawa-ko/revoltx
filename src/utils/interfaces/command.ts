@@ -1,4 +1,5 @@
 import type { AliasPieceJSON, AliasPieceOptions } from '@sapphire/pieces';
+import type { ResultError } from '@sapphire/result';
 import type { NonNullObject } from '@sapphire/utilities';
 import type { Message, API } from 'revolt.js';
 
@@ -104,6 +105,19 @@ export interface CommandOptions extends AliasPieceOptions, FlagStrategyOptions {
 	 * @since 1.1.3
 	 */
 	userPermissions?: PermissionsResolvable[];
+
+	/**
+	 * The quotes accepted by this command, pass `[]` to disable them.
+	 * @since 1.1.4
+	 * @default
+	 * [
+	 *   ['"', '"'], // Double quotes
+	 *   ['“', '”'], // Fancy quotes (on iOS)
+	 *   ['「', '」'] // Corner brackets (CJK)
+	 *   ['«', '»'] // French quotes (guillemets)
+	 * ]
+	 */
+	quotes?: [string, string][];
 }
 
 export interface CommandJSON extends AliasPieceJSON {
@@ -122,12 +136,14 @@ export interface CommandDeniedPayload extends CommandPreAcceptedPayload {
 	error: UserError;
 }
 
-export interface CommandAcceptedPayload extends CommandPreAcceptedPayload {}
+export interface CommandAcceptedPayload extends CommandPreAcceptedPayload {
+	context: CommandRunContext;
+}
 
 export interface CommandErrorPayload {
 	command: Command;
 	message: Message;
-	error: unknown;
+	error: ResultError<unknown>;
 }
 
 export interface CommandNameNotFoundPayload {
@@ -143,6 +159,11 @@ export interface CommandParsePayload {
 export interface CommandNotFoundPayload extends CommandNameNotFoundPayload {}
 
 export interface CommandContext {
+	commandName: string;
+	prefix: string;
+}
+
+export interface CommandRunContext {
 	commandName: string;
 	prefix: string;
 }

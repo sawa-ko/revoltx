@@ -12,12 +12,13 @@ export class CoreArgument extends Argument<Message> {
 
 	public run(parameter: string, context: ArgumentContext): ArgumentResult<Message> {
 		const resolved = resolveMessage(parameter);
-		if (resolved.success) return this.ok(resolved.value);
-		return this.error({
-			parameter,
-			identifier: resolved.error,
-			message: 'The argument did not resolve to a valid message.',
-			context
-		});
+		return resolved.mapErrInto((identifier) =>
+			this.error({
+				parameter,
+				identifier,
+				message: 'The argument did not resolve to a message.',
+				context
+			})
+		);
 	}
 }

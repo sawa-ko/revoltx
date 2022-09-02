@@ -16,7 +16,6 @@ export * from './utils/interfaces/listener';
 
 export * from './lib/structures/command';
 export * from './lib/structures/listener';
-export * from './lib/structures/argument';
 export * from './lib/structures/precondition';
 
 export * from './lib/resolvers/boolean';
@@ -43,8 +42,6 @@ export * from './lib/errors/precondition-error';
 export * from './lib/errors/user-error';
 
 export * from './lib/parsers/args';
-export * from './lib/parsers/maybe';
-export * from './lib/parsers/result';
 
 export * from './lib/structures/stores/argument';
 export * from './lib/structures/stores/command';

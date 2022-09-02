@@ -1,5 +1,5 @@
 import { Identifiers } from '../errors/identifiers';
-import { err, ok, Result } from '../parsers/result';
+import { err, ok, Result } from '@sapphire/result';
 
 const baseTruths = ['1', 'true', '+', 't', 'yes', 'y'] as const;
 const baseFalses = ['0', 'false', '-', 'f', 'no', 'n'] as const;

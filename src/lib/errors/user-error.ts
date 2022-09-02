@@ -15,9 +15,10 @@ export class UserError extends Error {
 
 	/**
 	 * Constructs an UserError.
-	 * @param options UserError options
+	 * @param type The identifier, useful to localize emitted errors.
+	 * @param message The error message.
 	 */
-	public constructor(options: UserErrorOptions) {
+	public constructor(options: UserError.Options) {
 		super(options.message);
 		this.identifier = options.identifier;
 		this.context = options.context ?? null;
@@ -29,23 +30,29 @@ export class UserError extends Error {
 	}
 }
 
-export interface UserErrorOptions {
+export namespace UserError {
 	/**
-	 * The identifier for this error.
+	 * The options for {@link UserError}.
 	 * @since 1.0.0
 	 */
-	identifier: string;
+	export interface Options {
+		/**
+		 * The identifier for this error.
+		 * @since 1.0.0
+		 */
+		identifier: string;
 
-	/**
-	 * The message to be passed to the Error constructor.
-	 * @since 1.0.0
-	 */
-	message?: string;
+		/**
+		 * The message to be passed to the Error constructor.
+		 * @since 1.0.0
+		 */
+		message?: string;
 
-	/**
-	 * The extra context to provide more information about this error.
-	 * @since 1.0.0
-	 * @default null
-	 */
-	context?: unknown;
+		/**
+		 * The extra context to provide more information about this error.
+		 * @since 1.0.0
+		 * @default null
+		 */
+		context?: unknown;
+	}
 }

@@ -1,16 +1,17 @@
-/* eslint-disable @typescript-eslint/require-await */
+import { Option, Result } from '@sapphire/result';
 import { container } from '@sapphire/pieces';
-import type * as Lexure from 'lexure';
+import type { ArgumentStream, Parameter } from '@sapphire/lexure';
+import type { Awaitable } from '@sapphire/utilities';
+
 import type { Message } from 'revolt.js';
 
 import { ArgumentError } from '../errors/argument-error';
 import { Identifiers } from '../errors/identifiers';
 import { UserError } from '../errors/user-error';
-import { isSome, maybe, Maybe } from './maybe';
-import { Err, err, isErr, isOk, ok, Ok, Result } from './result';
 import type { ArgumentResult, IArgument } from '../structures/argument';
 import type { Command } from '../structures/command';
-import type { ArgOptions, ArgsNextCallback, ArgType, RepeatArgOptions } from '../../utils/interfaces/argument';
+import type { ArgOptions, ArgsJson, ArgsNextCallback, ArgType, ArrayResultType, RepeatArgOptions, ResultType } from '../../utils/interfaces/argument';
+import type { CommandRunContext } from '../../utils/interfaces/command';
 
 /**
  * The argument parser to be used in {@link Command}.
@@ -27,32 +28,34 @@ export class Args {
 	public readonly command: Command;
 
 	/**
+	 * The context of the command being run.
+	 */
+	public readonly commandContext: CommandRunContext;
+
+	/**
 	 * The internal Lexure parser.
 	 */
-	protected readonly parser: Lexure.Args;
+	protected readonly parser: ArgumentStream;
 
 	/**
 	 * The states stored in the args.
 	 * @see Args#save
 	 * @see Args#restore
 	 */
-	private readonly states: Lexure.ArgsState[] = [];
+	private readonly states: ArgumentStream.State[] = [];
 
-	public constructor(message: Message, command: Command, parser: Lexure.Args) {
+	public constructor(message: Message, command: Command, parser: ArgumentStream, context: CommandRunContext) {
 		this.message = message;
 		this.command = command;
 		this.parser = parser;
+		this.commandContext = context;
 	}
 
 	/**
 	 * Sets the parser to the first token.
 	 */
 	public start(): Args {
-		this.parser.state = {
-			usedIndices: new Set(),
-			position: 0,
-			positionFromEnd: this.parser.parserOutput.ordered.length - 1
-		};
+		this.parser.reset();
 		return this;
 	}
 
@@ -63,7 +66,7 @@ export class Args {
 	 * ```typescript
 	 * // !square 5
 	 * const resolver = Args.make((arg) => {
-	 *   const parsed = Number(argument);
+	 *   const parsed = Number(arg);
 	 *   if (Number.isNaN(parsed)) return err(new UserError('ArgumentNumberNaN', 'You must write a valid number.'));
 	 *   return ok(parsed);
 	 * });
@@ -74,7 +77,7 @@ export class Args {
 	 * // Sends "The result is: 25"
 	 * ```
 	 */
-	public async pickResult<T>(type: IArgument<T>, options?: ArgOptions): Promise<Result<T, UserError>>;
+	public async pickResult<T>(type: IArgument<T>, options?: ArgOptions): Promise<ResultType<T>>;
 	/**
 	 * Retrieves the next parameter and parses it. Advances index on success.
 	 * @param type The type of the argument.
@@ -91,9 +94,9 @@ export class Args {
 	 * // Sends "The result is: 3"
 	 * ```
 	 */
-	public async pickResult<K extends keyof ArgType>(type: K, options?: ArgOptions): Promise<Result<ArgType[K], UserError>>;
-	public async pickResult<K extends keyof ArgType>(type: K, options: ArgOptions = {}): Promise<Result<ArgType[K], UserError>> {
-		const argument = this.resolveArgument(type);
+	public async pickResult<K extends keyof ArgType>(type: K, options?: ArgOptions): Promise<ResultType<ArgType[K]>>;
+	public async pickResult<K extends keyof ArgType>(type: K, options: ArgOptions = {}): Promise<ResultType<ArgType[K]>> {
+		const argument = this.resolveArgument<ArgType[K]>(type);
 		if (!argument) return this.unavailableArgument(type);
 
 		const result = await this.parser.singleParseAsync(async (arg) =>
@@ -102,12 +105,16 @@ export class Args {
 				argument,
 				message: this.message,
 				command: this.command,
+				commandContext: this.commandContext,
 				...options
 			})
 		);
-		if (result === null) return this.missingArguments();
-		if (isOk(result)) return result as Ok<ArgType[K]>;
-		return result;
+
+		if (result.isErrAnd((value) => value === null)) {
+			return this.missingArguments();
+		}
+
+		return result as ResultType<ArgType[K]>;
 	}
 
 	/**
@@ -117,7 +124,7 @@ export class Args {
 	 * ```typescript
 	 * // !square 5
 	 * const resolver = Args.make((arg) => {
-	 *   const parsed = Number(argument);
+	 *   const parsed = Number(arg);
 	 *   if (Number.isNaN(parsed)) return err(new UserError('ArgumentNumberNaN', 'You must write a valid number.'));
 	 *   return ok(parsed);
 	 * });
@@ -143,8 +150,7 @@ export class Args {
 	public async pick<K extends keyof ArgType>(type: K, options?: ArgOptions): Promise<ArgType[K]>;
 	public async pick<K extends keyof ArgType>(type: K, options?: ArgOptions): Promise<ArgType[K]> {
 		const result = await this.pickResult(type, options);
-		if (isOk(result)) return result.value;
-		throw result.error;
+		return result.unwrap();
 	}
 
 	/**
@@ -161,7 +167,7 @@ export class Args {
 	 * // Sends "The reversed value is... !dlrow olleH"
 	 * ```
 	 */
-	public async restResult<T>(type: IArgument<T>, options?: ArgOptions): Promise<Result<T, UserError>>;
+	public async restResult<T>(type: IArgument<T>, options?: ArgOptions): Promise<ResultType<T>>;
 	/**
 	 * Retrieves all the following arguments.
 	 * @param type The type of the argument.
@@ -178,25 +184,27 @@ export class Args {
 	 * // Sends "The repeated value is... Hello World!Hello World!"
 	 * ```
 	 */
-	public async restResult<K extends keyof ArgType>(type: K, options?: ArgOptions): Promise<Result<ArgType[K], UserError>>;
-	public async restResult<T>(type: keyof ArgType | IArgument<T>, options: ArgOptions = {}): Promise<Result<unknown, UserError>> {
+	public async restResult<K extends keyof ArgType>(type: K, options?: ArgOptions): Promise<ResultType<ArgType[K]>>;
+	public async restResult<T>(type: keyof ArgType | IArgument<T>, options: ArgOptions = {}): Promise<ResultType<T>> {
 		const argument = this.resolveArgument(type);
 		if (!argument) return this.unavailableArgument(type);
 		if (this.parser.finished) return this.missingArguments();
 
 		const state = this.parser.save();
-		const data = this.parser.many().reduce((acc, token) => `${acc}${token.value}${token.trailing}`, '');
+		const data = this.parser
+			.many()
+			.unwrapOr<Parameter[]>([])
+			.reduce((acc, parameter) => `${acc}${parameter.leading}${parameter.value}`, '');
 		const result = await argument.run(data, {
 			args: this,
 			argument,
 			message: this.message,
 			command: this.command,
+			commandContext: this.commandContext,
 			...options
 		});
-		if (isOk(result)) return result;
 
-		this.parser.restore(state);
-		return result;
+		return result.inspectErr(() => this.parser.restore(state));
 	}
 
 	/**
@@ -227,8 +235,7 @@ export class Args {
 	public async rest<K extends keyof ArgType>(type: K, options?: ArgOptions): Promise<ArgType[K]>;
 	public async rest<K extends keyof ArgType>(type: K, options?: ArgOptions): Promise<ArgType[K]> {
 		const result = await this.restResult(type, options);
-		if (isOk(result)) return result.value;
-		throw result.error;
+		return result.unwrap();
 	}
 
 	/**
@@ -245,7 +252,7 @@ export class Args {
 	 * // Sends "You have written 2 word(s): olleH !dlroW"
 	 * ```
 	 */
-	public async repeatResult<T>(type: IArgument<T>, options?: RepeatArgOptions): Promise<Result<T[], UserError>>;
+	public async repeatResult<T>(type: IArgument<T>, options?: RepeatArgOptions): Promise<ArrayResultType<T>>;
 	/**
 	 * Retrieves all the following arguments.
 	 * @param type The type of the argument.
@@ -259,8 +266,8 @@ export class Args {
 	 * // Sends "You have written 2 word(s): Hello World!"
 	 * ```
 	 */
-	public async repeatResult<K extends keyof ArgType>(type: K, options?: RepeatArgOptions): Promise<Result<ArgType[K][], UserError>>;
-	public async repeatResult<K extends keyof ArgType>(type: K, options: RepeatArgOptions = {}): Promise<Result<ArgType[K][], UserError>> {
+	public async repeatResult<K extends keyof ArgType>(type: K, options?: RepeatArgOptions): Promise<ArrayResultType<ArgType[K]>>;
+	public async repeatResult<K extends keyof ArgType>(type: K, options: RepeatArgOptions = {}): Promise<ArrayResultType<ArgType[K]>> {
 		const argument = this.resolveArgument(type);
 		if (!argument) return this.unavailableArgument(type);
 		if (this.parser.finished) return this.missingArguments();
@@ -273,19 +280,25 @@ export class Args {
 					argument,
 					message: this.message,
 					command: this.command,
+					commandContext: this.commandContext,
 					...options
 				})
 			);
-			if (result === null) break;
-			if (isErr(result)) {
-				if (output.length === 0) return result;
+			if (result.isErr()) {
+				const error = result.unwrapErr();
+				if (error === null) break;
+
+				if (output.length === 0) {
+					return result as Result.Err<UserError | ArgumentError<ArgType[K]>>;
+				}
+
 				break;
 			}
 
-			output.push(result.value as ArgType[K]);
+			output.push(result.unwrap() as ArgType[K]);
 		}
 
-		return ok(output);
+		return Result.ok(output);
 	}
 
 	/**
@@ -315,8 +328,7 @@ export class Args {
 	public async repeat<K extends keyof ArgType>(type: K, options?: RepeatArgOptions): Promise<ArgType[K][]>;
 	public async repeat<K extends keyof ArgType>(type: K, options?: RepeatArgOptions): Promise<ArgType[K][]> {
 		const result = await this.repeatResult(type, options);
-		if (isOk(result)) return result.value;
-		throw result.error;
+		return result.unwrap();
 	}
 
 	/**
@@ -331,15 +343,17 @@ export class Args {
 	 * const resolver = Args.make((arg) => ok(arg.split('').reverse().join('')));
 	 *
 	 * const result = await args.peekResult(() => args.repeatResult(resolver));
-	 * if (isOk(result)) await message.channel.send(
-	 *   `Reversed ${result.value.length} word(s): ${result.value.join(' ')}`
+	 * await result.inspectAsync((value) =>
+	 * 	message.channel.send(`Reversed ${value.length} word(s): ${value.join(' ')}`)
 	 * ); // Reversed 2 word(s): olleh dlrow
 	 *
 	 * const firstWord = await args.pickResult('string');
-	 * if (isOk(firstWord)) await message.channel.send(firstWord.value.toUpperCase()); // HELLO
+	 * await firstWord.inspectAsync((value) =>
+	 * 	message.channel.send(firstWord.value.toUpperCase())
+	 * ); // HELLO
 	 * ```
 	 */
-	public async peekResult<T>(type: () => ArgumentResult<T>): Promise<Result<T, UserError>>;
+	public async peekResult<T>(type: () => ArgumentResult<T>): Promise<ResultType<T>>;
 	/**
 	 * Peeks the following parameter(s) without advancing the parser's state.
 	 * Passing a function as a parameter allows for returning {@link Args.pickResult}, {@link Args.repeatResult},
@@ -352,13 +366,13 @@ export class Args {
 	 * const resolver = Args.make((arg) => ok(arg.split('').reverse().join('')));
 	 *
 	 * const peekedWord = await args.peekResult(resolver);
-	 * if (isOk(peekedWord)) await message.channel.send(peekedWord.value); // erihppas
+	 * await peekedWord.inspectAsync((value) => message.channel.send(peekedWord.value)); // erihppas
 	 *
 	 * const firstWord = await args.pickResult('string');
-	 * if (isOk(firstWord)) await message.channel.send(firstWord.value.toUpperCase()); // SAPPHIRE
+	 * await firstWord.inspectAsync((value) => message.channel.send(value.toUpperCase())); // SAPPHIRE
 	 * ```
 	 */
-	public async peekResult<T>(type: IArgument<T>, options?: ArgOptions): Promise<Result<T, UserError>>;
+	public async peekResult<T>(type: IArgument<T>, options?: ArgOptions): Promise<ResultType<T>>;
 	/**
 	 * Peeks the following parameter(s) without advancing the parser's state.
 	 * Passing a function as a parameter allows for returning {@link Args.pickResult}, {@link Args.repeatResult},
@@ -369,23 +383,25 @@ export class Args {
 	 * ```typescript
 	 * // !datethenaddtwo 1608867472611
 	 * const date = await args.peekResult('date');
-	 * if (isOk(date)) await message.channel.send(
-	 *   `Your date (in UTC): ${date.value.toUTCString()}`
+	 * await date.inspectAsync((value) =>
+	 * 	message.channel.send(`Your date (in UTC): ${date.value.toUTCString()}`)
 	 * ); // Your date (in UTC): Fri, 25 Dec 2020 03:37:52 GMT
 	 *
 	 * const result = await args.pickResult('number', { maximum: Number.MAX_SAFE_INTEGER - 2 });
-	 * if (isOk(result)) await message.channel.send(`Your number plus two: ${result.value + 2}`); // Your number plus two: 1608867472613
+	 * await result.inspectAsync((value) =>
+	 * 	message.channel.send(`Your number plus two: ${result.value + 2}`)
+	 * ); // Your number plus two: 1608867472613
 	 * ```
 	 */
 	public async peekResult<K extends keyof ArgType>(
-		type: (() => ArgumentResult<ArgType[K]>) | K,
+		type: (() => Awaitable<ArgumentResult<ArgType[K]>>) | K,
 		options?: ArgOptions
-	): Promise<Result<ArgType[K], UserError>>;
+	): Promise<ResultType<ArgType[K]>>;
 
 	public async peekResult<K extends keyof ArgType>(
-		type: (() => ArgumentResult<ArgType[K]>) | K,
+		type: (() => Awaitable<ArgumentResult<ArgType[K]>>) | K,
 		options: ArgOptions = {}
-	): Promise<Result<ArgType[K], UserError>> {
+	): Promise<ResultType<ArgType[K]>> {
 		this.save();
 		const result = typeof type === 'function' ? await type() : await this.pickResult(type, options);
 		this.restore();
@@ -455,8 +471,7 @@ export class Args {
 	public async peek<K extends keyof ArgType>(type: (() => ArgumentResult<ArgType[K]>) | K, options?: ArgOptions): Promise<ArgType[K]>;
 	public async peek<K extends keyof ArgType>(type: (() => ArgumentResult<ArgType[K]>) | K, options?: ArgOptions): Promise<ArgType[K]> {
 		const result = await this.peekResult(type, options);
-		if (isOk(result)) return result.value;
-		throw result.error;
+		return result.unwrap();
 	}
 
 	/**
@@ -469,7 +484,7 @@ export class Args {
 	 * // -> { exists: true, value: '1' }
 	 * ```
 	 */
-	public nextMaybe(): Maybe<string>;
+	public nextMaybe(): Option<string>;
 	/**
 	 * Retrieves the value of the next unused ordered token, but only if it could be transformed.
 	 * That token will now be consider used if the transformation succeeds.
@@ -487,9 +502,9 @@ export class Args {
 	 * // -> { exists: true, value: 1 }
 	 * ```
 	 */
-	public nextMaybe<T>(cb: ArgsNextCallback<T>): Maybe<T>;
-	public nextMaybe<T>(cb?: ArgsNextCallback<T>): Maybe<T | string> {
-		return maybe<T | string>(typeof cb === 'function' ? this.parser.singleMap(cb) : this.parser.single());
+	public nextMaybe<T>(cb: ArgsNextCallback<T>): Option<T>;
+	public nextMaybe<T>(cb?: ArgsNextCallback<T>): Option<T | string> {
+		return Option.from<T | string>(typeof cb === 'function' ? this.parser.singleMap(cb) : this.parser.single());
 	}
 
 	/**
@@ -521,8 +536,8 @@ export class Args {
 	 */
 	public next<T>(cb: ArgsNextCallback<T>): T;
 	public next<T>(cb?: ArgsNextCallback<T>): T | string | null {
-		const value = cb ? this.nextMaybe(cb) : this.nextMaybe();
-		return isSome<T | string>(value) ? value.value : null;
+		const value = cb ? this.nextMaybe<T | string | null>(cb) : this.nextMaybe();
+		return value.unwrapOr(null);
 	}
 
 	/**
@@ -541,12 +556,35 @@ export class Args {
 	 * // >>> false
 	 * ```
 	 */
-	public getFlags(...keys: readonly string[]) {
+	public getFlags(...keys: readonly string[]): boolean {
 		return this.parser.flag(...keys);
 	}
 
 	/**
+	 * Gets the last value of one or more options as an {@link Option}.
+	 * If you do not care about safely handling non-existing values
+	 * you can use {@link Args.getOption} to get `string | null` as return type
+	 * @param keys The name(s) of the option.
+	 * @example
+	 * ```typescript
+	 * // Suppose args are from '--a=1 --b=2 --c=3'.
+	 * console.log(args.getOptionResult('a'));
+	 * // >>> Some { value: '1' }
+	 *
+	 * console.log(args.getOptionResult('b', 'c'));
+	 * // >>> Some { value: '2' }
+	 *
+	 * console.log(args.getOptionResult('d'));
+	 * // >>> None {}
+	 * ```
+	 */
+	public getOptionResult(...keys: readonly string[]): Option<string> {
+		return this.parser.option(...keys);
+	}
+
+	/**
 	 * Gets the last value of one or more options.
+	 * Similar to {@link Args.getOptionResult} but returns the value on success, or `null` if not.
 	 * @param keys The name(s) of the option.
 	 * @example
 	 * ```typescript
@@ -561,12 +599,36 @@ export class Args {
 	 * // >>> null
 	 * ```
 	 */
-	public getOption(...keys: readonly string[]) {
-		return this.parser.option(...keys);
+	public getOption(...keys: readonly string[]): string | null {
+		return this.parser.option(...keys).unwrapOr(null);
 	}
 
 	/**
 	 * Gets all the values of one or more option.
+	 * @param keys The name(s) of the option.
+	 * @example
+	 * ```typescript
+	 * // Suppose args are from '--a=1 --a=1 --b=2 --c=3'.
+	 * console.log(args.getOptionsResult('a'));
+	 * // >>> Some { value: [ '1' ] }
+	 *
+	 * console.log(args.getOptionsResult('a', 'd'));
+	 * // >>> Some { value: [ '1' ] }
+	 *
+	 * console.log(args.getOptionsResult('b', 'c'));
+	 * // >>> Some { value: [ '2', '3' ] }
+	 *
+	 * console.log(args.getOptionsResult('d'));
+	 * // >>> None {}
+	 * ```
+	 */
+	public getOptionsResult(...keys: readonly string[]): Option<readonly string[]> {
+		return this.parser.options(...keys);
+	}
+
+	/**
+	 * Gets all the values of one or more option.
+	 * Similar to {@link Args.getOptionsResult} but returns the value on success, or `null` if not.
 	 * @param keys The name(s) of the option.
 	 * @example
 	 * ```typescript
@@ -581,15 +643,15 @@ export class Args {
 	 * // >>> null
 	 * ```
 	 */
-	public getOptions(...keys: readonly string[]) {
-		return this.parser.options(...keys);
+	public getOptions(...keys: readonly string[]): readonly string[] | null {
+		return this.parser.options(...keys).unwrapOr(null);
 	}
 
 	/**
 	 * Saves the current state into the stack following a FILO strategy (first-in, last-out).
 	 * @see Args#restore
 	 */
-	public save() {
+	public save(): void {
 		this.states.push(this.parser.save());
 	}
 
@@ -597,27 +659,27 @@ export class Args {
 	 * Restores the previously saved state from the stack.
 	 * @see Args#save
 	 */
-	public restore() {
+	public restore(): void {
 		if (this.states.length !== 0) this.parser.restore(this.states.pop()!);
 	}
 
 	/**
 	 * Whether all arguments have been consumed.
 	 */
-	public get finished() {
+	public get finished(): boolean {
 		return this.parser.finished;
 	}
 
 	/**
 	 * Defines the `JSON.stringify` override.
 	 */
-	public toJSON() {
-		return { message: this.message, command: this.command };
+	public toJSON(): ArgsJson {
+		return { message: this.message, command: this.command, commandContext: this.commandContext };
 	}
 
-	protected unavailableArgument<T>(type: string | IArgument<T>) {
+	protected unavailableArgument<T>(type: string | IArgument<T>): Result.Err<UserError> {
 		const name = typeof type === 'string' ? type : type.name;
-		return err(
+		return Result.err(
 			new UserError({
 				identifier: Identifiers.ArgsUnavailable,
 				message: `The argument "${name}" was not found.`,
@@ -626,8 +688,8 @@ export class Args {
 		);
 	}
 
-	protected missingArguments() {
-		return err(new UserError({ identifier: Identifiers.ArgsMissing, message: 'There are no more arguments.', context: this.toJSON() }));
+	protected missingArguments(): Result.Err<UserError> {
+		return Result.err(new UserError({ identifier: Identifiers.ArgsMissing, message: 'There are no more arguments.', context: this.toJSON() }));
 	}
 
 	/**
@@ -651,15 +713,15 @@ export class Args {
 	 * Constructs an {@link Ok} result.
 	 * @param value The value to pass.
 	 */
-	public static ok<T>(value: T): Ok<T> {
-		return ok(value);
+	public static ok<T>(value: T): Result.Ok<T> {
+		return Result.ok(value);
 	}
 
 	/**
 	 * Constructs an {@link Err} result containing an {@link ArgumentError}.
 	 * @param options The options for the argument error.
 	 */
-	public static error<T>(options: ArgumentError.Options<T>): Err<ArgumentError<T>> {
-		return err(new ArgumentError<T>(options));
+	public static error<T>(options: ArgumentError.Options<T>): Result.Err<ArgumentError<T>> {
+		return Result.err(new ArgumentError<T>(options));
 	}
 }

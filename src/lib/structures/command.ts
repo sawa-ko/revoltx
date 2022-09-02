@@ -1,17 +1,24 @@
 import { AliasPiece, PieceContext } from '@sapphire/pieces';
-import * as Lexure from 'lexure';
 import type { Awaitable } from '@sapphire/utilities';
 import type { Message } from 'revolt.js';
 
 import { Args } from '../parsers/args';
-import { FlagUnorderedStrategy } from '../../utils/strategies/flag-unordered-strategy';
 import { PreconditionContainerArray } from '../preconditions/precondition-container-array';
-import { CommandContext, CommandJSON, CommandMetadata, CommandOptions, CommandPreConditions } from '../../utils/interfaces/command';
+import {
+	CommandContext,
+	CommandJSON,
+	CommandMetadata,
+	CommandOptions,
+	CommandPreConditions,
+	CommandRunContext
+} from '../../utils/interfaces/command';
 import { BucketScope } from '../../utils/enums/command';
 import type { RunInCommands } from '../../utils/interfaces/precondition';
 import type { PermissionsResolvable } from '../utils/permissions';
+import { ArgumentStream, IUnorderedStrategy, Lexer, Parser } from '@sapphire/lexure';
+import { FlagUnorderedStrategy } from '../../utils/strategies/flag-unordered-strategy';
 
-export abstract class Command<T = Args, O extends CommandOptions = CommandOptions> extends AliasPiece<O> {
+export abstract class Command<PreParseReturn = Args, O extends CommandOptions = CommandOptions> extends AliasPiece<O> {
 	/**
 	 * Command description.
 	 * @since 1.0.0
@@ -37,7 +44,7 @@ export abstract class Command<T = Args, O extends CommandOptions = CommandOption
 	 * The strategy to use for the lexer.
 	 * @since 1.0.0
 	 */
-	public strategy: Lexure.UnorderedStrategy;
+	public strategy: IUnorderedStrategy;
 
 	/**
 	 * The preconditions to be run.
@@ -76,7 +83,7 @@ export abstract class Command<T = Args, O extends CommandOptions = CommandOption
 	 * @since 1.0.0
 	 * @private
 	 */
-	protected lexer = new Lexure.Lexer();
+	protected lexer: Lexer;
 
 	public constructor(context: PieceContext, options: CommandOptions) {
 		super(context, options);
@@ -88,6 +95,15 @@ export abstract class Command<T = Args, O extends CommandOptions = CommandOption
 		this.clientPermissions = options.clientPermissions;
 
 		this.strategy = new FlagUnorderedStrategy(options);
+		this.lexer = new Lexer({
+			quotes: options.quotes ?? [
+				['"', '"'], // Double quotes
+				['“', '”'], // Fancy quotes (on iOS)
+				['「', '」'], // Corner brackets (CJK)
+				['«', '»'] // French quotes (guillemets)
+			]
+		});
+
 		this.preconditions = new PreconditionContainerArray(options.preconditions);
 
 		if (options.category) this.category = options.category;
@@ -149,16 +165,16 @@ export abstract class Command<T = Args, O extends CommandOptions = CommandOption
 	 * @param message The message that triggered the command.
 	 * @param args The value returned by {@link Command.preParse}, by default an instance of {@link Args}.
 	 */
-	public abstract run(message: Message, args: T, context: CommandContext): Awaitable<unknown>;
+	public abstract run(message: Message, args: PreParseReturn, context: CommandContext): Awaitable<unknown>;
 
 	/**
 	 * The pre-parse method. This method can be overridden by plugins to define their own argument parser.
 	 * @param message The message that triggered the command.
 	 * @param parameters The raw parameters as a single string.
 	 */
-	public preParse(message: Message, parameters: string): Awaitable<T> {
-		const parser = new Lexure.Parser(this.lexer.setInput(parameters).lex()).setUnorderedStrategy(this.strategy);
-		const args = new Lexure.Args(parser.parse());
-		return new Args(message, this as any, args) as any;
+	public preParse(message: Message, parameters: string, context: CommandRunContext): Awaitable<PreParseReturn> {
+		const parser = new Parser(this.strategy);
+		const args = new ArgumentStream(parser.run(this.lexer.run(parameters)));
+		return new Args(message, this as any, args, context) as any;
 	}
 }

@@ -1,9 +1,10 @@
 import { Piece } from '@sapphire/pieces';
 import type { Awaitable } from '@sapphire/utilities';
+import { err, ok, Result } from '@sapphire/result';
+
 import type { Message } from 'revolt.js';
 
 import { PreconditionError } from '../errors/precondition-error';
-import { err, ok, Result } from '../parsers/result';
 import type { UserError } from '../errors/user-error';
 import type { Command } from './command';
 import type { PreconditionOptions, PreconditionContext } from '../../utils/interfaces/precondition';

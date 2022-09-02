@@ -28,5 +28,6 @@ export const enum Identifiers {
 	PreconditionTextChannel = 'preconditionTextChannel',
 	PreconditionServer = 'preconditionServer',
 	PreconditionClientPermissions = 'preconditionClientPermissions',
-	PreconditionUserPermissions = 'preconditionUserPermissions'
+	PreconditionUserPermissions = 'preconditionUserPermissions',
+	PreconditionMissingRunHandler = 'PreconditionMissingRunHandler'
 }

@@ -1,4 +1,4 @@
-import { isErr, isOk, ok } from '@sapphire/result';
+import { Result } from '@sapphire/result';
 import type { Message } from 'revolt.js';
 import type { PreconditionContext } from '../../utils/interfaces/precondition';
 import type { Command } from '../structures/command';
@@ -6,18 +6,18 @@ import type { IPreconditionContainer, PreconditionContainerResult, PreconditionC
 
 /**
  * Defines the condition for {@link PreconditionContainerArray}s to run.
- * @since 1.0.0
+ * @since 2.0.2
  */
 export interface IPreconditionCondition {
 	/**
 	 * Runs the containers one by one.
 	 * @seealso {@link PreconditionRunMode.sequential}
-	 * @since 1.0.0
+	 * @since 2.0.2
 	 * @param message The message that ran this precondition.
 	 * @param command The command the message invoked.
 	 * @param entries The containers to run.
 	 */
-	sequential(
+	messageSequential(
 		message: Message,
 		command: Command,
 		entries: readonly IPreconditionContainer[],
@@ -27,12 +27,12 @@ export interface IPreconditionCondition {
 	/**
 	 * Runs all the containers using `Promise.all`, then checks the results once all tasks finished running.
 	 * @seealso {@link PreconditionRunMode.parallel}
-	 * @since 1.0.0
+	 * @since 2.0.2
 	 * @param message The message that ran this precondition.
 	 * @param command The command the message invoked.
 	 * @param entries The containers to run.
 	 */
-	parallel(
+	messageParallel(
 		message: Message,
 		command: Command,
 		entries: readonly IPreconditionContainer[],
@@ -42,22 +42,20 @@ export interface IPreconditionCondition {
 
 /**
  * An {@link IPreconditionCondition} which runs all containers similarly to doing (V0 && V1 [&& V2 [&& V3 ...]]).
- * @since 1.0.0
+ * @since 2.0.2
  */
 export const PreconditionConditionAnd: IPreconditionCondition = {
-	async sequential(message, command, entries, context) {
+	async messageSequential(message, command, entries, context) {
 		for (const child of entries) {
 			const result = await child.run(message, command, context);
-			if (isErr(result)) return result;
+			if (result.isErr()) return result;
 		}
 
-		return ok();
+		return Result.ok();
 	},
-	async parallel(message, command, entries, context) {
+	async messageParallel(message, command, entries, context) {
 		const results = await Promise.all(entries.map((entry) => entry.run(message, command, context)));
-		// This is simplified compared to PreconditionContainerAny because we're looking for the first error.
-		// However, the base implementation short-circuits with the first Ok.
-		return results.find(isErr) ?? ok();
+		return results.find((res) => res.isErr()) ?? Result.ok();
 	}
 };
 
@@ -66,25 +64,25 @@ export const PreconditionConditionAnd: IPreconditionCondition = {
  * @since 1.0.0
  */
 export const PreconditionConditionOr: IPreconditionCondition = {
-	async sequential(message, command, entries, context) {
+	async messageSequential(message, command, entries, context) {
 		let error: PreconditionContainerResult | null = null;
 		for (const child of entries) {
 			const result = await child.run(message, command, context);
-			if (isOk(result)) return result;
+			if (result.isOk()) return result;
 			error = result;
 		}
 
-		return error ?? ok();
+		return error ?? Result.ok();
 	},
-	async parallel(message, command, entries, context) {
+	async messageParallel(message, command, entries, context) {
 		const results = await Promise.all(entries.map((entry) => entry.run(message, command, context)));
 
 		let error: PreconditionContainerResult | null = null;
 		for (const result of results) {
-			if (isOk(result)) return result;
+			if (result.isOk()) return result;
 			error = result;
 		}
 
-		return error ?? ok();
+		return error ?? Result.ok();
 	}
 };

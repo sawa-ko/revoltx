@@ -1,6 +1,5 @@
 import { container } from '@sapphire/pieces';
 import type { Message } from 'revolt.js';
-
 import type { SimplePreconditionKeys, PreconditionKeys, Preconditions, PreconditionContext } from '../../utils/interfaces/precondition';
 import type { Command } from '../structures/command';
 import type { IPreconditionContainer } from './precondition-container';
@@ -8,12 +7,12 @@ import type { IPreconditionContainer } from './precondition-container';
 /**
  * Defines the simple options for the {@link PreconditionContainerSingle}, where only the name of the precondition can
  * be defined.
- * @since 2.0.0
+ * @since 2.0.2
  */
 export interface SimplePreconditionSingleResolvableDetails {
 	/**
 	 * The name of the precondition to retrieve from {@link SapphireClient.preconditions}.
-	 * @since 2.0.0
+	 * @since 2.0.2
 	 */
 	name: SimplePreconditionKeys;
 }
@@ -80,7 +79,12 @@ export class PreconditionContainerSingle implements IPreconditionContainer {
 	 */
 	public run(message: Message, command: Command, context: PreconditionContext = {}) {
 		const precondition = container.stores.get('preconditions').get(this.name);
-		if (precondition) return precondition.run(message, command, { ...context, ...this.context });
+		if (precondition) {
+			if (precondition.run) return precondition.run(message, command, { ...context, ...this.context });
+			throw new Error(
+				`The precondition "${precondition.name}" is missing a "messageRun" handler, but it was requested for the "${command.name}" command.`
+			);
+		}
 		throw new Error(`The precondition "${this.name}" is not available.`);
 	}
 }
