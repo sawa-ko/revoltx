@@ -13,13 +13,13 @@ export class CoreListener extends Listener {
 		const { message, command, prefix } = payload;
 
 		const globalResult = await this.container.stores.get('preconditions').run(message, command, payload as any);
-		if (!globalResult.isErr()) {
+		if (globalResult.isErr()) {
 			this.container.client.emit(CommandEvents.CommandDenied, { ...payload, error: globalResult.err().unwrap() });
 			return;
 		}
 
 		const localResult = await command.preconditions.run(message, command, payload as any);
-		if (!localResult.isErr()) {
+		if (localResult.isErr()) {
 			this.container.client.emit(CommandEvents.CommandDenied, { ...payload, error: localResult.err().unwrap() });
 			return;
 		}
