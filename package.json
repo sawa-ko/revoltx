@@ -25,7 +25,7 @@
 	},
 	"dependencies": {
 		"@discordjs/collection": "^1.2.0",
-		"@favware/rollup-type-bundler": "^1.0.11",
+		"@favware/rollup-type-bundler": "^2.0.0",
 		"@sapphire/lexure": "^1.1.2",
 		"@sapphire/pieces": "^3.5.2",
 		"@sapphire/ratelimits": "^2.4.5",
