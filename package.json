@@ -34,7 +34,7 @@
 		"chalk": "^5.1.2",
 		"chokidar": "^3.5.3",
 		"tslib": "^2.4.1",
-		"tslog": "^3.3.4"
+		"tslog": "^4.2.0"
 	},
 	"devDependencies": {
 		"@commitlint/cli": "^17.2.0",
