@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.3](https://github.com/kaname-png/revoltx/compare/v2.0.2...v2.0.3) (2022-12-04)
+
+
+### Bug Fixes
+
+* **deps:** update all non-major dependencies ([0906834](https://github.com/kaname-png/revoltx/commit/09068343060396a2dd1f86f15ef4d2d490483819))
+* **deps:** update dependency @favware/rollup-type-bundler to v2 ([e8ca1b3](https://github.com/kaname-png/revoltx/commit/e8ca1b3199feaad84babd0af4ae3a48b47be4ea8))
+* **deps:** update dependency @sapphire/pieces to ^3.6.0 ([74e927c](https://github.com/kaname-png/revoltx/commit/74e927c3fba02f7968dee98a3d59b605734e1a9a))
+* **deps:** update dependency tslog to v4 ([ee95b7c](https://github.com/kaname-png/revoltx/commit/ee95b7cec9d8fa798be05930989ae7263c56b95c))
+* **deps:** update sapphire dependencies ([daf78be](https://github.com/kaname-png/revoltx/commit/daf78be71dbc726749de4035069c5c9a02d9232c))
+* **deps:** update sapphire dependencies ([f4ed3b1](https://github.com/kaname-png/revoltx/commit/f4ed3b1f9aa69c98170add3adbd4c2b2076d2709))
+* **deps:** update sapphire dependencies ([261072c](https://github.com/kaname-png/revoltx/commit/261072caede79241e13f6af1a8935ee9d33f57a8))
+* types with logger ([7927e92](https://github.com/kaname-png/revoltx/commit/7927e92fdd558c9bcec5c55caad92b335eb23160))
+
 ### [2.0.2](https://github.com/kaname-png/revoltx/compare/v2.0.1...v2.0.2) (2022-09-02)
 
 
