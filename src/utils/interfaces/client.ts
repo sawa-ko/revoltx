@@ -1,6 +1,7 @@
 import type { Awaitable } from '@sapphire/utilities';
 import type { API, Message } from 'revolt.js';
 import type { ISettingsParam } from 'tslog';
+import type { ILogObj } from 'tslog/dist/types/interfaces';
 
 import type { HMROptions } from '../../lib/utils/hmr';
 import type { BucketScope } from '../enums/command';
@@ -41,7 +42,7 @@ export interface ClientOptions {
 	 * The logger options
 	 * @since 1.3.0
 	 */
-	logger?: ISettingsParam;
+	logger?: ISettingsParam<ILogObj>;
 
 	/**
 	 * The prefix hook, by default it is a callback function that returns {@link ClientOptions.defaultPrefix}.

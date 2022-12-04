@@ -13,6 +13,7 @@ import { CommandStore } from './structures/stores/command';
 import { ArgumentStore } from './structures/stores/argument';
 import { PreconditionStore } from './structures/stores/precondition';
 import { HMROptions, startHMR } from './utils/hmr';
+import type { ILogObj } from 'tslog/dist/types/interfaces';
 
 export class Client extends EventEmitter {
 	/**
@@ -126,10 +127,8 @@ export class Client extends EventEmitter {
 		container.stores = this.stores;
 		container.logger = new Logger({
 			name: 'RevoltX',
-			minLevel: 'info',
-			displayFilePath: 'hidden',
+			minLevel: 1,
 			maskValuesOfKeys: ['token', 'password', 'secret'],
-			exposeErrorCodeFrameLinesBeforeAndAfter: 10,
 			...this.clientOptions.logger
 		});
 
@@ -195,7 +194,7 @@ export class Client extends EventEmitter {
 declare module '@sapphire/pieces' {
 	interface Container {
 		client: Client;
-		logger: Logger;
+		logger: Logger<ILogObj>;
 	}
 
 	interface StoreRegistryEntries {
