@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.4](https://github.com/kaname-png/revoltx/compare/v2.0.3...v2.0.4) (2023-06-05)
+
+
+### Bug Fixes
+
+* **deps:** update all non-major dependencies ([fcd1f83](https://github.com/kaname-png/revoltx/commit/fcd1f835a6bf001e6ef329abd20caf0b62ee34de))
+* **deps:** update dependency @sapphire/ratelimits to ^2.4.6 ([368af31](https://github.com/kaname-png/revoltx/commit/368af3109d12fddd1e7e48dbf533aaea3bb9dc68))
+
 ### [2.0.3](https://github.com/kaname-png/revoltx/compare/v2.0.2...v2.0.3) (2022-12-04)
 
 
