@@ -1,6 +1,7 @@
 {
 	"extends": "@sapphire",
 	"rules": {
+    "@typescript-eslint/unbound-method": "off",
 		"prettier/prettier": [
 			"error",
 			{
