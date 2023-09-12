@@ -2,6 +2,7 @@
 	"extends": "@sapphire",
 	"rules": {
     "@typescript-eslint/unbound-method": "off",
+    "@typescript-eslint/require-await": "off",
 		"prettier/prettier": [
 			"error",
 			{

@@ -12,7 +12,7 @@ export class CorePrecondition extends Precondition {
 		super(context, { name: 'UserPermissions' });
 	}
 
-	public async run(message: Message, _: Command, context: PermissionsContext) {
+	public run(message: Message, _: Command, context: PermissionsContext) {
 		const permissions = new PermissionsManager();
 		if (context.permissions.length > 0 && message.channel) {
 			permissions.add(calculatePermission(message.channel, { member: message.member }));
