@@ -8,7 +8,7 @@ export enum ClientEvents {
 	MessageUpdate = 'messageUpdate',
 	MessageDelete = 'messageDelete',
 	ChannelCreate = 'channelCreate',
-	ChannelUpdate = 'messageUpdate',
+	ChannelUpdate = 'channelUpdate',
 	ChannelDelete = 'channelDelete',
 	ServerUpdate = 'serverUpdate',
 	ServerDelete = 'serverDelete',
