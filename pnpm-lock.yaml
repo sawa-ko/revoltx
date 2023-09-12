@@ -21,7 +21,7 @@ dependencies:
     specifier: ^3.7.0
     version: 3.7.0
   '@sapphire/ratelimits':
-    specifier: ^2.4.6
+    specifier: ^2.4.7
     version: 2.4.7
   '@sapphire/result':
     specifier: 2.6.4
@@ -68,10 +68,10 @@ devDependencies:
     specifier: ^20.6.0
     version: 20.6.0
   '@typescript-eslint/eslint-plugin':
-    specifier: ^6.6.0
+    specifier: ^6.7.0
     version: 6.7.0(@typescript-eslint/parser@6.7.0)(eslint@8.49.0)(typescript@5.2.2)
   '@typescript-eslint/parser':
-    specifier: ^6.6.0
+    specifier: ^6.7.0
     version: 6.7.0(eslint@8.49.0)(typescript@5.2.2)
   cz-conventional-changelog:
     specifier: ^3.3.0
@@ -287,6 +287,7 @@ packages:
   /@babel/highlight@7.22.13:
     resolution: {integrity: sha512-C/BaXcnnvBCmHTpz/VGZ8jgtE2aYlW4hxDhseJAWZb7gqGM/qtCK6iZUb0TyKFf7BOUsBH7Q7fkRsDRhg1XklQ==}
     engines: {node: '>=6.9.0'}
+    requiresBuild: true
     dependencies:
       '@babel/helper-validator-identifier': 7.22.15
       chalk: 2.4.2
@@ -3951,6 +3952,7 @@ packages:
 
   /js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
+    requiresBuild: true
 
   /js-yaml@3.14.1:
     resolution: {integrity: sha512-okMH7OXXJ7YrN9Ok3/SXrnu4iX9yOk+25nqX4imS2npuvTYDmo/QEZoqwZkYaIDk3jVvBOTOIEgEhaLOynBS9g==}
