@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.6](https://github.com/kaname-png/revoltx/compare/v2.0.5...v2.0.6) (2023-09-12)
+
+
+### Bug Fixes
+
+* **deps:** update all non-major dependencies ([c02114a](https://github.com/kaname-png/revoltx/commit/c02114a55516e42eab09af28b86f7e8a85394068))
+* **deps:** update all non-major dependencies ([a031529](https://github.com/kaname-png/revoltx/commit/a031529fb7bb72740dbfce9182bb77bd09eb87ad))
+* **deps:** update all non-major dependencies ([896b4af](https://github.com/kaname-png/revoltx/commit/896b4af4d3262c3325f2b2823d932f5bcac142d1))
+* **deps:** update all non-major dependencies ([e14f435](https://github.com/kaname-png/revoltx/commit/e14f43575188f06197bdd00aa63abc6c504d0fe4))
+* ts config extends ([93987e8](https://github.com/kaname-png/revoltx/commit/93987e87a1dc2e5379c70a7e909020355bd8d520))
+
 ### [2.0.5](https://github.com/kaname-png/revoltx/compare/v2.0.4...v2.0.5) (2023-06-05)
 
 ### [2.0.4](https://github.com/kaname-png/revoltx/compare/v2.0.3...v2.0.4) (2023-06-05)
