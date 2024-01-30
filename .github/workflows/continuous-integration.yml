@@ -82,7 +82,7 @@ jobs:
           name: coverage
           path: coverage/
       - name: Codecov Upload
-        uses: codecov/codecov-action@d9f34f8cd5cb3b3eb79b3e4b5dae3a16df499a70 # tag=v3
+        uses: codecov/codecov-action@ab904c41d6ece82784817410c45d8b8c02684457 # v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           directory: coverage/
