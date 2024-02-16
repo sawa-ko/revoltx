@@ -1113,7 +1113,7 @@ __metadata:
     "@favware/rollup-type-bundler": "npm:^3.3.0"
     "@sapphire/eslint-config": "npm:^5.0.3"
     "@sapphire/lexure": "npm:^1.1.6"
-    "@sapphire/pieces": "npm:^3.10.0"
+    "@sapphire/pieces": "npm:^4.2.2"
     "@sapphire/prettier-config": "npm:^2.0.0"
     "@sapphire/ratelimits": "npm:^2.4.8"
     "@sapphire/result": "npm:2.6.5"
@@ -1349,14 +1349,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sapphire/pieces@npm:^3.10.0":
-  version: 3.10.0
-  resolution: "@sapphire/pieces@npm:3.10.0"
+"@sapphire/pieces@npm:^4.2.2":
+  version: 4.2.2
+  resolution: "@sapphire/pieces@npm:4.2.2"
   dependencies:
     "@discordjs/collection": "npm:^1.5.3"
-    "@sapphire/utilities": "npm:^3.13.0"
+    "@sapphire/utilities": "npm:^3.15.3"
     tslib: "npm:^2.6.2"
-  checksum: ce29aa1b91a2ca843271792107655f9a79176d2c53927cbe9902994390035094b29ccb1a52891304daf87d2d74243fda45279e5e933a02a61cfc3fbbf37feec4
+  checksum: d0e52256be78f1d2ad236bf5b9eefff57b08b8c1a3dd80b68938313c53c1819e1d01af60a34b83b1cef084ae669de0e097d6537a7dc28c7d328f6a53a1c70a79
   languageName: node
   linkType: hard
 
@@ -1393,10 +1393,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sapphire/utilities@npm:^3.11.0, @sapphire/utilities@npm:^3.13.0, @sapphire/utilities@npm:^3.14.0, @sapphire/utilities@npm:^3.15.2":
-  version: 3.15.2
-  resolution: "@sapphire/utilities@npm:3.15.2"
-  checksum: f5d6bf09228b76d735d7a524584597c69e27bbdd985be50d7417454d7fff535923103698a1ec658df1e25fa28f13d126a01721a7b770d4df7a3bca6d9a3a4295
+"@sapphire/utilities@npm:^3.11.0, @sapphire/utilities@npm:^3.14.0, @sapphire/utilities@npm:^3.15.2, @sapphire/utilities@npm:^3.15.3":
+  version: 3.15.3
+  resolution: "@sapphire/utilities@npm:3.15.3"
+  checksum: b1cb07f955b93f731b757f7f39fb9a9c9bc763bc5cddcd247e01beb5a4c7d38a6bb215d969b9aaf0891073333a63605861a219f5b5b457d73a2fd085c722f9c5
   languageName: node
   linkType: hard
 
