@@ -20,7 +20,7 @@ export class PreconditionStore extends Store<Precondition> {
 				: await precondition.error({
 						identifier: Identifiers.PreconditionMissingRunHandler,
 						message: `The precondition "${precondition.name}" is missing a "messageRun" handler, but it was requested for the "${command.name}" command.`
-				  });
+					});
 
 			if (result.isErr()) {
 				return result;

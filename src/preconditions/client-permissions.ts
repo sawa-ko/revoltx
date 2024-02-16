@@ -29,6 +29,6 @@ export class CorePrecondition extends Precondition {
 					context: { missing: missingPermissions },
 					identifier: Identifiers.PreconditionClientPermissions,
 					message: errorMessage.join('\n')
-			  });
+				});
 	}
 }
