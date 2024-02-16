@@ -17,7 +17,7 @@ jobs:
           echo ::set-output name=current_version::${GITHUB_REF#refs/tags/v}
         shell: bash
       - name: Checkout code
-        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8 # tag=v3
+        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3
       - name: Get Changelog Entry
         id: changelog_reader
         uses: artlaman/conventional-changelog-reader-action@a2ac23f78e2d16bfec78cd0028becf5ec2246eb8 # tag=v1.1.0
