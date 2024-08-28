@@ -25,7 +25,7 @@ jobs:
           version: ${{ steps.tag_name.outputs.current_version }}
           path: ./CHANGELOG.md
       - name: Create/update release
-        uses: ncipollo/release-action@4c75f0f2e4ae5f3c807cf0904605408e319dcaac # tag=v1
+        uses: ncipollo/release-action@2c591bcc8ecdcd2db72b97d6147f871fcd833ba5 # v1
         with:
           tag: ${{ steps.changelog_reader.outputs.version }}
           name: Release ${{ steps.changelog_reader.outputs.version }}
